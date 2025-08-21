@@ -1,0 +1,74 @@
+.custom-navbar {
+    background-color: #F0F2E5;
+    border-bottom: 3px solid #C5A94D;
+}
+
+.logo {
+    height: 100%;
+    width: auto;
+    max-height: 50px;
+}
+
+.system-name {
+    color: #00924C;
+}
+
+.nav-link {
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #00924C !important;
+}
+
+
+.logout-btn {
+    border: 1px solid #00924C;
+    color: #00924C;
+    background: #F2FCF5;
+    /* light green bg */
+}
+
+.logout-btn:hover {
+    background: #00924C;
+    color: #fff;
+}
+
+body {
+    background-color: #F0F2E5;
+}
+
+.card {
+    background-color: #F5F7F0;
+    border: none;
+}
+
+/* Advanced Logout Button */
+.logout-btn {
+  background: linear-gradient(135deg, #00924C, #00753D); /* hijau gradient */
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.logout-btn i {
+  font-size: 1rem;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #00753D, #005F2F); /* darker green */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
