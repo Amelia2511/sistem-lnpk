@@ -1,6 +1,6 @@
 .custom-navbar {
-    background-color: #F0F2E5;
-    border-bottom: 3px solid #C5A94D;
+    background-color: #e6f0fa;
+    border-bottom: 3px solid #ff8c42;
 }
 
 .logo {
@@ -10,7 +10,8 @@
 }
 
 .system-name {
-    color: #00924C;
+  color: #003D73;
+  font-weight: 700;
 }
 
 .nav-link {
@@ -20,55 +21,37 @@
 }
 
 .nav-link:hover {
-    color: #00924C !important;
+    color: #ff8c42 !important;
 }
 
+:host {
+    display: block;
+    background-color: #f9fafd;
+}
 
 .logout-btn {
-    border: 1px solid #00924C;
-    color: #00924C;
-    background: #F2FCF5;
-    /* light green bg */
-}
-
-.logout-btn:hover {
-    background: #00924C;
+    background: linear-gradient(135deg, #0056a3, #003d73);
     color: #fff;
-}
-
-body {
-    background-color: #F0F2E5;
-}
-
-.card {
-    background-color: #F5F7F0;
     border: none;
-}
-
-/* Advanced Logout Button */
-.logout-btn {
-  background: linear-gradient(135deg, #00924C, #00753D); /* hijau gradient */
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 6px 16px;
-  font-weight: 500;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .15);
+    transition: all .3s ease;
 }
 
 .logout-btn i {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #00753D, #005F2F); /* darker green */
-  transform: translateY(-2px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ff8c42, #e66b00);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .2);
 }
 
 .logout-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+    transform: translateY(0);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .15);
 }
