@@ -1,0 +1,30 @@
+.layout {
+    display: flex;
+    height: calc(100vh - 70px);
+    background: linear-gradient(135deg, #f9fafc, #f3f6fb);
+}
+
+app-side-menu {
+    flex-shrink: 0;
+    width: 80px;
+    transition: width 0.3s ease;
+    z-index: 10;
+}
+
+app-side-menu.open {
+    width: 260px;
+}
+
+.content {
+    flex: 1;
+    padding: 24px;
+    background: transparent;
+
+
+    margin: 20px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(7, 62, 119, 0.15),
+        0 6px 12px rgba(0, 0, 0, 0.08);
+    overflow-y: auto;
+}
