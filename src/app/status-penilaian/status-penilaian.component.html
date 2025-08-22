@@ -1,0 +1,43 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Status Penilaian</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-stepper>
+            <mat-step label="Aktif" state="aktif">
+                <p>Anda telah diaktifkan untuk penilaian. Sila sediakan Laporan Pencapaian Sasaran Kerja bagi melakukan penilaian.</p>
+                <div>
+                    <button matButton matStepperNext>Sediakan Laporan</button>
+                </div>
+            </mat-step>
+            <mat-step label="Draf" state="draf">
+                <p>Sila lengkapkan dan hantar Laporan Pencapaian Sasaran Kerja anda.</p>
+                <div>
+                    <button matButton matStepperNext>Kemas kini Laporan</button>
+                </div>
+            </mat-step>
+            <mat-step label="Pengesahan PPP" state="pengesahan-ppp">
+                <p>Terima kasih kerana menghantar Laporan Pencapaian Sasaran Kerja anda. Laporan anda sedang disemak oleh Pegawai Penilai Pertama.</p>
+            </mat-step>
+            <mat-step label="SKT Selesai" state="skt-selesai">
+                <p>Laporan Pencapaian Sasaran Kerja anda telah disahkan oleh Pegawai Penilai Pertama.</p>
+            </mat-step>
+            <mat-step label="Penilaian oleh PPP" state="penilaian-ppp">
+                <p>Pegawai Penilai Pertama akan/sedang menilai prestasi anda.</p>
+            </mat-step>
+            <mat-step label="Penilaian oleh PPK" state="penilaian-ppk">
+                <p>Pegawai Penilai Kedua akan/sedang menilai prestasi anda.</p>
+            </mat-step>
+            <mat-step label="Penilaian Selesai" state="penilaian-selesai">
+                <p>Penilaian anda sudah selesai dan sedang disemak oleh Unit Pembangunan Sumber Manusia.</p>
+            </mat-step>
+            <mat-step label="Penilaian Selesai PPSM" state="penilaian-selesai-ppsm">
+                <p>Penilaian anda sudah selesai.<br>Terima kasih atas sumbangan kerja anda.
+                </p>
+                <div>
+                    <button matButton matStepperNext>Lihat Penilaian</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </mat-card-content>
+</mat-card>
