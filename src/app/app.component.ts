@@ -15,12 +15,15 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 export class AppComponent {
   title = 'sistem-lnpk';
   showHeader = true;
+  showLayout = true;
 
   constructor(private router: Router) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.showHeader = event.urlAfterRedirects === '/log-masuk' ? false : true;
+      const isLoginPage = event.urlAfterRedirects === '/log-masuk';
+      this.showHeader = !isLoginPage;
+      this.showLayout = !isLoginPage;
     });
   }
 }

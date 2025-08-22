@@ -1,6 +1,5 @@
 <app-header *ngIf="showHeader"></app-header>
-
-<div class="layout">
+<div class="layout" *ngIf="showLayout">
   <!-- Side Menu -->
   <app-side-menu></app-side-menu>
 
@@ -9,3 +8,6 @@
     <router-outlet></router-outlet>
   </main>
 </div>
+
+<!-- If login page, show only the outlet (full screen) -->
+<router-outlet *ngIf="!showLayout"></router-outlet>
