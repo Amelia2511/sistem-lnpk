@@ -1,0 +1,57 @@
+.custom-navbar {
+    background-color: #e6f0fa;
+    border-bottom: 3px solid #ff8c42;
+}
+
+.logo {
+    height: 100%;
+    width: auto;
+    max-height: 50px;
+}
+
+.system-name {
+  color: #003D73;
+  font-weight: 700;
+}
+
+.nav-link {
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #ff8c42 !important;
+}
+
+:host {
+    display: block;
+    background-color: #f9fafd;
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #0056a3, #003d73);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .15);
+    transition: all .3s ease;
+}
+
+.logout-btn i {
+    font-size: 1rem;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #ff8c42, #e66b00);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .2);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .15);
+}

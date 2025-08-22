@@ -1,0 +1,16 @@
+<div class="backdrop" *ngIf="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
+
+<div class="side-menu floating" [class.open]="menuOpen">
+  <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+    <i class="bi" [ngClass]="menuOpen ? 'bi-x-lg' : 'bi-list'"></i>
+  </button>
+
+  <ul>
+    <li *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <span class="menu-text">{{ item.name }}</span>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,12 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { HeaderComponent } from './header/header.component';
+import { CommonModule } from '@angular/common';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, HeaderComponent, CommonModule, SideMenuComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'sistem-lnpk';
+  showHeader = true;
+  showLayout = true;
+
+  constructor(private router: Router) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      const isLoginPage = event.urlAfterRedirects === '/log-masuk';
+      this.showHeader = !isLoginPage;
+      this.showLayout = !isLoginPage;
+    });
+  }
 }
