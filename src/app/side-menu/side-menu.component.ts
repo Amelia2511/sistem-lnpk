@@ -17,6 +17,7 @@ export class SideMenuComponent {
     { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama' },
     { name: 'Login', icon: 'bi-box-arrow-in-right', route: '/log-masuk' },
     { name: 'Settings', icon: 'bi-gear', route: '/settings' },
+    { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'}
   ];
 
   toggleMenu(): void {

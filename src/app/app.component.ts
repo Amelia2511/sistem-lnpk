@@ -3,13 +3,14 @@ import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, CommonModule, SideMenuComponent],
+  imports: [RouterOutlet, HeaderComponent, CommonModule, SideMenuComponent, MatCardModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
