@@ -1,5 +1,12 @@
 <div style="display: flex;">
-    <mat-card style="flex: 1 1 auto;">
+  <p-card  [style]="{ width: '100%', overflow: 'hidden' }">
+      <ng-template #title> Pegawai Penilai Pertama </ng-template>
+  </p-card>
+  <p-card  [style]="{ width: '100%', overflow: 'hidden' }">
+      <ng-template #title> Pegawai Penilai Kedua </ng-template>
+  </p-card>
+</div>
+    <!-- <mat-card style="flex: 1 1 auto;">
         <mat-card-title>Pegawai Penilai Pertama</mat-card-title>
         <mat-card-content>
             <img mat-card-image [src]="pegawaiPenilaiPertama.gambar" alt="Gambar Pegawai Penilai Kedua">
@@ -20,5 +27,4 @@
             <p>Bahagian: {{ pegawaiPenilaiKedua.bahagian }}</p>
             <p>Unit: {{ pegawaiPenilaiKedua.unit }}</p>
         </mat-card-content>
-    </mat-card>
-</div>
+    </mat-card> -->

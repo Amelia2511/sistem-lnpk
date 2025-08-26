@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
