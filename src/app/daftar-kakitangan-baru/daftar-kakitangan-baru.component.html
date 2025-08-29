@@ -1,1 +1,77 @@
-<p>daftar-kakitangan-baru works!</p>
+<h2>Tambah Pegawai</h2><br>
+<div class="row">
+                    <div class="col-md-5 form-group input-text">
+                        <label>Nama</label>
+                        <input id="nama" name="nama"
+                               type="text" ng-disabled="toggleinput"
+                               class="act_setting"
+                               ng-model="userDetails.nama"><br><br>
+                               <label>No. Kad Pengenalan</label>
+                        <input id="no_kad" name="no_kad"
+                               type="text" ng-disabled="toggleinput"
+                               class="act_setting"
+                               ng-model="userDetails.no_kad"><br><br>
+                               <label>Skim Perkhidmatan</label>
+                        <input id="skim_khidmat" name="skim_khidmat"
+                               type="text" ng-disabled="toggleinput"
+                               class="act_setting"
+                               ng-model="userDetails.skim_khidmat"><br><br>
+                               <label for="gred_hakiki">Gred Hakiki</label>
+                               <select 
+                               id="gred_hakiki" 
+                               name="gred_hakiki" 
+                               ng-disabled="toggleinput" 
+                               class="act_setting" 
+                               ng-model="userDetails.gred_hakiki">
+                               <option value=""> Gred </option>
+                               <option value="F41">F41</option>
+                               <option value="F44">F44</option>
+                               <option value="F48">F48</option>
+                               <option value="F52">F52</option>
+                               <option value="F54">F54</option>
+                               <option value="FA29">FA29</option>
+                               <option value="FA32">FA32</option>
+                               <option value="FA38">FA38</option>
+                            </select>
+                               
+                    </div>
+                    <div class="col-md-5 form-group input-text">
+                        <label for="jawatan_sekarang">Nama/Gred Jawatan yang disandang sekarang</label>
+                        <select id="jawatan_sekarang"
+                        name="jawatan_sekarang"
+                        ng-disabled="toggleinput"
+                        class="act_setting"
+                        ng-model="userDetails.jawatan_sekarang">
+                        <option value=""> Jawatan </option>
+                        <option value="Pegawai Teknologi Maklumat F41">Pegawai Teknologi Maklumat F41</option>
+                        <option value="Pegawai Teknologi Maklumat F44">Pegawai Teknologi Maklumat F44</option>
+                        <option value="Pegawai Teknologi Maklumat F48">Pegawai Teknologi Maklumat F48</option>
+                        <option value="Pegawai Teknologi Maklumat F52">Pegawai Teknologi Maklumat F52</option>
+                        <option value="Pegawai Teknologi Maklumat F54">Pegawai Teknologi Maklumat F54</option>
+                        <option value="Penolong Pegawai Teknologi Maklumat FA29">Penolong Pegawai Teknologi Maklumat FA29</option>
+                        <option value="Penolong Pegawai Teknologi Maklumat FA32">Penolong Pegawai Teknologi Maklumat FA32</option>
+                        <option value="Penolong Pegawai Teknologi Maklumat FA38">Penolong Pegawai Teknologi Maklumat FA38</option>
+                    </select><br><br>
+                               <label>Tempat Bertugas</label>
+                        <input id="tempat_bertugas" name="tempat_bertugas"
+                               type="text" ng-disabled="toggleinput"
+                               class="act_setting "
+                               ng-model="userDetails.tempat_bertugas"><br><br>
+                               <label>Tarikh Mula Kontrak</label>
+                        <input id="tarikh_mula" name="tarikh_mula"
+                               type="date" ng-disabled="toggleinput"
+                               class="act_setting "
+                               ng-model="userDetails.tarikh_mula"><br><br>
+                               <label>Tarikh Akhir Kontrak</label>
+                        <input id="tarikh_akhir" name="tarikh_akhir"
+                               type="date" ng-disabled="toggleinput"
+                               class="act_setting "
+                               ng-model="userDetails.tarikh_akhir">
+                    </div>
+                </div>
+                <div class="row">
+
+<div class="example-button-row">
+  <button mat-button class="btn-kembali">Kembali</button>
+  <button mat-button class="btn-tambah">Tambah</button>
+</div>

@@ -1,3 +1,13 @@
+p-card {
+  flex-grow: 1;
+}
+
+div {
+  gap: 20px 20px;
+}
+b {
+  font-weight: 600;
+}
 /* mat-card {
     border: 1px solid coral;
 } */

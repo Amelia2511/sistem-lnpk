@@ -3,8 +3,8 @@ import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
-import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MatCardModule } from '@angular/material/card';
+import { SideMenuComponent } from './side-menu/side-menu.component';
 
 
 @Component({
