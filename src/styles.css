@@ -1,4 +1,19 @@
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import "primeicons/primeicons.css";
+
+body {
+  font-family: "TikTok Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 100;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: "TikTok Sans", Roboto, "Helvetica Neue", sans-serif; }
+
+
 :root {
   --app-bg:
     radial-gradient(1200px 600px at 12% -10%, #E9F0FC 0%, transparent 60%),
@@ -57,4 +72,11 @@ app-root, #root {
   display: block;
   min-height: 100dvh;
   background: transparent;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: "TikTok Sans" Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-card {
+  font-family: "TikTok Sans";
 }
