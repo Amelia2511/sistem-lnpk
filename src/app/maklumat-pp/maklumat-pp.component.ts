@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 import { CardModule } from 'primeng/card';
 
 
 @Component({
   selector: 'app-maklumat-pp',
-  imports: [MatCardModule, CardModule],
+  imports: [CardModule],
   templateUrl: './maklumat-pp.component.html',
   styleUrl: './maklumat-pp.component.css'
 })

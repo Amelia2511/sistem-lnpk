@@ -1,169 +1,126 @@
-<p-card [style]="{ width: '100%', overflow: 'hidden' }">
-    <ng-template #title> Status Penilaian </ng-template>
-    <!-- <ng-template #subtitle> Card subtitle </ng-template> -->
-    <p>
-      <p-stepper [value]="1" class="basis-[50rem]">
-        <p-step-list>
-            <p-step [value]="1">Aktif</p-step>
-            <p-step [value]="2">Draf</p-step>
-            <p-step [value]="3">Pengesahan PPP</p-step>
-            <p-step [value]="4">SKT Selesai</p-step>
-            <p-step [value]="5">Penilaian oleh PPP</p-step>
-            <p-step [value]="6">Penilaian oleh PPK</p-step>
-            <p-step [value]="7">Penilaian Selesai</p-step>
-            <p-step [value]="8">Penilaian Selesai PPSM</p-step>
-        </p-step-list>
-        <p-step-panels>
-            <p-step-panel [value]="1">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Akaun anda telah diaktifkan untuk penilaian. Sila sediakan Laporan Pencapaian Sasaran Kerja bagi melakukan penilaian.
-                        </div>
-                        <div class="flex pt-6 justify-end">
-                            <p-button label="Sediakan laporan" (onClick)="activateCallback()" />
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+<div>
+  <p-card [style]="{ width: '100%', overflow: 'hidden' }">
+      <ng-template #title> Status Penilaian </ng-template>
+      <!-- <ng-template #subtitle> Card subtitle </ng-template> -->
+      <p>
+        <p-stepper [value]="1" class="basis-[50rem]">
+          <p-step-list>
+              <p-step [value]="1">Aktif</p-step>
+              <p-step [value]="2">Draf</p-step>
+              <p-step [value]="3">Pengesahan PPP</p-step>
+              <p-step [value]="4">SKT Selesai</p-step>
+              <p-step [value]="5">Penilaian PPP</p-step>
+              <p-step [value]="6">Penilaian PPK</p-step>
+              <p-step [value]="7">Penilaian Selesai</p-step>
+              <p-step [value]="8">Penilaian Selesai PPSM</p-step>
+          </p-step-list>
+          <p-step-panels>
+              <p-step-panel [value]="1">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Akaun anda telah diaktifkan untuk penilaian. Sila sediakan Laporan Pencapaian Sasaran Kerja bagi melakukan penilaian.
+                          </div>
+                          <div class="flex pt-6 justify-end">
+                              <p-button label="Sediakan laporan" (onClick)="activateCallback()" />
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="2">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Sila lengkapkan dan hantar Laporan Pencapaian Sasaran Kerja anda.
-                        </div>
-                    </div>
-                    <div class="flex pt-6 justify-between">
-                        <p-button label="Lengkapkan SKT" (onClick)="activateCallback()" />
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="2">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Sila lengkapkan dan hantar Laporan Pencapaian Sasaran Kerja anda.
+                          </div>
+                      </div>
+                      <div class="flex pt-6 justify-between">
+                          <p-button label="Lengkapkan laporan" (onClick)="activateCallback()" />
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="3">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Terima kasih kerana menghantar Laporan Pencapaian Sasaran Kerja anda. Laporan anda sedang disemak oleh Pegawai Penilai Pertama.
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="3">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Terima kasih kerana menghantar Laporan Pencapaian Sasaran Kerja anda. Laporan anda sedang disemak oleh Pegawai Penilai Pertama.
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="4">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Laporan Pencapaian Sasaran Kerja anda telah disahkan oleh Pegawai Penilai Pertama.
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="4">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Laporan Pencapaian Sasaran Kerja anda telah disahkan oleh Pegawai Penilai Pertama.
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="5">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Pegawai Penilai Pertama akan/sedang menilai prestasi anda.
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="5">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Pegawai Penilai Pertama akan/sedang menilai prestasi anda.
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="6">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Pegawai Penilai Kedua akan/sedang menilai prestasi anda.
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="6">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Pegawai Penilai Kedua akan/sedang menilai prestasi anda.
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="7">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Penilaian anda sudah selesai dan sedang disemak oleh Unit Pembangunan Sumber Manusia.
-                        </div>
-                    </div>
-                </ng-template>
-            </p-step-panel>
+              <p-step-panel [value]="7">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Penilaian anda sudah selesai dan sedang disemak oleh Unit Pembangunan Sumber Manusia.
+                          </div>
+                      </div>
+                  </ng-template>
+              </p-step-panel>
 
-            <p-step-panel [value]="8">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <div class="flex flex-col h-48">
-                        <div
-                            class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                        >
-                            Penilaian anda sudah selesai.<br>Terima kasih atas sumbangan kerja anda.
-                        </div>
-                    </div>
-                    <div class="flex pt-6 justify-start">
-                        <p-button label="Lihat penilaian" (onClick)="activateCallback()" />
-                    </div>
-                </ng-template>
-            </p-step-panel>
-        </p-step-panels>
-    </p-stepper>
-    </p>
-</p-card>
-
-
-<!-- <mat-card>
-    <mat-card-header>
-        <mat-card-title>Status Penilaian</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <mat-stepper>
-            <mat-step label="Aktif" state="aktif">
-                <p>Anda telah diaktifkan untuk penilaian. Sila sediakan Laporan Pencapaian Sasaran Kerja bagi melakukan penilaian.</p>
-                <div>
-                    <button matButton matStepperNext>Sediakan Laporan</button>
-                </div>
-            </mat-step>
-            <mat-step label="Draf" state="draf">
-                <p>Sila lengkapkan dan hantar Laporan Pencapaian Sasaran Kerja anda.</p>
-                <div>
-                    <button matButton matStepperNext>Kemas kini Laporan</button>
-                </div>
-            </mat-step>
-            <mat-step label="Pengesahan PPP" state="pengesahan-ppp">
-                <p>Terima kasih kerana menghantar Laporan Pencapaian Sasaran Kerja anda. Laporan anda sedang disemak oleh Pegawai Penilai Pertama.</p>
-            </mat-step>
-            <mat-step label="SKT Selesai" state="skt-selesai">
-                <p>Laporan Pencapaian Sasaran Kerja anda telah disahkan oleh Pegawai Penilai Pertama.</p>
-            </mat-step>
-            <mat-step label="Penilaian oleh PPP" state="penilaian-ppp">
-                <p>Pegawai Penilai Pertama akan/sedang menilai prestasi anda.</p>
-            </mat-step>
-            <mat-step label="Penilaian oleh PPK" state="penilaian-ppk">
-                <p>Pegawai Penilai Kedua akan/sedang menilai prestasi anda.</p>
-            </mat-step>
-            <mat-step label="Penilaian Selesai" state="penilaian-selesai">
-                <p>Penilaian anda sudah selesai dan sedang disemak oleh Unit Pembangunan Sumber Manusia.</p>
-            </mat-step>
-            <mat-step label="Penilaian Selesai PPSM" state="penilaian-selesai-ppsm">
-                <p>Penilaian anda sudah selesai.<br>Terima kasih atas sumbangan kerja anda.
-                </p>
-                <div>
-                    <button matButton matStepperNext>Lihat Penilaian</button>
-                </div>
-            </mat-step>
-        </mat-stepper>
-    </mat-card-content>
-</mat-card> -->
+              <p-step-panel [value]="8">
+                  <ng-template #content let-activateCallback="activateCallback">
+                      <div class="flex flex-col h-48">
+                          <div
+                              class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                          >
+                              Penilaian anda sudah selesai.<br>Terima kasih atas sumbangan kerja anda.
+                          </div>
+                      </div>
+                      <div class="flex pt-6 justify-start">
+                          <p-button label="Lihat penilaian" (onClick)="activateCallback()" />
+                      </div>
+                  </ng-template>
+              </p-step-panel>
+          </p-step-panels>
+      </p-stepper>
+      </p>
+  </p-card>
+</div>

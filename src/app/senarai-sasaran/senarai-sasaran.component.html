@@ -1,0 +1,19 @@
+<h1>Laporan Pencapaian Sasaran Kerja</h1>
+<p-table [value]="products" [tableStyle]="{ 'min-width': '25rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Tahun Penilaian</th>
+            <th>Kategori Penilaian</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-product>
+        <tr>
+          <td>{{ product.tahunPenilaian }}</td>
+          <td>{{ product.kategoriPenilaian }}</td>
+          <td><p-tag value="{{ product.status }}" [severity]="product.status === 'Draf' ? 'warn' : null" /></td>
+          <td><p-button (onClick)="onButtonClick()" [label]="product.status === 'Draf' ? 'Kemas kini' : 'Lihat'" [rounded]="true" [severity]="product.status === 'Draf' ? 'warn' : null" size="small"/></td>
+        </tr>
+    </ng-template>
+</p-table>
