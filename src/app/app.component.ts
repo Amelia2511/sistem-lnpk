@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { MatCardModule } from '@angular/material/card';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,

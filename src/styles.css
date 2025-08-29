@@ -1,3 +1,5 @@
+@import "primeicons/primeicons.css";
+
 body {
   font-family: "TikTok Sans", sans-serif;
   font-optical-sizing: auto;
@@ -69,4 +71,8 @@ app-root, #root {
   display: block;
   min-height: 100dvh;
   background: transparent;
+}
+
+.mat-card {
+  font-family: "TikTok Sans";
 }
