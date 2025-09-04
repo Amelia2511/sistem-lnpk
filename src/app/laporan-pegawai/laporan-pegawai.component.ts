@@ -1,48 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { Tag } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
-import { RouterModule, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-senarai-pegawai',
-  standalone: true,
-  imports: [
-    TableModule,
-    CommonModule,
-    ButtonModule,
-    TagModule,
-    MultiSelectModule,
-    InputTextModule,
-    DropdownModule,
-    BreadcrumbModule,
-    RouterModule
-  ],
-  templateUrl: './senarai-pegawai.component.html',
-  styleUrls: ['./senarai-pegawai.component.css'],
+  selector: 'app-laporan-pegawai',
+  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule],
+  templateUrl: './laporan-pegawai.component.html',
+  styleUrl: './laporan-pegawai.component.css'
 })
-export class SenaraiPegawaiComponent implements OnInit {
-  statuses!: any[];
-  pegawai: any;
-
+export class LaporanPegawaiComponent {
+statuses!: any[];
+  ngOnInit() {
+  }
   products = [
     {
-      id: 1,
       nama: 'Mas Salwa Alie',
       tarikhMulaKontrak: '12 Ogos 2023',
       tarikhAkhirKontrak: '12 Ogos 2026',
       tempohBerkhidmat: '2 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
     {
-      id: 2,
       nama: 'Noor Amelia Mohd Noor',
       tarikhMulaKontrak: '16 Oktober 2022',
       tarikhAkhirKontrak: '16 Oktober 2027',
@@ -51,72 +36,53 @@ export class SenaraiPegawaiComponent implements OnInit {
       buttonOption: 'Aktifkan'
     },
     {
-      id: 3,
       nama: 'Nur Syahmina Mohd Noorhisham',
       tarikhMulaKontrak: '20 Oktober 2022',
       tarikhAkhirKontrak: '20 Oktober 2026',
       tempohBerkhidmat: '3 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
     {
-      id: 4,
       nama: 'Mohamad Azim Hasnul Azlan',
       tarikhMulaKontrak: '9 Julai 2024',
       tarikhAkhirKontrak: '9 Julai 2026',
       tempohBerkhidmat: '1 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
     {
-      id: 5,
       nama: 'Rabia’tul Adawiyah Khairul Azwan',
       tarikhMulaKontrak: '12 Ogos 2024',
       tarikhAkhirKontrak: '12 Ogos 2026',
       tempohBerkhidmat: '1 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
     {
-      id: 6,
-      nama: 'Nur Izzatul Iffah Mazlan',
+      nama: ' Nur Izzatul Iffah Mazlan',
       tarikhMulaKontrak: '18 November 2022',
       tarikhAkhirKontrak: '18 November 2026',
       tempohBerkhidmat: '3 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
     {
-      id: 7,
       nama: 'Faris Rassoulli Rizal Wong',
       tarikhMulaKontrak: '12 Mei 2021',
       tarikhAkhirKontrak: '12 Mei 2026',
       tempohBerkhidmat: '4 tahun',
       status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
+      buttonOption: 'Lihat Laporan'
     },
   ];
 
-  constructor(private route: ActivatedRoute) {}
-
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.pegawai = this.products.find(p => p.id === id);
-    }
-  }
-
   handleButtonClick(product: any) {
-    if (product.buttonOption === 'Aktifkan') {
-      product.buttonOption = 'Boleh Dinilai';
-      product.status = 'Aktif';
-      console.log(product.nama + ' telah diaktifkan');
-    } else {
-      product.buttonOption = 'Boleh Dinilai';
-      product.status = 'Draf';
-    }
-  }
+  if (product.buttonOption === 'Aktifkan') {
+    product.buttonOption = 'Lihat Laporan';
+    product.status = 'Aktif';
+    console.log(product.nama + ' telah diaktifkan');
+  } 
+}
 
-  items: MenuItem[] = [{label: 'Senarai', routerLink: '/senarai-pegawai' },{ label: 'Form', routerLink: '/daftar-anggota' }];
-  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
 }

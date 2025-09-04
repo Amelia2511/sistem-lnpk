@@ -19,7 +19,8 @@ export class SideMenuComponent {
     { name: 'Settings', icon: 'bi-gear', route: '/settings' },
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'},
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai'},
-    { name: 'Maklumat Pegawai', icon: 'bi bi-person-circle', route: '/maklumat-pegawai'}
+    { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran'},
+    { name: 'Laporan Pegawai', icon: 'bi bi-list', route: '/laporan-pegawai'},
   ];
 
   toggleMenu(): void {

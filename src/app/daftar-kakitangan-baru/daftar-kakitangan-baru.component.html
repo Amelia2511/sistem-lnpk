@@ -1,4 +1,5 @@
-<h2>Tambah Pegawai</h2><br>
+<p-breadcrumb [home]="home" [model]="items" />
+<h4>Tambah Pegawai</h4><br>
 <div class="row">
                     <div class="col-md-5 form-group input-text">
                         <label>Nama</label>
@@ -65,25 +66,15 @@
                                ng-model="userDetails.tempat_bertugas">
                                <option value=""> Tempat Bertugas </option>
                         </select><br><br>
-                        <div id="Tarikh" class="flex-auto">
-                            <label for="icondisplay">Tarikh Mula Kontrak</label>
-                            <p-calendar [(ngModel)]="date1"
-                            inputId="icondisplay"
-                            ng-disabled="toggleinput"
-                            [iconDisplay]="'input'"
-                            [showIcon]="true"
-                            dateFormat="mm/dd/yy"
-                            class="act_setting_calendar">
-                     </p-calendar>
-                     </div><br>
-                        <div class="flex-auto">
-                            <label for="icondisplay" class="font-bold block mb-2"> Tarikh Akhir Kontrak </label>
-                            <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+                        <label> Tarikh Mula Kontrak </label>
+                        <p-datepicker [(ngModel)]="date1" dateFormat="dd/mm/yy" /><br><br>
+                        <label> Tarikh Akhir Kontrak </label>
+                        <p-datepicker [(ngModel)]="date2" dateFormat="dd/mm/yy" />
                         </div>
                      </div>
                      <div class="row">
 
 <div class="example-button-row">
-  <button mat-button class="btn-kembali">Kembali</button>
-  <button mat-button class="btn-tambah">Tambah</button>
+  <button mat-button class="btn-kembali" [routerLink]="'/senarai-pegawai'">Kembali</button>
+  <button mat-button class="btn-tambah" (click)="simpan()">Tambah</button>
 </div>

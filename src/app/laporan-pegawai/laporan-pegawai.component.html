@@ -1,5 +1,5 @@
-<p-breadcrumb [home]="home" [model]="items" />
-<h4>Senarai Pegawai</h4><br>
+<h2>Senarai Pegawai</h2>
+
 <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
     <tr>
@@ -8,17 +8,13 @@
       <th>Tarikh Akhir</th>
       <th>Tempoh Sudah Berkhidmat</th>
       <th>Status</th>
-      <th></th>
+      <th>Tindakan</th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-product>
     <tr>
-      <td>
-        <a [routerLink]="['/maklumat-pegawai', product.id]" class="pegawai-link">
-        {{ product.nama }}
-        </a>
-      </td>
+      <td>{{ product.nama }}</td>
       <td>{{ product.tarikhMulaKontrak }}</td>
       <td>{{ product.tarikhAkhirKontrak }}</td>
       <td>{{ product.tempohBerkhidmat }}</td>
@@ -29,8 +25,9 @@
           [severity]="product.status === 'Aktif' ? 'success' : 'secondary'">
         </p-tag>
       </td>
-      <td class="button-n">
-        <p-button
+
+      <td class="card flex justify-center">
+        <p-button 
           rounded="true" 
           variant="outlined" 
           [severity]="product.buttonOption === 'Aktifkan' ? 'success' : 'info'" 
