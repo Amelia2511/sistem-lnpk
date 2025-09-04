@@ -7,48 +7,48 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-senarai-sasaran',
+  selector: 'app-senarai-penilaian',
   imports: [ButtonModule, CardModule, DialogModule, TableModule, TagModule],
-  templateUrl: './senarai-sasaran.component.html',
-  styleUrl: './senarai-sasaran.component.css'
+  templateUrl: './senarai-penilaian.component.html',
+  styleUrl: './senarai-penilaian.component.css'
 })
-export class SenaraiSasaranComponent {
+export class SenaraiPenilaianComponent {
   private router = inject(Router);
 
   onButtonClick() {
-    this.router.navigate(['/sasaran']);
+    this.router.navigate(['/penilaian']);
   }
 
   products = [
     {
       tahunPenilaian: 2025,
       kategoriPenilaian: 'Semula',
-      status: 'Draf'
+      status: 'Penilaian PPP'
     },
     {
       tahunPenilaian: 2025,
       kategoriPenilaian: 'Utama',
-      status: 'Sah'
+      status: 'Penilaian Selesai PPSM'
     },
     {
       tahunPenilaian: 2024,
       kategoriPenilaian: 'Semula',
-      status: 'Sah'
+      status: 'Penilaian Selesai PPSM'
     },
     {
       tahunPenilaian: 2024,
       kategoriPenilaian: 'Utama',
-      status: 'Sah'
+      status: 'Penilaian Selesai PPSM'
     },
     {
       tahunPenilaian: 2023,
       kategoriPenilaian: 'Semula',
-      status: 'Sah'
+      status: 'Penilaian Selesai PPSM'
     },
     {
       tahunPenilaian: 2023,
       kategoriPenilaian: 'Utama',
-      status: 'Sah'
+      status: 'Penilaian Selesai PPSM'
     },
   ];
 }

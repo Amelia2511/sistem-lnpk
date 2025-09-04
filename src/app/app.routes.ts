@@ -7,6 +7,9 @@ import { SasaranComponent } from './sasaran/sasaran.component';
 import { TambahAktivitiComponent } from './tambah-aktiviti/tambah-aktiviti.component';
 import { SenaraiPegawaiComponent } from './senarai-pegawai/senarai-pegawai.component';
 import { MaklumatPegawaiComponent } from './maklumat-pegawai/maklumat-pegawai.component';
+import { LaporanSasaranComponent } from './laporan-sasaran/laporan-sasaran.component';
+import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
+import { PenilaianComponent } from './penilaian/penilaian.component';
 
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
@@ -15,7 +18,10 @@ export const routes: Routes = [
     { path: 'senarai-sasaran', component: SenaraiSasaranComponent},
     { path: 'sasaran', component: SasaranComponent},
     { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
+    { path: 'maklumat-sasaran', component: LaporanSasaranComponent},
     { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},
-    { path: 'maklumat-pegawai', component: MaklumatPegawaiComponent}
+    { path: 'maklumat-pegawai', component: MaklumatPegawaiComponent},
+    { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
+    { path: 'penilaian', component: PenilaianComponent},
     // { path: '', redirectTo: '/laman-utama', pathMatch: 'full' }
 ];
