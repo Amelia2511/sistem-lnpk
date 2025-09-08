@@ -20,7 +20,6 @@ export class SideMenuComponent {
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'},
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai'},
     { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran'},
-    { name: 'Laporan Pegawai', icon: 'bi bi-list', route: '/laporan-pegawai'},
   ];
 
   toggleMenu(): void {
