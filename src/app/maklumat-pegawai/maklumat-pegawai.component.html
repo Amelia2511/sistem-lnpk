@@ -1,21 +1,30 @@
 <div class="mb-4 p-8">
   <p-breadcrumb [home]="home" [model]="items" />
   <h4>Maklumat Pegawai</h4><br>
+  <button pButton label="{{ isEditMode ? 'Simpan' : 'Edit' }}" (click)="toggleEdit()"
+    icon="{{ isEditMode ? 'pi pi-save' : 'pi pi-pencil' }}" class="mb-3"
+    [severity]="isEditMode ? 'success' : 'secondary'">
+  </button>
+
   <ng-container *ngIf="pegawai">
-    <p-table [value]="pegawai.details" [tableStyle]="{ 'min-width': '50rem' }">
+    <!-- <p-table [value]="pegawai.details" [tableStyle]="{ 'min-width': '50rem' }"> -->
+      <p-table>
       <ng-template #header>
-        <p-image 
-          [src]="pegawai.gambar" 
-          alt="Image" 
-          width="250" 
-          styleClass="rounded-image">
-        </p-image> 
+        <p-image [src]="pegawai.gambar" alt="Image" width="250" styleClass="rounded-image">
+        </p-image>
         <span class="pegawai-name">{{ pegawai.nama }}</span>
       </ng-template>
-      <ng-template #body let-product>
+      <ng-template #body let-product let-i="rowIndex">
         <tr>
           <td><b>{{ product.label }}</b></td>
-          <td>{{ product.label2 }}</td>
+          <td>
+            <ng-container *ngIf="isEditMode; else viewMode">
+              <!-- <input type="text" pInputText (ngModel)="pegawai.details[i].label2" /> -->
+            </ng-container>
+            <ng-template #viewMode>
+              {{ product.label2 }}
+            </ng-template>
+          </td>
         </tr>
       </ng-template>
     </p-table>

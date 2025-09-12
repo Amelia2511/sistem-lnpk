@@ -124,3 +124,8 @@ input:focus {
 ::ng-deep .p-datepicker {
   width: 800px;
 }
+
+::ng-deep p-inputmask .act_setting {
+  width: 100% ;
+  border-radius: 10px;
+}

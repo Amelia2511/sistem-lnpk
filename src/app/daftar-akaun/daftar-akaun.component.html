@@ -1,0 +1,37 @@
+<div class="card-wrapper">
+    <mat-card class="login-card" [ngStyle]="{'background-image': 'url(image/background-login.png)'}">
+        <div class="card-content">
+            <img src="image/logolgm.png" alt="LGM Logo" class="logo">
+            <h2>MyLNPk</h2>
+            <div class="flex-auto">
+                <label>
+                <span class="font-bold block mb-2">No. KP </span>
+                <p-inputmask name="noKP" ngModel [(ngModel)]="daftarUser.noKP" mask="999999-99-9999"
+                    placeholder="999999-99-9999" />
+                </label>
+            </div>
+            <div class="flex-auto">
+                <label>
+                <span class="font-bold block mb-2">Password </span>
+                <p-password name="password" type="password" ngModel [(ngModel)]="daftarUser.password" (input)="isPasswordTyping = true" [feedback]="false" />
+                </label>
+            </div>
+            <div class="flex-auto">
+                <label>
+                <span class="font-bold block mb-2">Re-enter Password </span>
+                <p-password name="re-password" type="password" ngModel [(ngModel)]="repeatPassword" [feedback]="false" />
+                </label>
+            </div>
+            <div class="password-info" *ngIf="isPasswordTyping && !hasValidPassword(daftarUser.password || '')"
+                style="color: red;">
+                Password must contain at least 6 characters and include at least one special character (!&#64;#$%^&*
+                etc.)
+            </div>
+            <div class="button-row">
+            <button mat-button class="btn-daftar" (click)="goToLogMasuk()">Daftar</button>
+            <button mat-button class="btn-kembali" (click)="goToLogin()">Kembali</button>
+            </div>
+
+        </div>
+    </mat-card>
+</div>

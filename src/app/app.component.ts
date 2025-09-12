@@ -24,9 +24,12 @@ export class AppComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      const isLoginPage = event.urlAfterRedirects === '/log-masuk';
-      this.showHeader = !isLoginPage;
-      this.showLayout = !isLoginPage;
+      const url = event.urlAfterRedirects;
+      const hideOnRoutes = ['/log-masuk', '/daftar-akaun'];
+      const shouldHide = hideOnRoutes.includes(url);
+
+      this.showHeader = !shouldHide;
+      this.showLayout = !shouldHide;
     });
   }
 }
