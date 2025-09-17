@@ -4,6 +4,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 import Aura from '@primeng/themes/aura';
 import { provideNativeDateAdapter } from '@angular/material/core'
 
@@ -13,6 +14,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideNativeDateAdapter(),
     provideAnimationsAsync(),
+    provideHttpClient(),
     providePrimeNG({
       theme: {
         preset: Aura

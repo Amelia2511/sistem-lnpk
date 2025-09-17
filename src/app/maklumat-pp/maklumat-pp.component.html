@@ -1,32 +1,32 @@
   <div style="display: flex; flex-wrap: wrap; width: 100%;">
     <p-card>
       <ng-template #title>Pegawai yang Dinilai </ng-template>
-      <ng-template #subtitle>Ephrem Loo Ee Zhe</ng-template>
+      <ng-template #subtitle>{{ pegawaiDinilai.nama }}</ng-template>
       <p style="line-height: 1.7;">
-        <b>Jawatan</b>    Pegawai Teknologi Maklumat<br>
-        <b>Gred</b>       F42<br>
-        <b>Bahagian</b>   Bahagian Pengurusan dan Sokongan<br>
-        <b>Unit</b>       Unit Teknologi Maklumat
+        <b>Jawatan</b>    {{ pegawaiDinilai.jawatan }}<br>
+        <b>Gred</b>       {{ pegawaiDinilai.gred }}<br>
+        <b>Bahagian</b>   {{ pegawaiDinilai.bahagian }}<br>
+        <b>Unit</b>       {{ pegawaiDinilai.unit }}
       </p>
     </p-card>
     <p-card>
       <ng-template #title>Pegawai Penilai Pertama</ng-template>
-      <ng-template #subtitle>Mas Salwa Alie</ng-template>
+      <ng-template #subtitle>{{ pegawaiPenilaiPertama.nama }}</ng-template>
       <p style="line-height: 1.7;">
-        <b>Jawatan</b>    Pegawai Teknologi Maklumat<br>
-        <b>Gred</b>       F44<br>
-        <b>Bahagian</b>   Bahagian Pengurusan dan Sokongan<br>
-        <b>Unit</b>       Unit Teknologi Maklumat
+        <b>Jawatan</b>    {{ pegawaiPenilaiPertama.jawatan }}<br>
+        <b>Gred</b>       {{ pegawaiPenilaiPertama.gred }}<br>
+        <b>Bahagian</b>   {{ pegawaiPenilaiPertama.bahagian }}<br>
+        <b>Unit</b>       {{ pegawaiPenilaiPertama.unit }}
       </p>
     </p-card>
     <p-card>
       <ng-template #title>Pegawai Penilai Kedua </ng-template>
-      <ng-template #subtitle>Mimi Safinaz Jamaluddin</ng-template>
+      <ng-template #subtitle>{{ pegawaiPenilaiKedua.nama }}</ng-template>
       <p style="line-height: 1.7;">
-        <b>Jawatan</b>    Pegawai Teknologi Maklumat<br>
-        <b>Gred</b>       F54<br>
-        <b>Bahagian</b>   Bahagian Pengurusan dan Sokongan<br>
-        <b>Unit</b>       Unit Teknologi Maklumat
+        <b>Jawatan</b>    {{ pegawaiPenilaiKedua.jawatan }}<br>
+        <b>Gred</b>       {{ pegawaiPenilaiKedua.gred }}<br>
+        <b>Bahagian</b>   {{ pegawaiPenilaiKedua.bahagian }}<br>
+        <b>Unit</b>       {{ pegawaiPenilaiKedua.unit }}
       </p>
     </p-card>
   </div>

@@ -7,74 +7,105 @@ import { Tag } from 'primeng/tag';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { PegawaiService, Pegawai } from '../services/pegawai.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-senarai-pegawai',
-  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule],
+  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule, HttpClientModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrl: './senarai-pegawai.component.css',
 })
 export class SenaraiPegawaiComponent implements OnInit{
   statuses!: any[];
+  employees: Pegawai[] = [];
+  loading: boolean = false;
+  
+  constructor(private pegawaiService: PegawaiService) {}
+  
   ngOnInit() {
+    this.loadEmployees();
   }
-  products = [
-    {
-      nama: 'Mas Salwa Alie',
-      tarikhMulaKontrak: '12 Ogos 2023',
-      tarikhAkhirKontrak: '12 Ogos 2026',
-      tempohBerkhidmat: '2 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-    {
-      nama: 'Noor Amelia Mohd Noor',
-      tarikhMulaKontrak: '16 Oktober 2022',
-      tarikhAkhirKontrak: '16 Oktober 2027',
-      tempohBerkhidmat: '3 tahun',
-      status: 'Tidak Aktif',
-      buttonOption: 'Aktifkan'
-    },
-    {
-      nama: 'Nur Syahmina Mohd Noorhisham',
-      tarikhMulaKontrak: '20 Oktober 2022',
-      tarikhAkhirKontrak: '20 Oktober 2026',
-      tempohBerkhidmat: '3 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-    {
-      nama: 'Mohamad Azim Hasnul Azlan',
-      tarikhMulaKontrak: '9 Julai 2024',
-      tarikhAkhirKontrak: '9 Julai 2026',
-      tempohBerkhidmat: '1 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-    {
-      nama: 'Rabia’tul Adawiyah Khairul Azwan',
-      tarikhMulaKontrak: '12 Ogos 2024',
-      tarikhAkhirKontrak: '12 Ogos 2026',
-      tempohBerkhidmat: '1 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-    {
-      nama: ' Nur Izzatul Iffah Mazlan',
-      tarikhMulaKontrak: '18 November 2022',
-      tarikhAkhirKontrak: '18 November 2026',
-      tempohBerkhidmat: '3 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-    {
-      nama: 'Faris Rassoulli Rizal Wong',
-      tarikhMulaKontrak: '12 Mei 2021',
-      tarikhAkhirKontrak: '12 Mei 2026',
-      tempohBerkhidmat: '4 tahun',
-      status: 'Aktif',
-      buttonOption: 'Boleh Dinilai'
-    },
-  ]
+
+  loadEmployees() {
+    this.loading = true;
+    this.pegawaiService.getAllPegawai().subscribe({
+      next: (data) => {
+        this.employees = data;
+        this.loading = false;
+        console.log('Loaded employees:', data);
+      },
+      error: (error) => {
+        console.error('Error loading employees:', error);
+        this.loading = false;
+        // Fallback to dummy data if API fails
+        this.employees = this.getDummyData();
+      }
+    });
+  }
+
+  getDummyData(): Pegawai[] {
+    // Fallback dummy data in case API is not available
+    return [
+      {
+        id: 1,
+        nama: 'Mas Salwa Alie',
+        noKp: '920315-14-5678',
+        emel: 'mas.salwa@company.gov.my',
+        namaJawatan: 'HR Officer',
+        skimPerkhidmatan: 'Kontrak',
+        gredHakiki: 'S29',
+        gredDisandang: 'S29',
+        kementerian: 'Kementerian Pembangunan Luar Bandar',
+        idBahagian: 'HR001',
+        idUnit: 'UN001',
+        isActive: true,
+        createdAt: '2023-08-12T00:00:00',
+        noFail: 'HR2023001'
+      }
+    ] as Pegawai[];
+  }
+
+  // Convert Pegawai data to match your existing table structure
+  get products() {
+    return this.employees.map(emp => ({
+      nama: emp.nama,
+      namaJawatan: emp.namaJawatan,
+      noKp: emp.noKp,
+      emel: emp.emel,
+      bahagian: emp.idBahagianNavigation?.namaBahagian || emp.idBahagian,
+      unit: emp.idUnitNavigation?.namaUnit || emp.idUnit,
+      status: emp.isActive ? 'Aktif' : 'Tidak Aktif',
+      buttonOption: emp.isActive ? 'Boleh Dinilai' : 'Aktifkan',
+      skimPerkhidmatan: emp.skimPerkhidmatan,
+      gred: emp.gredHakiki,
+      // Calculate tempoh berkhidmat from createdAt
+      tempohBerkhidmat: this.calculateServicePeriod(emp.createdAt),
+      // Mock contract dates for now
+      tarikhMulaKontrak: new Date(emp.createdAt).toLocaleDateString('ms-MY'),
+      tarikhAkhirKontrak: this.calculateEndDate(emp.createdAt)
+    }));
+  }
+
+  calculateServicePeriod(startDate: string): string {
+    const start = new Date(startDate);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const years = Math.floor(diffDays / 365);
+    const months = Math.floor((diffDays % 365) / 30);
+    
+    if (years > 0) {
+      return `${years} tahun ${months > 0 ? months + ' bulan' : ''}`;
+    } else {
+      return `${months} bulan`;
+    }
+  }
+
+  calculateEndDate(startDate: string): string {
+    const start = new Date(startDate);
+    const end = new Date(start);
+    end.setFullYear(start.getFullYear() + 3); // Assuming 3-year contracts
+    return end.toLocaleDateString('ms-MY');
+  }
 }
