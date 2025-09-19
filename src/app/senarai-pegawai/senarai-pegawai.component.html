@@ -1,32 +1,43 @@
-<h2>Senarai Pegawai</h2>
+<p-breadcrumb [home]="home" [model]="items" />
+<h4>Senarai Pegawai</h4><br>
+<p-table class="p-datatable-customers" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nama</th>
+      <th>Tarikh Mula</th>
+      <th>Tarikh Akhir</th>
+      <!-- <th>Tempoh Sudah Berkhidmat</th> -->
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </ng-template>
 
-<div class="card">
-    <p-table [value]="products"  [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template #header>
-            <tr>
-                <th>Nama</th>
-                <th>Tarikh Mula</th>
-                <th>Tarikh Akhir</th>
-                <th>Tempoh Sudah Berkhidmat</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-product>
-            <tr>
-                <td>{{ product.nama }}</td>
-                <td>{{ product.tarikhMulaKontrak }}</td>
-                <td>{{ product.tarikhAkhirKontrak }}</td>
-                <td>{{ product.tempohBerkhidmat }}</td>
-                <td>
-                    <div class="card flex justify-center">
-                        <p-tag [severity]="product.status === 'Tidak Aktif'? 'secondary': null ">{{ product.status }}</p-tag>
-                    </div>
-                </td>
-                <td>
-                    <p-button variant="outlined" [severity]="product.buttonOption === 'Aktifkan'? 'success': null ">{{ product.buttonOption }}</p-button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td>
+        <a [routerLink]="['/maklumat-pegawai', product.id]" class="pegawai-link">
+        {{ product.nama }}
+        </a>
+      </td> 
+      <td>{{ product.tarikhMulaKontrak}}</td>
+      <td>{{ product.tarikhAkhirKontrak }}</td>
+      <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
+
+      <td>
+        <p-tag 
+          [value]="product.status" 
+          [severity]="product.status === 'Aktif' ? 'success' : (product.status === 'Tidak Aktif' ? 'danger' : 'secondary')">
+        </p-tag>
+      </td>
+      <td class="button-n">
+        <p-button
+          rounded="true" 
+          variant="outlined" 
+          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+          label="{{ product.buttonOption }}"> 
+          <!-- (onClick)="handleButtonClick(product)"> -->
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

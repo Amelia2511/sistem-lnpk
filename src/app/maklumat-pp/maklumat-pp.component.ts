@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CardModule } from 'primeng/card';
-
+import { userDTO } from '../model/userDTO.model';
+import { AuthService } from '../auth/auth.service';
+import { PydService } from '../services/pyd.service';
+import { pegawai } from '../model/employee.model';
 
 @Component({
   selector: 'app-maklumat-pp',
@@ -9,21 +12,23 @@ import { CardModule } from 'primeng/card';
   styleUrl: './maklumat-pp.component.css'
 })
 export class MaklumatPpComponent {
-  pegawaiPenilaiPertama = {
-    nama: 'Mas Salwa Alie',
-    gambar: 'https://imgs.search.brave.com/8kCKM_jpOXqInK09U--KJjMEaXU_RuaR-XpcUmivzWs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hdmF0/YXJmaWxlcy5hbHBo/YWNvZGVycy5jb20v/Mzc1L3RodW1iLTM1/MC0zNzU5MTEud2Vi/cA',
-    noKp: '123456789012',
-    jawatan: 'Pegawai Teknologi Maklumat Gred F44',
-    bahagian: 'Bahagian Perkhidmatan dan Sokongan',
-    unit: 'Unit Teknologi Maklumat'
-  };
+  user: userDTO = {} as userDTO;
+  details: pegawai = {} as pegawai;
 
-  pegawaiPenilaiKedua = {
-    nama: 'Mimi Safinaz Jamaluddin',
-    gambar: 'https://imgs.search.brave.com/8kCKM_jpOXqInK09U--KJjMEaXU_RuaR-XpcUmivzWs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hdmF0/YXJmaWxlcy5hbHBo/YWNvZGVycy5jb20v/Mzc1L3RodW1iLTM1/MC0zNzU5MTEud2Vi/cA',
-    noKp: '123456789014',
-    jawatan: 'Pegawai Teknologi Maklumat Gred F54',
-    bahagian: 'Bahagian Perkhidmatan dan Sokongan',
-    unit: 'Unit Teknologi Maklumat'
-  };
+  constructor(private authService: AuthService, private pydService: PydService) { }
+
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe(res => {
+      if (res) {
+        this.user = res;
+        console.log(this.user, "Maklumat PP");
+      }
+      // this.pydService.getMaklumatPenilai(this.user.noKP).subscribe(info => {
+      //   this.details = info;
+      //   console.log(info)
+
+      // })
+    });
+
+  }
 }
