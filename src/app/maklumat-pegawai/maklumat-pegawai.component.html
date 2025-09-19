@@ -1,0 +1,13 @@
+<div class="mb-4 p-8">
+    <h4>Maklumat Pegawai</h4>
+        <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+        </ng-template>
+        <ng-template #body let-product>
+            <tr>
+                <td><b>{{ product.label }}</b></td>
+                <td>{{ product.label2 }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
