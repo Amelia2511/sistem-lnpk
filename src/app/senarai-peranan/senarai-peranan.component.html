@@ -1,15 +1,35 @@
-<p-select [options]="pegawaiList" ngModel [(ngModel)]="selectedPegawai" optionLabel="nama"
-    placeholder="Pilih Pegawai">
-</p-select>
+<div class="form-container">
+    <!-- Pegawai -->
+    <p-card header="Pilih Pegawai" styleClass="custom-card">
+        <div class="field">
+            <label for="pegawai">Pegawai</label>
+            <p-select id="pegawai" [options]="pegawaiList" ngModel [(ngModel)]="selectedPegawai" optionLabel="nama"
+                placeholder="-- Pilih Pegawai --" styleClass="w-full">
 
-<div *ngIf="selectedPegawai">
-    <p>Nama: {{ selectedPegawai.nama }}</p>
-</div>
+                <ng-template let-pegawai pTemplate="item">
+                    {{ capitalizeWords(pegawai.nama) }}
+                </ng-template>
+            </p-select>
+        </div>
+        <div *ngIf="selectedPegawai" class="info">
+            <p><b>Nama:</b> {{ capitalizeWords(selectedPegawai.nama) }}</p>
+        </div>
+    </p-card>
 
-<p-select [options]="perananList" ngModel [(ngModel)]="selectedPeranan" optionLabel="nama"
-    placeholder="Pilih Peranan">
-</p-select>
+    <!-- Peranan -->
+    <p-card header="Pilih Peranan" styleClass="custom-card">
+        <div class="field">
+            <label for="peranan">Peranan</label>
+            <p-select id="peranan" [options]="perananList" ngModel [(ngModel)]="selectedPeranan" optionLabel="nama"
+                placeholder="-- Pilih Peranan --" styleClass="w-full">
+            </p-select>
+        </div>
+        <div *ngIf="selectedPeranan" class="info">
+            <p><b>Nama:</b> {{ selectedPeranan.nama }}</p>
+        </div>
+    </p-card>
 
-<div *ngIf="selectedPeranan">
-    <p>Nama: {{ selectedPeranan.nama }}</p>
+    <div class="action-row">
+        <button pButton type="button" label="Tambah" icon="pi pi-plus" class="btn-tambah" (click)="simpan()"></button>
+    </div>
 </div>

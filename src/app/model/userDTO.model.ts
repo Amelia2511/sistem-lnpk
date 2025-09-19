@@ -1,4 +1,5 @@
 export class userDTO {
-    noKP: string | undefined;
+    id: number | undefined;
+    noKP: string = "";
     nama: string | undefined;
 }
