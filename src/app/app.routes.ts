@@ -19,8 +19,6 @@ export const routes: Routes = [
     { path: 'sasaran', component: SasaranComponent},
     { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
     { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},
-    { path: 'maklumat-pegawai', component: MaklumatPegawaiComponent}
-    { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},
     { path: 'maklumat-pegawai/:id', component: MaklumatPegawaiComponent},
     { path: 'daftar-akaun', component: DaftarAkaunComponent},
     { path: 'pegawai-dinilai', component: PegawaiDinilaiComponent},
