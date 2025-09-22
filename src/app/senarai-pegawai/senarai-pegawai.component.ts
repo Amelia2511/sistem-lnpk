@@ -7,11 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-senarai-pegawai',
   standalone: true,
-  imports: [ButtonModule, TagModule, RouterModule, TableModule, BreadcrumbModule],
+  imports: [ButtonModule, TagModule, RouterModule, TableModule, BreadcrumbModule, OverlayPanelModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrls: ['./senarai-pegawai.component.css'],
 })
@@ -47,8 +48,8 @@ export class SenaraiPegawaiComponent implements OnInit {
       console.error(err);
     }
   });
-
 }
+
 aktifkan(row: pegawaiDinilai) {
   if (!row?.id || row.isActive) return;
   // optional: a busy flag if you want to disable the button during request

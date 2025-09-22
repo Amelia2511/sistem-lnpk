@@ -36,7 +36,6 @@ export class SideMenuComponent {
     //ADMIN / PA
     { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan', roles: [6, 7], order: 8 },
 
-
   ];
 
   constructor(private authService: AuthService, private roleService: PerananService, private roleStateService: RoleStateService) { }

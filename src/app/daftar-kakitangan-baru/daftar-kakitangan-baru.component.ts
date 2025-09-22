@@ -50,7 +50,7 @@ simpan() {
     !this.details.gredHakiki?.trim() ||
     !this.details.namaJawatan?.trim() ||
     !this.details.gredDisandang?.trim() ||
-    !this.details.namaUnit || // check that it's not null/undefined
+    !this.details.namaUnit || 
     !this.details.tarikhMulaKontrak ||
     !this.details.tarikhAkhirKontrak
   ) {
