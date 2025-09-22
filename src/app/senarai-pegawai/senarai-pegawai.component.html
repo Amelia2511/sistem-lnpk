@@ -30,14 +30,23 @@
         </p-tag>
       </td>
       <td class="button-n">
-        <p-button
+        <!-- <p-button
         rounded="true"
         variant="outlined"
         [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
         [label]="product?.buttonOption"
         [disabled]="!!product?.isActive"
         (onClick)="aktifkan(product); showDialog()">
+        </p-button> -->
+        <p-button
+          rounded="true"
+          variant="outlined"
+          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+          [label]="product.buttonOption"
+          [disabled]="!!product.isActive"
+          (onClick)="aktifkan(product); showDialog()">
         </p-button>
+
       </td>
     </tr>
   </ng-template>
@@ -56,7 +65,7 @@
       optionValue="value">
     </p-select>
   </div>
-  
+
   <div class="field">
     <label for="kategoriPenilaian">Kategori Penilaian *</label>
     <p-select
@@ -71,17 +80,22 @@
   </div>
 
   <ng-template pTemplate="footer">
-    <p-button 
-      label="Batal" 
-      icon="pi pi-times" 
-      severity="secondary"
-      (onClick)="cancelActivation()">
-    </p-button>
-    <p-button 
-      label="Aktifkan" 
-      icon="pi pi-check" 
-      severity="success"
-      (onClick)="confirmActivation()">
-    </p-button>
+    <button
+      type="button"
+      pButton
+      label="Batal"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      (click)="cancelActivation()">
+    </button>
+
+    <button
+      type="button"
+      pButton
+      label="Aktifkan"
+      icon="pi pi-check"
+      [loading]="selectedPegawai?._busy"
+      (click)="confirmActivation()">
+    </button>
   </ng-template>
 </p-dialog>

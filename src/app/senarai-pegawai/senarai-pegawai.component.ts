@@ -10,16 +10,20 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 
 @Component({
   selector: 'app-senarai-pegawai',
   standalone: true,
-  imports: [ButtonModule, TagModule, RouterModule, TableModule, BreadcrumbModule, DialogModule, SelectModule, FormsModule],
+  imports: [ButtonModule, DatePickerModule, TagModule, RouterModule, TableModule, BreadcrumbModule, DialogModule, SelectModule, FormsModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrls: ['./senarai-pegawai.component.css'],
 })
 export class SenaraiPegawaiComponent implements OnInit {
+openActivationDialog(_t17: any) {
+throw new Error('Method not implemented.');
+}
   products: pegawaiDinilai[] = [];
   pegawai: pegawaiDinilai | undefined;
   display: boolean = false;
@@ -27,13 +31,13 @@ export class SenaraiPegawaiComponent implements OnInit {
 
   // Form data for the dialog
   tahunPenilaian: number | null = null;
-  kategoriPenilaian: string | null = null;
-
-  // Options for the select dropdowns
-  tahunOptions: any[] = [];
-  kategoriOptions: any[] = [
-    { label: 'Utama', value: 'Utama' },
-    { label: 'Semula', value: 'Semula' }
+  kategoriPenilaian: number | null = null;
+  
+  tahunOptions: { label: string; value: number }[] = [];
+  // Map to your real DB IDs
+  kategoriOptions = [
+    { label: 'Utama', value: 1 },
+    { label: 'Semula', value: 2 },
   ];
 
   items: MenuItem[] = [
@@ -54,13 +58,10 @@ export class SenaraiPegawaiComponent implements OnInit {
 
   initTahunOptions() {
     const currentYear = new Date().getFullYear();
-    this.tahunOptions = [];
-    
-    // Generate options for current year and next few years
-    for (let i = 0; i < 5; i++) {
-      const year = currentYear + i;
-      this.tahunOptions.push({ label: year.toString(), value: year });
-    }
+    this.tahunOptions = Array.from({ length: 5 }, (_, i) => {
+      const y = currentYear + i;
+      return { label: y.toString(), value: y };
+    });
   }
 
   getPegawaiList() {
@@ -82,6 +83,9 @@ export class SenaraiPegawaiComponent implements OnInit {
 
 aktifkan(row: pegawaiDinilai) {
   this.selectedPegawai = row;
+  this.display = true;
+  this.tahunPenilaian = null;
+  this.kategoriPenilaian = null;
 }
 
 showDialog() {
@@ -91,49 +95,44 @@ showDialog() {
   this.kategoriPenilaian = null;
 }
 
-confirmActivation() {
-  if (!this.selectedPegawai?.id || this.selectedPegawai.isActive) return;
-  
-  if (!this.tahunPenilaian || !this.kategoriPenilaian) {
-    alert('Sila pilih Tahun Penilaian dan Kategori Penilaian');
-    return;
+  confirmActivation() {
+    console.log('confirmActivation clicked', this.tahunPenilaian, this.kategoriPenilaian, this.selectedPegawai?.id);
+
+    if (!this.selectedPegawai?.id || this.selectedPegawai.isActive) return;
+
+    if (this.tahunPenilaian == null || this.kategoriPenilaian == null) {
+      alert('Sila pilih Tahun Penilaian dan Kategori Penilaian');
+      return;
+    }
+
+    (this.selectedPegawai)._busy = true;
+
+    const payload = {
+      tahunPenilaian: Number(this.tahunPenilaian),
+      idKategoriPenilaian: Number(this.kategoriPenilaian)
+    };
+
+    this.pydService.aktifkanPegawai(this.selectedPegawai.id, payload).subscribe({
+      next: () => {
+        this.selectedPegawai!.isActive = true;
+        this.selectedPegawai!.status = 'Aktif';
+        this.selectedPegawai!.buttonOption = 'Boleh Dinilai';
+        (this.selectedPegawai as any)._busy = false;
+
+        this.display = false;
+        this.selectedPegawai = undefined;
+      },
+      error: (err) => {
+        console.error('Activation failed', err);
+        (this.selectedPegawai as any)._busy = false;
+      }
+    });
   }
 
-  // optional: a busy flag if you want to disable the button during request
-  (this.selectedPegawai as any)._busy = true;
-
-  // Here you can pass the form data to your service if needed
-  console.log('Activating employee with:', {
-    tahunPenilaian: this.tahunPenilaian,
-    kategoriPenilaian: this.kategoriPenilaian
-  });
-
-  this.pydService.aktifkanPegawai(this.selectedPegawai.id).subscribe({
-    next: () => {
-      if (this.selectedPegawai) {
-        this.selectedPegawai.isActive = true;
-        this.selectedPegawai.status = 'Aktif';
-        this.selectedPegawai.buttonOption = 'Boleh Dinilai';
-        (this.selectedPegawai as any)._busy = false;
-      }
-      this.display = false;
-      this.selectedPegawai = undefined;
-    },
-    error: (err) => {
-      console.error('Aktifkan failed', err);
-      if (this.selectedPegawai) {
-        (this.selectedPegawai as any)._busy = false;
-      }
-    }
-  });
-}
-
-cancelActivation() {
-  this.display = false;
-  this.selectedPegawai = undefined;
-  this.tahunPenilaian = null;
-  this.kategoriPenilaian = null;
-
-}
-
+  cancelActivation() {
+    this.display = false;
+    this.selectedPegawai = undefined;
+    this.tahunPenilaian = null;
+    this.kategoriPenilaian = null;
+  }
 }

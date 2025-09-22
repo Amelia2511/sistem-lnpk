@@ -19,4 +19,6 @@ export class pegawaiDinilai {
     id?: number;
     gambar?: string;
     details?: { label: string; label2: string }[];
+
+    _busy?: boolean;
 }
