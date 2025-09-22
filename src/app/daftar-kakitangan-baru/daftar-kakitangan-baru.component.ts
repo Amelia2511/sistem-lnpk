@@ -18,10 +18,11 @@ import { PpsmService } from '../services/ppsm.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { InputMask } from 'primeng/inputmask';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-daftar-kakitangan-baru',
-  imports: [FormsModule, CommonModule, InputMask, MatDatepickerModule, MatIconModule, MatInputModule, DatePickerModule, FluidModule, CalendarModule, BreadcrumbModule, DatePicker, ButtonModule, RouterModule],
+  imports: [FormsModule, CommonModule, InputMask, MatDatepickerModule, MatIconModule, MatInputModule, DatePickerModule, FluidModule, CalendarModule, BreadcrumbModule, DatePicker, ButtonModule, RouterModule, SelectModule],
   templateUrl: './daftar-kakitangan-baru.component.html',
   styleUrl: './daftar-kakitangan-baru.component.css'
 })
@@ -41,39 +42,61 @@ export class DaftarKakitanganBaruComponent {
     this.ppsm.getUnit().subscribe(res => this.units = res);
   }
 
-  simpan() {
-    this.details.isActive = false;
-    const payload = {
-      ...this.details,
-      tarikhMulaKontrak: this.details.tarikhMulaKontrak
-        ? this.formatDateOnly(this.details.tarikhMulaKontrak)
-        : null,
-      tarikhAkhirKontrak: this.details.tarikhAkhirKontrak
-        ? this.formatDateOnly(this.details.tarikhAkhirKontrak)
-        : null
-    };
-
-    this.ppsm.simpanPegawaiBaru(payload).subscribe({
-      next: () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Berjaya!',
-          text: 'Pegawai berjaya disimpan.',
-          confirmButtonText: 'OK'
-        }).then(() => {
-          this.router.navigate(['/senarai-pegawai']);
-        });
-      },
-      error: () => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ralat!',
-          text: 'Gagal menyimpan pegawai. Sila cuba lagi.',
-          confirmButtonText: 'OK'
-        });
-      }
+simpan() {
+  
+  if (
+    !this.details.nama?.trim() ||
+    !this.details.skimPerkhidmatan?.trim() ||
+    !this.details.gredHakiki?.trim() ||
+    !this.details.namaJawatan?.trim() ||
+    !this.details.gredDisandang?.trim() ||
+    !this.details.namaUnit || // check that it's not null/undefined
+    !this.details.tarikhMulaKontrak ||
+    !this.details.tarikhAkhirKontrak
+  ) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Maklumat tidak lengkap!',
+      text: 'Sila lengkapkan semua maklumat.',
+      confirmButtonText: 'OK'
     });
+    return;
   }
+
+  this.details.isActive = false;
+
+  const payload = {
+    ...this.details,
+    tarikhMulaKontrak: this.details.tarikhMulaKontrak
+      ? this.formatDateOnly(this.details.tarikhMulaKontrak)
+      : null,
+    tarikhAkhirKontrak: this.details.tarikhAkhirKontrak
+      ? this.formatDateOnly(this.details.tarikhAkhirKontrak)
+      : null
+  };
+
+  this.ppsm.simpanPegawaiBaru(payload).subscribe({
+    next: () => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berjaya!',
+        text: 'Pegawai berjaya disimpan.',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        this.router.navigate(['/senarai-pegawai']);
+      });
+    },
+    error: (err) => {
+      console.error('Save error:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Ralat!',
+        text: 'Gagal menyimpan pegawai. Sila cuba lagi.',
+        confirmButtonText: 'OK'
+      });
+    }
+  });
+}
 
   // Utility to format Date to YYYY-MM-DD
   formatDateOnly(date: Date): string {

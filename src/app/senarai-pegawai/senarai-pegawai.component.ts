@@ -47,17 +47,29 @@ export class SenaraiPegawaiComponent implements OnInit {
       console.error(err);
     }
   });
+
+}
+aktifkan(row: pegawaiDinilai) {
+  if (!row?.id || row.isActive) return;
+  // optional: a busy flag if you want to disable the button during request
+  (row as any)._busy = true;
+
+  this.pydService.aktifkanPegawai(row.id).subscribe({
+    next: () => {
+      row.isActive = true;
+      row.status = 'Aktif';
+      row.buttonOption = 'Boleh Dinilai';
+      (row as any)._busy = false;
+    },
+    error: (err) => {
+      console.error('Aktifkan failed', err);
+      (row as any)._busy = false;
+    }
+  });
+
+// Optionally, refresh the list after activation by calling this.getPegawaiList();
+// this.getPegawaiList();
+
 }
 
-  // handleButtonClick(product: pegawaiDinilai) {
-  //   if (product.buttonOption === 'Aktifkan') {
-  //     product.buttonOption = 'Boleh Dinilai';
-  //     product.status = 'Aktif';
-  //     console.log(product.nama + ' telah diaktifkan');
-  //   } else {
-  //     product.buttonOption = 'Boleh Dinilai';
-  //     product.status = 'Draf';
-  //   }
-  //   this.products = [...this.products];
-  // };
 }
