@@ -1,42 +1,75 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { InputTextModule } from 'primeng/inputtext';
+import { ActivatedRoute } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { TableModule } from "primeng/table";
+import { ImageModule } from 'primeng/image';
+import { ButtonModule } from 'primeng/button';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MenuItem } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { EditorModule } from 'primeng/editor';
+import { pegawaiDinilai } from '../model/pegawai.model';
+import { PydService } from '../services/pyd.service';
 
 @Component({
   selector: 'app-maklumat-pegawai',
-  imports: [CardModule, TableModule],
+  standalone: true,
+  imports: [CardModule, TableModule, ImageModule, ButtonModule, BreadcrumbModule, CommonModule, InputTextModule, EditorModule],
   templateUrl: './maklumat-pegawai.component.html',
   styleUrl: './maklumat-pegawai.component.css'
 })
-export class MaklumatPegawaiComponent {
-  products = [
-    {
-      label: 'No Kad Pengenalan',
-      label2: '050816-14-0208'
-    },
-    {
-      label: 'Skim Perkhidmatan',
-      label2: 'Pegawai IT'
-    },
-    {
-      label: 'Gred Hakiki',
-      label2: 'F44'
-    },
-    {
-      label: 'Tempat Bertugas',
-      label2: 'Unit Teknologi Maklumat'
-    },
-    {
-      label: 'Jawatan',
-      label2: 'Pegawai IT' 
-    },
-    {
-      label: 'Tarikh Mula Kontrak',
-      label2: '18 November 2022'
-    },
-    {
-      label: 'Tarikh Akhir Kontrak',
-      label2: '18 November 2026'
+
+
+export class MaklumatPegawaiComponent implements OnInit {
+  pegawai!: pegawaiDinilai;
+  isEditMode = false;
+
+  items: MenuItem[] = [
+    { label: 'Senarai', routerLink: '/senarai-pegawai' },
+    { label: 'Tambah Pegawai', routerLink: '/daftar-anggota' }
+  ];
+  home: MenuItem = { icon: 'pi pi-home', routerLink: '/' };
+
+  pegawaiId!: number;
+  
+  constructor(
+    private route: ActivatedRoute,
+    private pydService: PydService
+  ) { }
+
+  ngOnInit() {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.pydService.updatePegawai(this.pegawai.id!, this.pegawai).subscribe({
+        next: (data) => {
+          this.pegawai = data;
+        },
+        error: (err) => {
+          console.error('Gagal ambil data pegawai:', err);
+        }
+      });
     }
-  ]
+  }
+
+  toggleEdit() {
+    this.isEditMode = !this.isEditMode;
+
+    if (!this.isEditMode) {
+      this.pydService.updatePegawai(this.pegawai.id!, this.pegawai).subscribe({
+        next: (data: pegawaiDinilai) => {
+          this.pegawai = data;
+        },
+        error: (err: any) => {
+          console.error('Gagal ambil data pegawai:', err);
+        }
+      });
+      this.pydService.updatePegawai(this.pegawai.id!, this.pegawai).subscribe({
+        next: () => console.log('Maklumat pegawai berjaya disimpan.'),
+        error: (err: any) => console.error('Gagal simpan data:', err)
+      });
+
+
+    }
+  }
 }

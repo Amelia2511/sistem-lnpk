@@ -18,7 +18,7 @@
   flex-direction: column;
   align-items: center; 
   justify-content: center; 
-  gap: 8px; 
+  gap: 6px; 
 }
 
 .logo {
@@ -54,36 +54,69 @@
   z-index: -1;       
 }
 
-.btn-daftarpage {
+.btn-daftar {
   background-color: #C5A94D;
   color: #F5F7F0;
   font-weight: bold;
   padding: 8px 20px;
   border: 2px solid #C5A94D;
   transition: 0.3s ease;
+  bottom: 30px;
   border-radius: 18px;
 }
 
-.btn-daftarpage:hover {
+.btn-daftar:hover {
   background-color: #b0913e;
 }
 
-.button-group {
-  display: flex;
-  gap: 10px; 
-  align-items: center; 
+.password-info {
+  font-size: 0.85em;
+  margin-top: 4px;
+  color: #555;
+  transition: opacity 0.3s ease;
 }
 
-.btn-logmasuk {
-  background-color:forestgreen;
-  color: #F5F7F0;
+.button-row {
+  display: flex;
+  justify-content: center; 
+  gap: 10px; 
+  margin-top: 16px; 
+}
+
+.btn-kembali {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
   font-weight: bold;
   padding: 8px 20px;
-  border: 2px solid forestgreen;
+  border: 2px solid #C5A94D;
   transition: 0.3s ease;
+  background-color: #F5F7F0;
+  color: #C5A94D;
   border-radius: 18px;
 }
 
-.btn-logmasuk:hover {
-  background-color:darkgreen;
+.btn-kembali:hover {
+  background-color: #e6e9df;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label span {
+  display: inline-block;
+  width: 150px;     
+  margin-right: 10px;
+  text-align: left;  
+  white-space: nowrap; 
+}
+
+label input {
+  flex: 1;
+  max-width: 250px;  
+  padding: 6px;
 }

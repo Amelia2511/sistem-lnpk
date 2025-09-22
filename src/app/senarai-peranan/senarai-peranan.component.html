@@ -1,0 +1,15 @@
+<p-select [options]="pegawaiList" ngModel [(ngModel)]="selectedPegawai" optionLabel="nama"
+    placeholder="Pilih Pegawai">
+</p-select>
+
+<div *ngIf="selectedPegawai">
+    <p>Nama: {{ selectedPegawai.nama }}</p>
+</div>
+
+<p-select [options]="perananList" ngModel [(ngModel)]="selectedPeranan" optionLabel="nama"
+    placeholder="Pilih Peranan">
+</p-select>
+
+<div *ngIf="selectedPeranan">
+    <p>Nama: {{ selectedPeranan.nama }}</p>
+</div>

@@ -1,14 +1,26 @@
 <div class="page-background">
-    <img src="" alt="" class="background-image">
+  <img src="" alt="" class="background-image">
 </div>
 
 <div class="card-wrapper">
-  <mat-card class="login-card" 
-    [ngStyle]="{'background-image': 'url(image/background-login.png)'}">
+  <mat-card class="login-card" [ngStyle]="{'background-image': 'url(image/background-login.png)'}">
     <div class="card-content">
-        <img src="image/logolgm.png" alt="LGM Logo" class="logo">
-        <h2>MyLNPk</h2>
-        <button class="login-button">Log Masuk</button>
+      <img src="image/logolgm.png" alt="LGM Logo" class="logo">
+      <h2>MyLNPk</h2>
+      <div class="flex-auto">
+        <span class="font-bold block mb-2">No. KP </span>
+        <p-inputmask mask="999999-99-9999"  ngModel [(ngModel)]="this.user.noKP" placeholder="999999-99-9999" />
+      </div>
+      <div class="flex-auto">
+        <span class="font-bold block mb-2">Password </span>
+        <p-password ngModel [(ngModel)]="this.user.password" [feedback]="false" />
+      </div>
+      <button mat-button class="btn-logmasuk" (click)="goToLamanUtama()">Log Masuk</button>
+      <div class="button-group">
+        <button mat-button class="btn-daftarpage" (click)="goToDaftarAkaun()">Daftar Akaun</button>
+        <p-button label="Sign in with Microsoft" icon="bi bi-microsoft" [rounded]="true" variant="outlined"
+          [raised]="true" severity="info" />
+      </div>
     </div>
   </mat-card>
 </div>

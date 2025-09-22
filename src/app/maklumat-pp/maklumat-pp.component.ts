@@ -2,6 +2,10 @@ import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { PegawaiService } from '../services/pegawai.service';
 
+import { userDTO } from '../model/userDTO.model';
+import { AuthService } from '../auth/auth.service';
+import { PydService } from '../services/pyd.service';
+import { pegawai } from '../model/employee.model';
 
 @Component({
   selector: 'app-maklumat-pp',
@@ -53,4 +57,24 @@ export class MaklumatPpComponent {
   //   gred: 'F54',
   //   unit: 'Unit Teknologi Maklumat'
   // };
+
+  user: userDTO = {} as userDTO;
+  details: pegawai = {} as pegawai;
+
+  constructor(private authService: AuthService, private pydService: PydService) { }
+
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe(res => {
+      if (res) {
+        this.user = res;
+        console.log(this.user, "Maklumat PP");
+      }
+      // this.pydService.getMaklumatPenilai(this.user.noKP).subscribe(info => {
+      //   this.details = info;
+      //   console.log(info)
+
+      // })
+    });
+
+  }
 }

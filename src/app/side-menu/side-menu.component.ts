@@ -15,14 +15,14 @@ export class SideMenuComponent {
 
   menuItems: MenuItem[] = [
     { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama' },
-    { name: 'Login', icon: 'bi-box-arrow-in-right', route: '/log-masuk' },
     { name: 'Settings', icon: 'bi-gear', route: '/settings' },
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'},
     { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran'},
     { name: 'Maklumat Sasaran', icon: 'bi-bullseye', route: '/maklumat-sasaran'},
     { name: 'Penilaian', icon: 'bi bi-graph-up', route: '/senarai-penilaian'},
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai'},
-    { name: 'Maklumat Pegawai', icon: 'bi bi-person-circle', route: '/maklumat-pegawai'}
+    { name: 'Maklumat Pegawai', icon: 'bi bi-person-circle', route: '/maklumat-pegawai'},
+    { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan'}
   ];
 
   toggleMenu(): void {
