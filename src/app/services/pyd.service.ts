@@ -33,6 +33,13 @@ import { environment } from '../environments/environment';
 import { pegawaiDinilai } from '../model/pegawai.model';
 import { Observable } from 'rxjs';
 
+export interface SasaranKerjaListItem {
+  idSkt: number;
+  tahunPenilaian: number;
+  kategoriPenilaian: string;
+  status: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,4 +68,10 @@ export class PydService {
   aktifkanPegawai(id: number, payload: { tahunPenilaian: number; idKategoriPenilaian: number }): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
+
+  getSasaranByPyd(pydId: number) {
+  return this.httpClient.get<SasaranKerjaListItem[]>(
+    `${this.baseUrl}SasaranKerjas/ByPyd/${pydId}`
+  );
+}
 }

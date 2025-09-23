@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { UserService } from '../user.service';
+import { PydService, SasaranKerjaListItem } from '../services/pyd.service';
 
 @Component({
   selector: 'app-senarai-sasaran',
@@ -13,41 +15,36 @@ import { TagModule } from 'primeng/tag';
 })
 export class SenaraiSasaranComponent {
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private userService = inject(UserService);
+  private pydService = inject(PydService);
 
-  onButtonClick() {
-    this.router.navigate(['/sasaran']);
+  // pydId!: number;
+    pydId: number = this.userService.getPydId() as number; // default to logged-in user
+    products: (SasaranKerjaListItem & { severity?: string; actionLabel?: string })[] = [];
+
+  ngOnInit() {
+    // this.pydId = Number(this.route.snapshot.paramMap.get('pydId')); // /senarai-sasaran/:pydId
+    this.loadData(); // Just load the data without setting pydId from the route
   }
 
-  products = [
-    {
-      tahunPenilaian: 2025,
-      kategoriPenilaian: 'Semula',
-      status: 'Draf'
-    },
-    {
-      tahunPenilaian: 2025,
-      kategoriPenilaian: 'Utama',
-      status: 'Sah'
-    },
-    {
-      tahunPenilaian: 2024,
-      kategoriPenilaian: 'Semula',
-      status: 'Sah'
-    },
-    {
-      tahunPenilaian: 2024,
-      kategoriPenilaian: 'Utama',
-      status: 'Sah'
-    },
-    {
-      tahunPenilaian: 2023,
-      kategoriPenilaian: 'Semula',
-      status: 'Sah'
-    },
-    {
-      tahunPenilaian: 2023,
-      kategoriPenilaian: 'Utama',
-      status: 'Sah'
-    },
-  ];
+  loadData() {
+    this.pydService.getSasaranByPyd(this.pydId).subscribe({
+      next: list => {
+        this.products = list.map(x => ({
+          ...x,
+          severity: x.status?.toLowerCase() === 'draf' ? 'warn'
+                   : x.status?.toLowerCase() === 'sah' ? 'success'
+                   : undefined,
+          actionLabel: x.status?.toLowerCase() === 'draf' ? 'Kemas kini' : 'Lihat'
+        }));
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  onButtonClick(row: SasaranKerjaListItem) {
+    // navigate to a detail/edit page with SKT id
+    this.router.navigate(['/sasaran', row.idSkt]);
+  }
 }
