@@ -16,16 +16,16 @@
     <tr>
       <td>
         <a [routerLink]="['/maklumat-pegawai', product.id]" class="pegawai-link">
-        {{ product.nama }}
+          {{ product.nama }}
         </a>
-      </td> 
+
+      </td>
       <td>{{ product.tarikhMulaKontrak}}</td>
       <td>{{ product.tarikhAkhirKontrak }}</td>
       <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
 
       <td>
-        <p-tag 
-          [value]="product.status" 
+        <p-tag [value]="product.status"
           [severity]="product.status === 'Aktif' ? 'success' : (product.status === 'Tidak Aktif' ? 'danger' : 'secondary')">
         </p-tag>
       </td>
@@ -38,13 +38,16 @@
         [disabled]="!!product?.isActive"
         (onClick)="aktifkan(product); showDialog()">
         </p-button> -->
-        <p-button
+        <!-- <p-button
           rounded="true"
           variant="outlined"
           [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
           [label]="product.buttonOption"
           [disabled]="!!product.isActive"
-          (onClick)="aktifkan(product); showDialog()">
+          (onClick)="aktifkan(product); showDialog()"> -->
+        <p-button rounded="true" variant="outlined"
+          [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+          [label]="product?.buttonOption" [disabled]="!!product?.isActive" (onClick)="aktifkan(product)">
         </p-button>
 
       </td>

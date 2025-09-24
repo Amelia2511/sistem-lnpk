@@ -8,3 +8,7 @@ div {
   flex-direction: column;
   gap: 20px 20px;
 }
+
+.text-color {
+  color: #003D73;
+}
