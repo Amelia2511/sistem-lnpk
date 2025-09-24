@@ -20,8 +20,8 @@ export class SenaraiSasaranComponent {
   private pydService = inject(PydService);
 
   // pydId!: number;
-    pydId: number = this.userService.getPydId() as number; // default to logged-in user
-    products: (SasaranKerjaListItem & { severity?: string; actionLabel?: string })[] = [];
+  pydId: number = Number(this.userService.getPydId()); // default to logged-in user
+  products: (SasaranKerjaListItem & { severity?: string; actionLabel?: string })[] = [];
 
   ngOnInit() {
     // this.pydId = Number(this.route.snapshot.paramMap.get('pydId')); // /senarai-sasaran/:pydId
