@@ -1,13 +1,13 @@
 export class pegawaiDinilai {
-    noFail: string | undefined;
-    kementerian: string | undefined;
     nama: string | undefined;
-    noKP?: string;
+    noKP: string | undefined;
     emel: string | undefined;
     skimPerkhidmatan: string | undefined;
     gredHakiki: string | undefined;
     namaJawatan: string | undefined;
     gredDisandang: string | undefined;
+    noFail: string | undefined;
+    kementerian: string | undefined;
     tarikhMulaKontrak: Date | undefined;
     tarikhAkhirKontrak: Date | undefined;
     tempatBertugas: number | undefined;
@@ -18,7 +18,24 @@ export class pegawaiDinilai {
     buttonOption?: string;
     id?: number;
     gambar?: string;
-    details?: { label: string; label2: string }[];
-
+    // details?: { label: string; label2: string }[];
     _busy?: boolean;
+    details?: string;
+    namaPPP: string | undefined;
+    namaPPK: string | undefined;
+    idPPP?: number;
+    namaBahagian: string | undefined;
+    namaUnit: string | undefined;
+    jawatanPPP: string | undefined;
+    gredPPP: string | undefined;
+    idBahagianPPP: string | undefined;
+    idUnitPPP: string | undefined;
+    bahagianPPP: string | undefined;
+    unitPPP: string | undefined;
+    jawatanPPK: string | undefined;
+    gredPPK: string | undefined;
+    idBahagianPPK: string | undefined;
+    idUnitPPK: string | undefined;
+    bahagianPPK: string | undefined;
+    unitPPK: string | undefined;
 }

@@ -30,3 +30,91 @@
     </p-table>
   </ng-container>
 </div>
+
+<!-- <div class="mb-4 p-8">
+  <p-breadcrumb [home]="home" [model]="items" />
+  <h4>Maklumat Pegawai</h4><br>
+
+  <button 
+    pButton 
+    label="{{ isEditMode ? 'Simpan' : 'Edit' }}" 
+    (click)="toggleEdit()"
+    icon="{{ isEditMode ? 'pi pi-save' : 'pi pi-pencil' }}" 
+    class="mb-3"
+    [severity]="isEditMode ? 'success' : 'secondary'">
+  </button>
+
+  <div *ngIf="pegawai">
+    <table class="p-datatable">
+      <tr>
+        <td><b>Nama</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewNama">
+            <input pInputText [(ngModel)]="pegawai.nama" />
+          </ng-container>
+          <ng-template #viewNama>{{ pegawai.nama }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>No KP</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewKP">
+            <input pInputText [(ngModel)]="pegawai.noKP" />
+          </ng-container>
+          <ng-template #viewKP>{{ pegawai.noKP }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Emel</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewEmel">
+            <input pInputText [(ngModel)]="pegawai.emel" />
+          </ng-container>
+          <ng-template #viewEmel>{{ pegawai.emel }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Gred Hakiki</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewHakiki">
+            <input pInputText [(ngModel)]="pegawai.gredHakiki" />
+          </ng-container>
+          <ng-template #viewHakiki>{{ pegawai.gredHakiki }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Nama Jawatan</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewJawatan">
+            <input pInputText [(ngModel)]="pegawai.namaJawatan" />
+          </ng-container>
+          <ng-template #viewJawatan>{{ pegawai.namaJawatan }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Tarikh Mula</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewMula">
+            <input pInputText [(ngModel)]="pegawai.tarikhMulaKontrak" />
+          </ng-container>
+          <ng-template #viewMula>{{ pegawai.tarikhMulaKontrak }}</ng-template>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Tarikh Akhir</b></td>
+        <td>
+          <ng-container *ngIf="isEditMode; else viewAkhir">
+            <input pInputText [(ngModel)]="pegawai.tarikhAkhirKontrak" />
+          </ng-container>
+          <ng-template #viewAkhir>{{ pegawai.tarikhAkhirKontrak }}</ng-template>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div> -->

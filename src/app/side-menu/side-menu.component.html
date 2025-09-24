@@ -6,7 +6,7 @@
   </button>
 
   <ul>
-    <li *ngFor="let item of menuItems">
+    <li *ngFor="let item of filteredMenuItems">
       <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="bi" [ngClass]="item.icon"></i>
         <span class="menu-text">{{ item.name }}</span>

@@ -36,19 +36,23 @@ export class LoginPageComponent {
       });
       return;
     }
+
     this.authService.login(this.user).subscribe({
       next: res => {
         if (res != null) {
+          localStorage.setItem('user', JSON.stringify(res));
+
           this.authService.changeIsLoggedIn(true);
           this.authService.changeUser(res);
+
           this.router.navigate(['/laman-utama']);
+
           Swal.fire({
             icon: 'success',
             title: 'Selamat Datang!',
             text: 'Anda telah berjaya log masuk',
             confirmButtonText: 'OK'
           });
-          console.log(res, "Maklumat 2");
         } else {
           Swal.fire({
             icon: 'warning',

@@ -1,5 +1,5 @@
 export class peranan {
-    id: number | undefined;
+    idPeranan: number | undefined;
     kod : string | undefined;
     nama: string | undefined;
     status: boolean | undefined;
