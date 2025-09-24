@@ -10,10 +10,16 @@
     </ng-template>
     <ng-template #body let-product>
         <tr>
-          <td>{{ product.tahunPenilaian }}</td>
-          <td>{{ product.kategoriPenilaian }}</td>
-          <td><p-tag value="{{ product.status }}" [severity]="product.status === 'Draf' ? 'warn' : null" /></td>
-          <td><p-button (onClick)="onButtonClick()" [label]="product.status === 'Draf' ? 'Kemas kini' : 'Lihat'" [rounded]="true" [severity]="product.status === 'Draf' ? 'warn' : null" size="small"/></td>
+            <td>{{ product.tahunPenilaian }}</td>
+            <td>{{ product.namaKategoriPenilaian }}</td>
+            <td><p-tag value="{{ product.namaStatus }}" [severity]="product.namaStatus === 'Draf' ? 'warn' : null" />
+            </td>
+            <td><p-button (onClick)="onButtonClick()" [label]="product.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
+                    [rounded]="true" [severity]="product.namaStatus === 'Draf' ? 'warn' : null" size="small" /></td>
         </tr>
     </ng-template>
+    <div *ngFor="let item of products">
+        {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
+    </div>
+
 </p-table>
