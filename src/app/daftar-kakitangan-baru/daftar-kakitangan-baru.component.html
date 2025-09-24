@@ -10,12 +10,11 @@
                      [(ngModel)]="details.noKP" placeholder="999999-99-9999" /><br><br>
 
               <label>Emel</label>
-              <input id="emel" name="emel" type="text" class="act_setting" ngModel
-                     [(ngModel)]="details.emel"><br><br>
+              <input id="emel" name="emel" type="text" class="act_setting" ngModel [(ngModel)]="details.emel"><br><br>
 
               <label>Skim Perkhidmatan</label>
-              <input id="skim_khidmat" name="skim_khidmat" type="text" class="act_setting"
-                     ngModel [(ngModel)]="details.skimPerkhidmatan"><br><br>
+              <input id="skim_khidmat" name="skim_khidmat" type="text" class="act_setting" ngModel
+                     [(ngModel)]="details.skimPerkhidmatan"><br><br>
 
               <label>Gred Hakiki</label>
               <input id="gred_hakiki" name="gred_hakiki" type="text" class="act_setting" ngModel
@@ -32,9 +31,8 @@
                      [(ngModel)]="details.gredDisandang"><br><br>
 
               <label>Tempat Bertugas</label>
-              <p-select [options]="units" ngModel [(ngModel)]="details.namaUnit" optionLabel="namaUnit"
-                     optionValue="namaUnit" [filter]="true" filterBy="namaUnit" [showClear]="true"
-                     placeholder="Pilih Unit" class="act_setting">
+              <p-select [options]="units" [(ngModel)]="details.id" optionLabel="namaUnit" optionValue="id"
+                     [filter]="true" filterBy="namaUnit" [showClear]="true" placeholder="Pilih Unit" class="act_setting" (onChange)="onUnitChange($event)">
               </p-select>
               <br><br>
 

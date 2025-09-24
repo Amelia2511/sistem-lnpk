@@ -1,0 +1,271 @@
+<div style="display: flex; justify-content: space-between;">
+    <h1>Penilaian Prestasi</h1>
+    <span>
+        <div style="display: flex; gap: 5px;">
+            <p-tag value="2025" [rounded]="true" />
+            <p-tag value="Utama" [rounded]="true" />
+        </div>
+    </span>
+</div>
+
+<p-stepper [value]="1" class="basis-[50rem]">
+    <p-step-list>
+        <p-step [value]="2">Penilaian</p-step>
+        <p-step [value]="3">Ulasan</p-step>
+    </p-step-list>
+    <p-step-panels>
+
+        <p-step-panel [value]="2">
+            <ng-template #content let-activateCallback="activateCallback">
+                <div class="flex flex-col h-48">
+                    <div
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <p-divider />
+                            <h4>Pengetahuan, Kemahiran dan Penghasilan Kerja</h4>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Ilmu Pengetahuan dan Kemahiran dalam Bidang Kerja</h6>
+                                    <p>Mempunyai ilmu pengetahuan dan kemahiran/kepakaran dalam melaksanakan hasil kerja
+                                        meliputi kebolehan mengenalpasti, menganalisis serta menyelesaikan masalah.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kuantiti Hasil Kerja</h6>
+                                    <p>Kuantiti hasil kerja seperti jumlah, bilangan, kadar, kekerapan dan sebagainya
+                                        berbanding dengan sasaran kuantiti kerja, mengikut tempoh masa yang ditetapkan.
+                                    </p>
+                                </div>
+
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kualiti Hasil Kerja</h6>
+                                    <p>Dinilai dari segi kesempurnaan, teratur, kemas dan mengikut peraturan yang
+                                        ditetapkan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Penganalisisan</h6>
+                                    <p>Kebolehan mengenalpasti isu dan masalah serta berkeupayaan menganalisis serta
+                                        mengemukakan cadangan penyelesaian yang membina.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Nilai Tambah</h6>
+                                    <p>Menghasilkan nilai tambah kepada proses dan penghasilan kerja yang lebih baik.
+                                    </p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <p-divider />
+
+                            <h4>Kualiti Peribadi</h4>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Integriti</h6>
+                                    <p>Memiliki dan mempraktikkan nilai-nilai integriti seperti akauntabiliti, jujur,
+                                        benar, amanah, telus, cekap dan bijaksana dalam setiap tindakan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Disiplin</h6>
+                                    <p>Mempunyai daya kawal diri dari segi mental dan fizikal termasuk mematuhi
+                                        peraturan, menepati masa, menunaikan janji dan bersifat sabar.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kepimpinan/Penyeliaan</h6>
+                                    <p>Mempunyai ciri-ciri kepimpinan dan penyeliaan seperti berwawasan, berkeupayaan
+                                        merancang dan menggembleng sumber dalam kawalannya seperti kewangan, tenaga
+                                        manusia, peralatan dan maklumat serta menggerak dan memberi dorongan kepada
+                                        kakitangan ke arah pencapaian objektif organisasi.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kreatif dan Proaktif</h6>
+                                    <p>Berkebolehan dan mempunyai inisiatif untuk memikirkan dan mencadangkan idea baru
+                                        serta membuat pembaharuan kepada proses kerja bagi mempertingkatkan kualiti dan
+                                        produktiviti.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kawalan Diri</h6>
+                                    <p>Mempunyai kebolehan mengawal diri dari segi emosi, minda dan fizikal termasuk
+                                        keupayaan mengawal perasaan, memotivasikan diri, menghadapi tekanan kerja dan
+                                        mempunyai daya tahan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Jalinan Hubungan dan Kerjasama</h6>
+                                    <p>Mewujudkan suasana hubungan dan kerjasama yang harmoni dalam organisasi serta
+                                        boleh menyesuaikan diri dalam semua keadaan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
+                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+
+                            <p-divider />
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4>Markah Keseluruhan (%)</h4>
+                                <div style="display: flex;">
+                                    <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100"
+                                        mode="decimal" size="small"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100"
+                                        mode="decimal" size="small"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex pt-6 justify-between">
+                    <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
+                        (onClick)="activateCallback(3)" />
+                </div>
+            </ng-template>
+        </p-step-panel>
+
+        <p-step-panel [value]="3">
+            <ng-template #content let-activateCallback="activateCallback">
+                <div class="flex flex-col h-48">
+                    <div
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        <h4>Ulasan Keseluruhan</h4>
+                        <p-divider />
+                        <h6>Pegawai Penilai Pertama</h6>
+                        <p>Sepanjang tempoh penilaian ini, Encik Ee Zhe telah menunjukkan komitmen yang tinggi dalam
+                            melaksanakan tugasan harian. Beliau menunjukkan tahap kefahaman yang baik terhadap polisi
+                            dan prosedur organisasi, serta mampu menyelesaikan tugasan dalam tempoh masa yang
+                            ditetapkan. Walau bagaimanapun, terdapat ruang untuk penambahbaikan dalam aspek komunikasi
+                            dengan ahli pasukan, terutamanya dalam situasi yang memerlukan koordinasi yang lebih rapat.
+                            Beliau disarankan untuk mengambil inisiatif yang lebih proaktif dalam aktiviti pembangunan
+                            kendiri dan meningkatkan kemahiran kepimpinan. Secara keseluruhannya, prestasi yang
+                            ditunjukkan adalah memuaskan dan selaras dengan jangkaan untuk peringkat jawatan ini.</p>
+                        <p-divider />
+                        <h6>Pegawai Penilai Kedua</h6>
+                        <p>Berdasarkan pemerhatian saya sepanjang tempoh kontrak, Encik Ee Zhe menunjukkan dedikasi yang
+                            konsisten terhadap tanggungjawab yang diamanahkan. Beliau memiliki kemahiran teknikal yang
+                            kukuh dan mampu bekerja secara berdikari dengan pengawasan yang minimum. Kualiti kerja yang
+                            dihasilkan adalah pada tahap yang boleh diterima dan jarang memerlukan pembetulan yang
+                            ketara. Namun demikian, beliau perlu meningkatkan kemahiran dalam pengurusan masa,
+                            terutamanya apabila mengendalikan pelbagai tugasan serentak. Saya mencadangkan agar beliau
+                            menghadiri kursus berkaitan pengurusan projek untuk meningkatkan kecekapan kerja. Prestasi
+                            keseluruhan menunjukkan potensi yang baik untuk pembangunan kerjaya yang berterusan.</p>
+                    </div>
+                </div>
+                <div class="flex pt-6 justify-start">
+                    <p-button label="Kembali" icon="pi pi-arrow-left" iconPos="right" (onClick)="activateCallback(2)" />
+                </div>
+            </ng-template>
+        </p-step-panel>
+    </p-step-panels>
+</p-stepper>

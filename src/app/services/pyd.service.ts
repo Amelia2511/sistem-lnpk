@@ -69,13 +69,11 @@ export class PydService {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
 
-  getSasaranByPyd(pydId: number) {
-  return this.httpClient.get<SasaranKerjaListItem[]>(
-    `${this.baseUrl}SasaranKerjas/ByPyd/${pydId}`
-  );
+  // getSasaranByPyd(pydId: number) {
+  // return this.httpClient.get<SasaranKerjaListItem[]>(
+  //   `${this.baseUrl}SasaranKerjas/ByPyd/${pydId}`
+  // );
   // aktifkanPegawai(id: number): Observable<any> {
   //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
   // }
-
-}
 }

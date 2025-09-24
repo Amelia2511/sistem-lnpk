@@ -16,7 +16,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 @Component({
   selector: 'app-senarai-pegawai',
   standalone: true,
-  imports: [ButtonModule, DatePickerModule, TagModule, RouterModule, TableModule, BreadcrumbModule, DialogModule, SelectModule, FormsModule, OverlayPanelModule]
+  imports: [ButtonModule, DatePickerModule, TagModule, RouterModule, TableModule, BreadcrumbModule, DialogModule, SelectModule, FormsModule, OverlayPanelModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrls: ['./senarai-pegawai.component.css'],
 })
