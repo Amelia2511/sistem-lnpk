@@ -20,9 +20,9 @@ import { CommonModule } from '@angular/common';
 })
 export class SenaraiSasaranComponent {
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private userService = inject(UserService);
-  private pydService = inject(PydService);
+  // private route = inject(ActivatedRoute);
+  // private userService = inject(UserService);
+  // private pydService = inject(PydService);
 
   user: userDTO = {} as userDTO;
   products: sasaranKerja[] = [];
