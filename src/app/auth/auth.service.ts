@@ -19,7 +19,14 @@ export class AuthService {
   private loggedInSource = new BehaviorSubject(false);
   currentLoggedIn = this.loggedInSource.asObservable();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    // 🔹 Restore user on refresh
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      this.userSource.next(JSON.parse(savedUser));
+      this.loggedInSource.next(true);
+    }
+  }
 
   daftarUser(object: daftarDTO) {
     const httpOptions = {
@@ -44,13 +51,24 @@ export class AuthService {
   }
 
   changeIsLoggedIn(val: boolean) {
-    this.loggedInSource.next(val)
-  }
-
-  changeUser(val: userDTO | null) {
-    if (val) {
-      this.userSource.next(val);
+    this.loggedInSource.next(val);
+    if (!val) {
+      localStorage.removeItem('user'); // clear if log out
     }
   }
 
+  changeUser(val: userDTO | null) {
+    this.userSource.next(val);
+    if (val) {
+      localStorage.setItem('user', JSON.stringify(val)); // persist
+    } else {
+      localStorage.removeItem('user');
+    }
+  }
+
+  logout() {
+    this.userSource.next(null);
+    this.loggedInSource.next(false);
+    localStorage.removeItem('user');
+  }
 }

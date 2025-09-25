@@ -33,9 +33,10 @@
                      class="act_setting" ngModel [(ngModel)]="details.gredDisandang"><br><br>
 
               <label>Tempat Bertugas</label>
-              <select id="unit" name="unit" ng-disabled="toggleinput" class="act_setting" [(ngModel)]="details.idUnit">
-                     <option *ngFor="let unit of units" [value]="unit.id">{{ unit.namaUnit}}</option>
-              </select><br><br>
+              <input id="unit" name="unit" ng-disabled="toggleinput" class="act_setting" list="units" [(ngModel)]="details.idUnit" placeholder="Unit..." />
+              <datalist id="units">
+                     <option *ngFor="let unit of units" [value]="unit.id"> {{ unit.namaUnit }}</option>
+              </datalist><br><br>
 
               <label> Tarikh Mula Kontrak </label>
               <p-datepicker name="tarikhMulaKontrak" [(ngModel)]="details.tarikhMulaKontrak"

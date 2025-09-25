@@ -196,7 +196,6 @@ export class SenaraiPegawaiComponent implements OnInit {
   getPegawaiList() {
   this.pydService.getPegawaiDinilai().subscribe({
     next: (data: pegawaiDinilai[]) => {
-      console.log(data)
       this.products = data.map(p => ({
         ...p,
         status: p.isActive ? 'Aktif' : 'Tidak Aktif',

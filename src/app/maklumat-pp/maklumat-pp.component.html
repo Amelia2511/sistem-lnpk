@@ -1,45 +1,30 @@
-  <div style="display: flex; flex-wrap: wrap; width: 100%;">
-    <p-card>
-      <ng-template #title>Pegawai yang Dinilai </ng-template>
-      <ng-template #subtitle>{{ pegawaiDinilai.nama }}</ng-template>
-      <p style="line-height: 1.7;">
-        <b>Jawatan</b>    {{ pegawaiDinilai.jawatan }}<br>
-        <b>Gred</b>       {{ pegawaiDinilai.gred }}<br>
-        <b>Bahagian</b>   {{ pegawaiDinilai.bahagian }}<br>
-        <b>Unit</b>       {{ pegawaiDinilai.unit }}
-      </p>
-    </p-card>
-    <p-card>
-      <ng-template #title>Pegawai Penilai Pertama</ng-template>
-      <ng-template #subtitle>{{ pegawaiPenilaiPertama.nama }}</ng-template>
-      <p style="line-height: 1.7;">
-        <b>Jawatan</b>    {{ pegawaiPenilaiPertama.jawatan }}<br>
-        <b>Gred</b>       {{ pegawaiPenilaiPertama.gred }}<br>
-        <b>Bahagian</b>   {{ pegawaiPenilaiPertama.bahagian }}<br>
-        <b>Unit</b>       {{ pegawaiPenilaiPertama.unit }}
-      <!-- <ng-template #title>Pegawai Penilai Pertama</ng-template>
-      <ng-template #subtitle></ng-template>
-      <p style="line-height: 1.7;">
-        <b>Jawatan</b>    <br>
-        <b>Gred</b>       <br>
-        <b>Bahagian</b>   <br>
-        <b>Unit</b>      -->
-      </p>
-    </p-card>
-    <p-card>
-      <ng-template #title>Pegawai Penilai Kedua </ng-template>
-      <ng-template #subtitle>{{ pegawaiPenilaiKedua.nama }}</ng-template>
-      <p style="line-height: 1.7;">
-        <b>Jawatan</b>    {{ pegawaiPenilaiKedua.jawatan }}<br>
-        <b>Gred</b>       {{ pegawaiPenilaiKedua.gred }}<br>
-        <b>Bahagian</b>   {{ pegawaiPenilaiKedua.bahagian }}<br>
-        <b>Unit</b>       {{ pegawaiPenilaiKedua.unit }}
-      <!-- <ng-template #subtitle></ng-template>
-      <p style="line-height: 1.7;">
-        <b>Jawatan</b>    <br>
-        <b>Gred</b>       <br>
-        <b>Bahagian</b>   <br>
-        <b>Unit</b>        -->
-      </p>
-    </p-card>
-  </div>
+<div style="display: flex; flex-wrap: wrap; width: 100%;">
+  <p-card>
+    <ng-template #title>Pegawai Penilai Pertama</ng-template>
+    <ng-template #subtitle></ng-template>
+    <p style="line-height: 1.7;">
+      <b>{{ capitalizeWords(details?.namaPPP || 'Tiada maklumat') }}</b><br>
+      <b>Jawatan: <span
+          [ngStyle]="{ 'color': !details?.jawatanPPP ? 'gray' : 'inherit', 'fontStyle': !details?.jawatanPPP ? 'italic' : 'normal' }">
+          {{ capitalizeWords(details?.jawatanPPP || 'Tiada maklumat') }}
+        </span> </b> <br>
+      <b>Gred: <span
+          [ngStyle]="{ 'color': !details?.gredPPP ? 'gray' : 'inherit', 'fontStyle': !details?.gredPPP ? 'italic' : 'normal' }">
+          {{ capitalizeWords(details?.gredPPP || 'Tiada maklumat') }}
+        </span> </b> <br>
+      <b>Bahagian: {{ details?.bahagianPPP || 'Tiada maklumat' }} </b> <br>
+      <b>Unit: {{ details?.unitPPP || 'Tiada maklumat' }} </b>
+    </p>
+  </p-card>
+  <p-card>
+    <ng-template #title>Pegawai Penilai Kedua </ng-template>
+    <ng-template #subtitle></ng-template>
+    <p style="line-height: 1.7;">
+      <b>{{ capitalizeWords(details?.namaPPK || 'Tiada maklumat') }}</b> <br>
+      <b>Jawatan: {{ capitalizeWords(details?.jawatanPPK || 'Tiada maklumat') }} </b> <br>
+      <b>Gred: {{ capitalizeWords(details?.gredPPK || 'Tiada maklumat') }} </b> <br>
+      <b>Bahagian: {{ capitalizeWords(details?.bahagianPPK || 'Tiada maklumat') }} </b> <br>
+      <b>Unit: {{ details?.unitPPK || 'Tiada maklumat' }} </b>
+    </p>
+  </p-card>
+</div>

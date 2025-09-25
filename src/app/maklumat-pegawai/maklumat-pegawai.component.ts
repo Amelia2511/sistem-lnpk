@@ -11,15 +11,15 @@ import { CommonModule } from '@angular/common';
 import { EditorModule } from 'primeng/editor';
 import { pegawaiDinilai } from '../model/pegawai.model';
 import { PydService } from '../services/pyd.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-maklumat-pegawai',
   standalone: true,
-  imports: [CardModule, TableModule, ImageModule, ButtonModule, BreadcrumbModule, CommonModule, InputTextModule, EditorModule],
+  imports: [CardModule, TableModule, ImageModule, ButtonModule, BreadcrumbModule, CommonModule, InputTextModule, EditorModule, FormsModule],
   templateUrl: './maklumat-pegawai.component.html',
   styleUrl: './maklumat-pegawai.component.css'
 })
-
 
 export class MaklumatPegawaiComponent implements OnInit {
   pegawai!: pegawaiDinilai;
@@ -68,8 +68,6 @@ export class MaklumatPegawaiComponent implements OnInit {
         next: () => console.log('Maklumat pegawai berjaya disimpan.'),
         error: (err: any) => console.error('Gagal simpan data:', err)
       });
-
-
     }
   }
 }
