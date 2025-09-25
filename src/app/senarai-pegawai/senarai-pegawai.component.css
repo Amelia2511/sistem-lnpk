@@ -49,6 +49,22 @@
     }
 }
 
+/* Dialog form styling */
+.field {
+    margin-bottom: 1rem;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.field p-select {
+    width: 100%;
+}
+
 .p-w-100 {
     width: 100%;
 }

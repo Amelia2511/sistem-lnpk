@@ -22,15 +22,6 @@ export class SideMenuComponent {
   userRoles: number[] = [];
 
   menuItems: MenuItem[] = [
-    // { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama' },
-    // { name: 'Settings', icon: 'bi-gear', route: '/settings' },
-    // { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'},
-    // { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran'},
-    // { name: 'Maklumat Sasaran', icon: 'bi-bullseye', route: '/maklumat-sasaran'},
-    // { name: 'Penilaian', icon: 'bi bi-graph-up', route: '/senarai-penilaian'},
-    // { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai'},
-    // { name: 'Maklumat Pegawai', icon: 'bi bi-person-circle', route: '/maklumat-pegawai'},
-    // { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan'}
     { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama', order: 1 },
     { name: 'Settings', icon: 'bi-gear', route: '/settings', order: 99 },
     //PYD

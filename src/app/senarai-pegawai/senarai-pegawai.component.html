@@ -77,14 +77,72 @@
         </p-tag>
       </td>
       <td class="button-n">
+        <!-- <p-button
+        rounded="true"
+        variant="outlined"
+        [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+        [label]="product?.buttonOption"
+        [disabled]="!!product?.isActive"
+        (onClick)="aktifkan(product); showDialog()">
+        </p-button> -->
         <p-button
           rounded="true"
           variant="outlined"
           [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-          label="{{ product.buttonOption }}">
-          <!-- (onClick)="handleButtonClick(product)"> -->
+          [label]="product.buttonOption"
+          [disabled]="!!product.isActive"
+          (onClick)="aktifkan(product); showDialog()">
         </p-button>
+
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '450px' }">
+  <div class="field">
+    <label for="tahunPenilaian">Tahun Penilaian *</label>
+    <p-select
+      id="tahunPenilaian"
+      [(ngModel)]="tahunPenilaian"
+      [options]="tahunOptions"
+      placeholder="Pilih Tahun Penilaian"
+      [style]="{ width: '100%' }"
+      optionLabel="label"
+      optionValue="value">
+    </p-select>
+  </div>
+
+  <div class="field">
+    <label for="kategoriPenilaian">Kategori Penilaian *</label>
+    <p-select
+      id="kategoriPenilaian"
+      [(ngModel)]="kategoriPenilaian"
+      [options]="kategoriOptions"
+      placeholder="Pilih Kategori Penilaian"
+      [style]="{ width: '100%' }"
+      optionLabel="label"
+      optionValue="value">
+    </p-select>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      label="Batal"
+      icon="pi pi-times"
+      class="p-button-secondary"
+      (click)="cancelActivation()">
+    </button>
+
+    <button
+      type="button"
+      pButton
+      label="Aktifkan"
+      icon="pi pi-check"
+      [loading]="selectedPegawai?._busy"
+      (click)="confirmActivation()">
+    </button>
+  </ng-template>
+</p-dialog>

@@ -14,11 +14,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
+import { FormsModule } from '@angular/forms';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-senarai-pegawai',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule, HttpClientModule, BreadcrumbModule, RouterModule],
+  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule, HttpClientModule, BreadcrumbModule, RouterModule, DatePickerModule, DialogModule, SelectModule, FormsModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrls: ['./senarai-pegawai.component.css'],
 })
@@ -119,10 +123,24 @@ import { CommonModule } from '@angular/common';
 // }
 // =======
 export class SenaraiPegawaiComponent implements OnInit {
+openActivationDialog(_t17: any) {
+throw new Error('Method not implemented.');
+}
   products: pegawaiDinilai[] = [];
   pegawai: pegawaiDinilai | undefined;
-  loading: boolean = false;
-  units: any[] = [];
+  display: boolean = false;
+  selectedPegawai: pegawaiDinilai | undefined;
+
+  // Form data for the dialog
+  tahunPenilaian: number | null = null;
+  kategoriPenilaian: number | null = null;
+
+  tahunOptions: { label: string; value: number }[] = [];
+  // Map to your real DB IDs
+  kategoriOptions = [
+    { label: 'Utama', value: 1 },
+    { label: 'Semula', value: 2 },
+  ];
 
   items: MenuItem[] = [
     { label: 'Senarai', routerLink: '/senarai-pegawai' },
@@ -138,58 +156,14 @@ export class SenaraiPegawaiComponent implements OnInit {
 
   ngOnInit() {
     this.getPegawaiList();
-    this.loadUnitsFromAPI();
+    this.initTahunOptions();
   }
 
-  // Test function to load units from the API
-  loadUnitsFromAPI() {
-    console.log('Attempting to load units from API...');
-    this.pegawaiService.getAllUnit().subscribe({
-      next: (data) => {
-        console.log('Units loaded from API:', data);
-        this.units = data;
-      },
-      error: (error) => {
-        console.error('Error loading units from API:', error);
-      }
-    });
-  }
-
-  // Test function to load pegawai from API
-  loadPegawaiFromAPI() {
-    console.log('Attempting to load pegawai from API...');
-    this.loading = true;
-    this.pegawaiService.getAllPegawai().subscribe({
-      next: (data) => {
-        console.log('Pegawai loaded from API:', data);
-        // Convert API data to match pegawaiDinilai format
-        this.products = data.map((p: any) => ({
-          noFail: p.noFail || 'N/A',
-          kementerian: p.kementerian || 'N/A',
-          nama: p.nama,
-          noKP: p.noKP,
-          emel: p.emel,
-          skimPerkhidmatan: p.skimPerkhidmatan,
-          gredHakiki: p.gredHakiki,
-          namaJawatan: p.namaJawatan || 'N/A',
-          gredDisandang: p.gredDisandang,
-          tarikhMulaKontrak: undefined,
-          tarikhAkhirKontrak: undefined,
-          tempatBertugas: undefined,
-          idUnit: p.idUnit,
-          idBahagian: p.idBahagian,
-          isActive: p.isActive,
-          status: p.isActive ? 'Aktif' : 'Tidak Aktif',
-          buttonOption: p.isActive ? 'Boleh Dinilai' : 'Aktifkan'
-        } as pegawaiDinilai));
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error loading pegawai from API:', error);
-        this.loading = false;
-        // Fallback to original method
-        this.getPegawaiList();
-      }
+  initTahunOptions() {
+    const currentYear = new Date().getFullYear();
+    this.tahunOptions = Array.from({ length: 5 }, (_, i) => {
+      const y = currentYear + i;
+      return { label: y.toString(), value: y };
     });
   }
 
@@ -205,20 +179,64 @@ export class SenaraiPegawaiComponent implements OnInit {
     error: (err) => {
       console.error('Error with PydService, trying API instead:', err);
       // If the original service fails, try the API
-      this.loadPegawaiFromAPI();
+      // this.loadPegawaiFromAPI();
     }
   });
+
 }
 
-  // handleButtonClick(product: pegawaiDinilai) {
-  //   if (product.buttonOption === 'Aktifkan') {
-  //     product.buttonOption = 'Boleh Dinilai';
-  //     product.status = 'Aktif';
-  //     console.log(product.nama + ' telah diaktifkan');
-  //   } else {
-  //     product.buttonOption = 'Boleh Dinilai';
-  //     product.status = 'Draf';
-  //   }
-  //   this.products = [...this.products];
-  // };
+aktifkan(row: pegawaiDinilai) {
+  this.selectedPegawai = row;
+  this.display = true;
+  this.tahunPenilaian = null;
+  this.kategoriPenilaian = null;
+}
+
+showDialog() {
+  this.display = true;
+  // Reset form values
+  this.tahunPenilaian = null;
+  this.kategoriPenilaian = null;
+}
+
+  confirmActivation() {
+    console.log('confirmActivation clicked', this.tahunPenilaian, this.kategoriPenilaian, this.selectedPegawai?.id);
+
+    if (!this.selectedPegawai?.id || this.selectedPegawai.isActive) return;
+
+    if (this.tahunPenilaian == null || this.kategoriPenilaian == null) {
+      alert('Sila pilih Tahun Penilaian dan Kategori Penilaian');
+      return;
+    }
+
+    (this.selectedPegawai)._busy = true;
+
+    const payload = {
+      tahunPenilaian: Number(this.tahunPenilaian),
+      idKategoriPenilaian: Number(this.kategoriPenilaian)
+    };
+
+    this.pydService.aktifkanPegawai(this.selectedPegawai.id, payload).subscribe({
+      next: () => {
+        this.selectedPegawai!.isActive = true;
+        this.selectedPegawai!.status = 'Aktif';
+        this.selectedPegawai!.buttonOption = 'Boleh Dinilai';
+        (this.selectedPegawai as any)._busy = false;
+
+        this.display = false;
+        this.selectedPegawai = undefined;
+      },
+      error: (err) => {
+        console.error('Activation failed', err);
+        (this.selectedPegawai as any)._busy = false;
+      }
+    });
+  }
+
+  cancelActivation() {
+    this.display = false;
+    this.selectedPegawai = undefined;
+    this.tahunPenilaian = null;
+    this.kategoriPenilaian = null;
+  }
 }
