@@ -39,43 +39,43 @@ export interface Unit {
   providedIn: 'root'
 })
 export class PegawaiService {
-  private apiUrl = 'http://localhost:5145/api';
+  private apiUrl = 'http://localhost:5015/api';
 
   constructor(private http: HttpClient) { }
 
   // Get all employees
-  getAllPegawai(): Observable<Pegawai[]> {
-    return this.http.get<Pegawai[]>(`${this.apiUrl}/Pegawai`);
+  getAllPegawai(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Pegawais`);
   }
 
-  // Get employee by ID
+  // Get employee by ID - Note: This endpoint may not exist in your API
   getPegawaiById(id: number): Observable<Pegawai> {
-    return this.http.get<Pegawai>(`${this.apiUrl}/Pegawai/${id}`);
+    return this.http.get<Pegawai>(`${this.apiUrl}/Pegawais/${id}`);
   }
 
-  // Create new employee
+  // Create new employee - Note: This endpoint may not exist in your API
   createPegawai(pegawai: Pegawai): Observable<Pegawai> {
-    return this.http.post<Pegawai>(`${this.apiUrl}/Pegawai`, pegawai);
+    return this.http.post<Pegawai>(`${this.apiUrl}/Pegawais`, pegawai);
   }
 
-  // Update employee
+  // Update employee - Note: This endpoint may not exist in your API
   updatePegawai(id: number, pegawai: Pegawai): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/Pegawai/${id}`, pegawai);
+    return this.http.put<void>(`${this.apiUrl}/Pegawais/${id}`, pegawai);
   }
 
-  // Delete employee
+  // Delete employee - Note: This endpoint may not exist in your API
   deletePegawai(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/Pegawai/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/Pegawais/${id}`);
   }
 
-  // Get all departments
+  // Get all departments - Note: This endpoint may not exist in your API
   getAllBahagian(): Observable<Bahagian[]> {
     return this.http.get<Bahagian[]>(`${this.apiUrl}/Bahagian`);
   }
 
   // Get all units
   getAllUnit(): Observable<Unit[]> {
-    return this.http.get<Unit[]>(`${this.apiUrl}/Unit`);
+    return this.http.get<Unit[]>(`${this.apiUrl}/Units/GetUnit`);
   }
 
   // Test methods
