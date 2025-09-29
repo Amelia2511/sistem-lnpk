@@ -1,21 +1,6 @@
 <p-breadcrumb [home]="home" [model]="items" />
 <h4>Senarai Pegawai</h4>
 
-<!-- Test buttons for API -->
-<div style="margin-bottom: 20px;">
-  <p-button label="Test Load Units from API" (onClick)="loadUnitsFromAPI()" severity="success" class="mr-2"></p-button>
-  <p-button label="Test Load Pegawai from API" (onClick)="loadPegawaiFromAPI()" severity="info"></p-button>
-  <span *ngIf="loading" class="ml-2">Loading...</span>
-</div>
-
-<!-- Display Units from API -->
-<div *ngIf="units.length > 0" style="margin-bottom: 20px; padding: 10px; background-color: #f0f8ff; border-radius: 5px;">
-  <h5>Units loaded from API:</h5>
-  <ul>
-    <li *ngFor="let unit of units">{{ unit.namaUnit }} ({{ unit.instant }})</li>
-  </ul>
-</div>
-
 <br>
 <p-table class="p-datatable-customers" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
@@ -63,7 +48,7 @@
     <tr>
       <td>
         <a [routerLink]="['/maklumat-pegawai', product.id]" class="pegawai-link">
-        {{ product.nama }}
+          {{ product.nama }}
         </a>
       </td>
       <td>{{ product.tarikhMulaKontrak}}</td>
@@ -71,27 +56,14 @@
       <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
 
       <td>
-        <p-tag
-          [value]="product.status"
+        <p-tag [value]="product.status"
           [severity]="product.status === 'Aktif' ? 'success' : (product.status === 'Tidak Aktif' ? 'danger' : 'secondary')">
         </p-tag>
       </td>
       <td class="button-n">
-        <!-- <p-button
-        rounded="true"
-        variant="outlined"
-        [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-        [label]="product?.buttonOption"
-        [disabled]="!!product?.isActive"
-        (onClick)="aktifkan(product); showDialog()">
-        </p-button> -->
-        <p-button
-          rounded="true"
-          variant="outlined"
-          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-          [label]="product.buttonOption"
-          [disabled]="!!product.isActive"
-          (onClick)="aktifkan(product); showDialog()">
+        <p-button rounded="true" variant="outlined"
+          [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+          [label]="product?.buttonOption" [disabled]="!!product?.isActive" (onClick)="aktifkan(product)">
         </p-button>
 
       </td>
@@ -141,7 +113,7 @@
       pButton
       label="Aktifkan"
       icon="pi pi-check"
-      [loading]="selectedPegawai?._busy"
+      ([loading])="selectedPegawai?._busy"
       (click)="confirmActivation()">
     </button>
   </ng-template>

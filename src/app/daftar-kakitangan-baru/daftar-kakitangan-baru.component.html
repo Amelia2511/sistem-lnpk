@@ -3,40 +3,40 @@
 <div class="row">
        <div class="col-md-5 form-group input-text">
               <label>Nama</label>
-              <input id="nama" name="nama" type="text" ng-disabled="toggleinput" class="act_setting" ngModel
-                     [(ngModel)]="details.nama"><br><br>
+              <input id="nama" name="nama" type="text" class="act_setting" ngModel [(ngModel)]="details.nama"><br><br>
 
               <label>No. Kad Pengenalan</label>
-              <p-inputmask mask="999999-99-9999" id="no_kad" name="no_kad" type="text" ng-disabled="toggleinput"
-                     styleClass="act_setting" [(ngModel)]="details.noKP" placeholder="999999-99-9999" /><br><br>
+              <p-inputmask mask="999999-99-9999" id="no_kad" name="no_kad" type="text" styleClass="act_setting"
+                     [(ngModel)]="details.noKP" placeholder="999999-99-9999" /><br><br>
 
               <label>Emel</label>
-              <input id="emel" name="emel" type="text" ng-disabled="toggleinput" class="act_setting" ngModel
+              <input id="emel" name="emel" type="text" class="act_setting" ngModel
                      [(ngModel)]="details.emel"><br><br>
 
               <label>Skim Perkhidmatan</label>
-              <input id="skim_khidmat" name="skim_khidmat" type="text" ng-disabled="toggleinput" class="act_setting"
+              <input id="skim_khidmat" name="skim_khidmat" type="text" class="act_setting"
                      ngModel [(ngModel)]="details.skimPerkhidmatan"><br><br>
 
               <label>Gred Hakiki</label>
-              <input id="gred_hakiki" name="gred_hakiki" type="text" ng-disabled="toggleinput" class="act_setting"
-                     ngModel [(ngModel)]="details.gredHakiki"><br><br>
+              <input id="gred_hakiki" name="gred_hakiki" type="text" class="act_setting" ngModel
+                     [(ngModel)]="details.gredHakiki"><br><br>
        </div>
 
        <div class="col-md-5 form-group input-text">
               <label>Nama Jawatan yang disandang sekarang</label>
-              <input id="nama_jawatan_sekarang" name="nama_jawatan_sekarang" type="text" ng-disabled="toggleinput"
-                     class="act_setting" ngModel [(ngModel)]="details.namaJawatan"><br><br>
+              <input id="nama_jawatan_sekarang" name="nama_jawatan_sekarang" type="text" class="act_setting" ngModel
+                     [(ngModel)]="details.namaJawatan"><br><br>
 
               <label>Gred Jawatan yang disandang sekarang</label>
-              <input id="gred_jawatan_sekarang" name="gred_jawatan_sekarang" type="text" ng-disabled="toggleinput"
-                     class="act_setting" ngModel [(ngModel)]="details.gredDisandang"><br><br>
+              <input id="gred_jawatan_sekarang" name="gred_jawatan_sekarang" type="text" class="act_setting" ngModel
+                     [(ngModel)]="details.gredDisandang"><br><br>
 
               <label>Tempat Bertugas</label>
-              <input id="unit" name="unit" ng-disabled="toggleinput" class="act_setting" list="units" [(ngModel)]="details.idUnit" placeholder="Unit..." />
-              <datalist id="units">
-                     <option *ngFor="let unit of units" [value]="unit.id"> {{ unit.namaUnit }}</option>
-              </datalist><br><br>
+              <p-select [options]="units" ngModel [(ngModel)]="details.namaUnit" optionLabel="namaUnit"
+                     optionValue="namaUnit" [filter]="true" filterBy="namaUnit" [showClear]="true"
+                     placeholder="Pilih Unit" class="act_setting">
+              </p-select>
+              <br><br>
 
               <label> Tarikh Mula Kontrak </label>
               <p-datepicker name="tarikhMulaKontrak" [(ngModel)]="details.tarikhMulaKontrak"

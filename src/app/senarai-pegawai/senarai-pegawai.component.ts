@@ -18,11 +18,12 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-senarai-pegawai',
   standalone: true,
-  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule, HttpClientModule, BreadcrumbModule, RouterModule, DatePickerModule, DialogModule, SelectModule, FormsModule],
+  imports: [TableModule, CommonModule, ButtonModule, TagModule, Tag, MultiSelectModule, InputTextModule, DropdownModule, HttpClientModule, BreadcrumbModule, RouterModule, DatePickerModule, DialogModule, SelectModule, FormsModule, OverlayPanelModule],
   templateUrl: './senarai-pegawai.component.html',
   styleUrls: ['./senarai-pegawai.component.css'],
 })
@@ -182,7 +183,6 @@ throw new Error('Method not implemented.');
       // this.loadPegawaiFromAPI();
     }
   });
-
 }
 
 aktifkan(row: pegawaiDinilai) {

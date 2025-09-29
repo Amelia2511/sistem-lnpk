@@ -61,4 +61,8 @@ export class PydService {
   aktifkanPegawai(id: number, payload: { tahunPenilaian: number; idKategoriPenilaian: number }): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
+  // aktifkanPegawai(id: number): Observable<any> {
+  //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
+  // }
+
 }

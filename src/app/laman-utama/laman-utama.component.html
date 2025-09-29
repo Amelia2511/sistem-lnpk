@@ -1,5 +1,18 @@
-<h1>Selamat datang {{ capitalizeWords(this.user.nama) }}</h1>
-<div>
+<h1>Selamat datang
+  <span class="text-color">{{ capitalizeWords(this.user.nama) }}</span>
+</h1>
+
+<!-- PYD view -->
+<div *ngIf="hasRole(2)">
   <app-status-penilaian></app-status-penilaian>
   <app-maklumat-pp></app-maklumat-pp>
+</div>
+
+<!-- PPP/PPK view -->
+<div *ngIf="hasAnyRole([3,4])">
+</div>
+
+<!-- PPSM view -->
+<div *ngIf="hasRole(5)">
+  <app-dashboard-ppsm></app-dashboard-ppsm>
 </div>
