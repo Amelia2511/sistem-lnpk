@@ -51,8 +51,17 @@
   </ng-template>
 </p-table>
 
+<!-- <label>Lampiran</label>
+<p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload> -->
 <label>Lampiran</label>
-<p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload>
+<p-fileUpload 
+  name="files[]" 
+  [auto]="false" 
+  [customUpload]="true" 
+  [multiple]="true"
+  (onAdd)="handleFileSelect($event)"
+  (uploadHandler)="onCustomUpload($event)">
+</p-fileUpload>
 
 <div class="flex justify-end gap-2 mt-4">
   <p-button label="Batal"></p-button>
