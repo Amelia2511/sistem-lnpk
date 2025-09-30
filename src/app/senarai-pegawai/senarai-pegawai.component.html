@@ -113,7 +113,7 @@
       pButton
       label="Aktifkan"
       icon="pi pi-check"
-      ([loading])="selectedPegawai?._busy"
+      [loading]="selectedPegawai?._busy ?? false"
       (click)="confirmActivation()">
     </button>
   </ng-template>
