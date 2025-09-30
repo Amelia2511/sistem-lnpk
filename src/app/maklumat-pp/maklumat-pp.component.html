@@ -18,7 +18,7 @@
         </span> </b> <br>
       <b>Unit: <span
           [ngStyle]="{ 'color': !details?.unitPPP ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPP ? 'italic' : 'normal' }">
-          {{ capitalizeWords(details?.unitPPP || 'Tiada maklumat') }}
+          {{ details?.unitPPP || 'Tiada maklumat' }}
         </span> </b>
     </p>
   </p-card>
@@ -41,7 +41,7 @@
         </span></b> <br>
       <b>Unit:  <span
           [ngStyle]="{ 'color': !details?.unitPPK ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPK ? 'italic' : 'normal' }">
-          {{ capitalizeWords(details?.unitPPK || 'Tiada maklumat') }}
+          {{ details?.unitPPK || 'Tiada maklumat' }}
         </span></b>
     </p>
   </p-card>

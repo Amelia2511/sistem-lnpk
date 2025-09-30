@@ -5,47 +5,89 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { UserService } from '../user.service';
-import { PydService, SasaranKerjaListItem } from '../services/pyd.service';
+import { pegawaiDinilai } from '../model/pegawai.model';
+import { AuthService } from '../auth/auth.service';
+import { PydService } from '../services/pyd.service';
+import { userDTO } from '../model/userDTO.model';
+import { SasaranKerjaService } from '../services/sasaran-kerja.service';
+import { sasaranKerja } from '../model/sasaran-kerja.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-senarai-sasaran',
-  imports: [ButtonModule, CardModule, DialogModule, TableModule, TagModule],
+  imports: [CommonModule, ButtonModule, CardModule, DialogModule, TableModule, TagModule],
   templateUrl: './senarai-sasaran.component.html',
   styleUrl: './senarai-sasaran.component.css'
 })
 export class SenaraiSasaranComponent {
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
-  private userService = inject(UserService);
-  private pydService = inject(PydService);
+  // private route = inject(ActivatedRoute);
+  // private userService = inject(UserService);
+  // private pydService = inject(PydService);
 
-  // pydId!: number;
-  pydId: number = Number(this.userService.getPydId()); // default to logged-in user
-  products: (SasaranKerjaListItem & { severity?: string; actionLabel?: string })[] = [];
+  user: userDTO = {} as userDTO;
+  products: sasaranKerja[] = [];
 
-  ngOnInit() {
-    // this.pydId = Number(this.route.snapshot.paramMap.get('pydId')); // /senarai-sasaran/:pydId
-    this.loadData(); // Just load the data without setting pydId from the route
-  }
+  constructor(
+    private authService: AuthService,
+    private sasaranKerjaService: SasaranKerjaService
+  ) { }
 
-  loadData() {
-    this.pydService.getSasaranByPyd(this.pydId).subscribe({
-      next: list => {
-        this.products = list.map(x => ({
-          ...x,
-          severity: x.status?.toLowerCase() === 'draf' ? 'warn'
-                   : x.status?.toLowerCase() === 'sah' ? 'success'
-                   : undefined,
-          actionLabel: x.status?.toLowerCase() === 'draf' ? 'Kemas kini' : 'Lihat'
-        }));
-      },
-      error: err => console.error(err)
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe(res => {
+      if (res) {
+        this.user = res;
+        console.log("User noKP:", this.user.noKP);
+
+        if (this.user.noKP) {
+          this.sasaranKerjaService.getSasaranKerja(this.user.noKP).subscribe({
+            next: (info) => {
+              console.log("API response:", info);
+              this.products = info;
+            },
+            error: (error) => {
+              console.error("API Error:", error);
+            }
+          });
+        }
+      }
     });
   }
 
-  onButtonClick(row: SasaranKerjaListItem) {
-    // navigate to a detail/edit page with SKT id
-    this.router.navigate(['/sasaran', row.idSkt]);
+  onButtonClick() {
+    this.router.navigate(['/sasaran']);
   }
+
+  // products = [
+  //   {
+  //     tahunPenilaian: 2025,
+  //     kategoriPenilaian: 'Semula',
+  //     status: 'Draf'
+  //   },
+  //   {
+  //     tahunPenilaian: 2025,
+  //     kategoriPenilaian: 'Utama',
+  //     status: 'Sah'
+  //   },
+  //   {
+  //     tahunPenilaian: 2024,
+  //     kategoriPenilaian: 'Semula',
+  //     status: 'Sah'
+  //   },
+  //   {
+  //     tahunPenilaian: 2024,
+  //     kategoriPenilaian: 'Utama',
+  //     status: 'Sah'
+  //   },
+  //   {
+  //     tahunPenilaian: 2023,
+  //     kategoriPenilaian: 'Semula',
+  //     status: 'Sah'
+  //   },
+  //   {
+  //     tahunPenilaian: 2023,
+  //     kategoriPenilaian: 'Utama',
+  //     status: 'Sah'
+  //   },
+  // ];
 }

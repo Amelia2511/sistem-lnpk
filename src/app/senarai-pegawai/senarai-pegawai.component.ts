@@ -29,7 +29,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 })
 
 // <<<<<<< HEAD
-// export class SenaraiPegawaiComponent implements OnInit{
+// export class SenaraiPegawaßiComponent implements OnInit{
 //   statuses!: any[];
 //   employees: Pegawai[] = [];
 //   loading: boolean = false;
