@@ -61,6 +61,21 @@
         </p-tag>
       </td>
       <td class="button-n">
+        <!-- <p-button
+        rounded="true"
+        variant="outlined"
+        [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+        [label]="product?.buttonOption"
+        [disabled]="!!product?.isActive"
+        (onClick)="aktifkan(product); showDialog()">
+        </p-button> -->
+        <!-- <p-button
+          rounded="true"
+          variant="outlined"
+          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
+          [label]="product.buttonOption"
+          [disabled]="!!product.isActive"
+          (onClick)="aktifkan(product); showDialog()"> -->
         <p-button rounded="true" variant="outlined"
           [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
           [label]="product?.buttonOption" [disabled]="!!product?.isActive" (onClick)="aktifkan(product)">

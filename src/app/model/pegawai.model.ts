@@ -18,6 +18,9 @@ export class pegawaiDinilai {
     buttonOption?: string;
     id?: number;
     gambar?: string;
+    // details?: { label: string; label2: string }[];
+    _busy?: boolean;
+    details?: string;
     namaPPP: string | undefined;
     namaPPK: string | undefined;
     idPPP?: number;
@@ -35,7 +38,4 @@ export class pegawaiDinilai {
     idUnitPPK: string | undefined;
     bahagianPPK: string | undefined;
     unitPPK: string | undefined;
-    details?: { label: string; label2: string }[];
-
-    _busy?: boolean;
 }
