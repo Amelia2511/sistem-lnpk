@@ -10,10 +10,26 @@
 
 <p-stepper [value]="1" class="basis-[50rem]">
     <p-step-list>
+        <p-step [value]="1">Maklumat Pyd</p-step>
         <p-step [value]="2">Penilaian</p-step>
         <p-step [value]="3">Ulasan</p-step>
     </p-step-list>
+
     <p-step-panels>
+        <p-step-panel [value]="1">
+            <ng-template #content let-activateCallback="activateCallback">
+                <div class="flex flex-col h-48">
+                    <div
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        <app-maklumat-pyd></app-maklumat-pyd>
+                    </div><br>
+                    <div class="flex pt-6 justify-end">
+                        <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
+                            (onClick)="activateCallback(2)" />
+                    </div>
+                </div>
+            </ng-template>
+        </p-step-panel>
 
         <p-step-panel [value]="2">
             <ng-template #content let-activateCallback="activateCallback">
@@ -21,7 +37,7 @@
                     <div
                         class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
                         <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                <p-divider />
+                            <p-divider />
                             <h4>Pengetahuan, Kemahiran dan Penghasilan Kerja</h4>
                             <div style="display: flex; justify-content: space-between;">
                                 <div>
@@ -30,12 +46,12 @@
                                         meliputi kebolehan mengenalpasti, menganalisis serta menyelesaikan masalah.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[0]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[1]" />
                                 </div>
                             </div>
 
@@ -48,12 +64,12 @@
                                 </div>
 
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[2]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[3]" />
                                 </div>
                             </div>
 
@@ -64,12 +80,12 @@
                                         ditetapkan.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[4]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[5]" />
                                 </div>
                             </div>
 
@@ -80,12 +96,12 @@
                                         mengemukakan cadangan penyelesaian yang membina.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[6]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[7]" />
                                 </div>
                             </div>
 
@@ -96,12 +112,12 @@
                                     </p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[8]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[9]" />
                                 </div>
                             </div>
 
@@ -116,12 +132,12 @@
                                         benar, amanah, telus, cekap dan bijaksana dalam setiap tindakan.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[10]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[11]" />
                                 </div>
                             </div>
 
@@ -132,12 +148,12 @@
                                         peraturan, menepati masa, menunaikan janji dan bersifat sabar.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[12]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[13]" />
                                 </div>
                             </div>
 
@@ -150,12 +166,12 @@
                                         kakitangan ke arah pencapaian objektif organisasi.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[14]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[15]" />
                                 </div>
                             </div>
 
@@ -167,12 +183,12 @@
                                         produktiviti.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[16]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[17]" />
                                 </div>
                             </div>
 
@@ -184,12 +200,12 @@
                                         mempunyai daya tahan.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[18]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[19]" />
                                 </div>
                             </div>
 
@@ -200,12 +216,12 @@
                                         boleh menyesuaikan diri dalam semua keadaan.</p>
                                 </div>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="integeronly" min="1" max="10" size="large"
-                                        [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[20]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[21]" />
                                 </div>
                             </div>
 
@@ -214,16 +230,16 @@
                             <div style="display: flex; justify-content: space-between;">
                                 <h4>Markah Keseluruhan (%)</h4>
                                 <div style="display: flex;">
-                                    <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100"
-                                        mode="decimal" size="small"
-                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
-                                    <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100"
-                                        mode="decimal" size="small"
-                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center' }"
-                                        [style]="{ marginRight: '12px' }" />
+                                    <p-inputnumber [ngModel]="markahKeseluruhan1" [readonly]="true" [disabled]="true"
+                                        [minFractionDigits]="2" [maxFractionDigits]="2"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"></p-inputnumber>
+
+                                    <p-inputnumber [ngModel]="markahKeseluruhan2" [readonly]="true" [disabled]="true"
+                                        [minFractionDigits]="2" [maxFractionDigits]="2"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"></p-inputnumber>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -18,4 +18,7 @@ export class SasaranKerjaService {
     return this.httpClient.get<sasaranKerja[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerja/${noKP}`);
   }
 
+  bolehDinilai(idSkt: number, payload: { idstatus: number }): Observable<sasaranKerja[]> {
+    return this.httpClient.put<sasaranKerja[]>(`${this.baseUrl}SasaranKerjas/BolehDinilai/${idSkt}`, payload);
+  }
 }

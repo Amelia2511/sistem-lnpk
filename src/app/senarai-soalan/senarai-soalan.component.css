@@ -1,0 +1,22 @@
+.example-button-row {
+  display: flex;
+  justify-content: flex-end;  
+  gap: 12px;                  
+  margin-top: 20px;      
+  bottom: 20px;
+  right: 20px;
+}
+
+.btn-simpan {
+  background-color: #C5A94D;
+  color: #F5F7F0;
+  font-weight: bold;
+  padding: 8px 20px;
+  border: 2px solid #C5A94D;
+  transition: 0.3s ease;
+  border-radius: 15px;
+}
+
+.btn-simpan:hover {
+  background-color: #b0913e;
+}

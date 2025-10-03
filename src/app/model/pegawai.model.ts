@@ -1,4 +1,7 @@
 export class pegawaiDinilai {
+//     constructor(init?: Partial<pegawaiDinilai>) {
+//     Object.assign(this, init);
+//   }
     nama: string | undefined;
     noKP: string | undefined;
     emel: string | undefined;
@@ -12,7 +15,6 @@ export class pegawaiDinilai {
     tarikhAkhirKontrak: Date | undefined;
     tempatBertugas: number | undefined;
     idUnit: string | undefined;
-    idBahagian: string | undefined;
     isActive: boolean | undefined;
     status?: string;
     buttonOption?: string;
@@ -22,7 +24,6 @@ export class pegawaiDinilai {
     namaPPP: string | undefined;
     namaPPK: string | undefined;
     idPPP?: number;
-    namaBahagian: string | undefined;
     namaUnit: string | undefined;
     jawatanPPP: string | undefined;
     gredPPP: string | undefined;

@@ -1,0 +1,13 @@
+p-card {
+  flex-grow: 1;
+}
+
+div {
+  gap: 20px 20px;
+}
+b {
+  font-weight: 600;
+}
+.card-custom {
+  width: 300px;
+}

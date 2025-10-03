@@ -24,8 +24,8 @@
                         <div class="flex flex-col h-48">
                             <div
                                 class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                                <app-maklumat-pp></app-maklumat-pp>
-                            </div>
+                                <app-maklumat-pyd></app-maklumat-pyd>
+                            </div><br>
                             <div class="flex pt-6 justify-end">
                                 <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
                                     (onClick)="activateCallback(2)" />
@@ -61,10 +61,13 @@
                                 <h4>Ulasan Keseluruhan</h4>
                                 <p-divider />
                                 <h6>Pegawai Penilai Pertama</h6>
-                                <p>…</p>
+                                <input class="ulasan" type="text" pInputText ngModel [(ngModel)]="ulasanPPP" />
                                 <p-divider />
                                 <h6>Pegawai Penilai Kedua</h6>
-                                <p>…</p>
+                                <input class="ulasan" type="text" pInputText ngModel [(ngModel)]="ulasanPPK" />
+                            </div><br>
+                            <div class="example-button-row">
+                               <p-button label="Simpan" icon="pi pi-check" (onClick)="simpan()" />
                             </div>
                         </div>
                         <div class="flex pt-6 justify-start">

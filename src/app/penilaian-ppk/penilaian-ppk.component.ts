@@ -1,26 +1,27 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from 'primeng/button';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { markahSoalan } from '../model/markah-soalan.model';
 import Swal from 'sweetalert2';
 import { MarkahSoalanService } from '../services/markah-soalan.service';
 import { RoleStateService } from '../services/role-state.service';
-import { AuthService } from '../auth/auth.service';
+import { CommonModule } from '@angular/common';
 import { PenilaianService } from '../services/penilaian.service';
-import { penilaian } from '../model/penilaian.model';
+import { markahKeseluruhan } from '../model/markah-keseluruhan.model';
+import { SenaraiSoalanComponent } from "../senarai-soalan/senarai-soalan.component";
 
 @Component({
-  selector: 'app-senarai-soalan',
-  imports: [DividerModule, InputNumberModule, TableModule, CommonModule, FormsModule, ButtonModule],
-  templateUrl: './senarai-soalan.component.html',
-  styleUrl: './senarai-soalan.component.css'
+  selector: 'app-penilaian-ppk',
+  imports: [CommonModule, ButtonModule, FormsModule, TableModule, InputNumberModule, DividerModule, SenaraiSoalanComponent],
+  templateUrl: './penilaian-ppk.component.html',
+  styleUrl: './penilaian-ppk.component.css'
 })
-export class SenaraiSoalanComponent implements OnInit {
+
+export class PenilaianPpkComponent implements OnInit {
   a1 = 1;
 
   // Data for the Skala table
@@ -71,7 +72,7 @@ export class SenaraiSoalanComponent implements OnInit {
   markahKeseluruhan: number = 0;
   markahKeseluruhan2: number = 0;
 
-  constructor(private router: Router, private markahSoalan: MarkahSoalanService, private roleState: RoleStateService, private route: ActivatedRoute, private authService: AuthService, private penilaian: PenilaianService) { }
+  constructor(private router: Router, private markahSoalan: MarkahSoalanService, private roleState: RoleStateService, private penilaianService: PenilaianService) { }
 
   // Calculate overall percentage whenever any input changes
   calculateMarkahKeseluruhan(): void {
@@ -106,13 +107,13 @@ export class SenaraiSoalanComponent implements OnInit {
     ].filter(val => val !== null) as number[];
 
     // Calculate Column 1 percentage
-    if (column1Values.length === 0) {
-      this.markahKeseluruhan = 0;
-    } else {
-      const total1 = column1Values.reduce((sum, val) => sum + val, 0);
-      const average1 = total1 / column1Values.length;
-      this.markahKeseluruhan = (average1 / 10) * 100; // Convert scale 1-10 to percentage
-    }
+    // if (column1Values.length === 0) {
+    //   this.markahKeseluruhan = 0;
+    // } else {
+    //   const total1 = column1Values.reduce((sum, val) => sum + val, 0);
+    //   const average1 = total1 / column1Values.length;
+    //   this.markahKeseluruhan = (average1 / 10) * 100; // Convert scale 1-10 to percentage
+    // }
 
     // Calculate Column 2 percentage
     if (column2Values.length === 0) {
@@ -130,30 +131,23 @@ export class SenaraiSoalanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      if (user && user.noKP) {
-        this.penilaian.getLatestPenilaianByNoKp(user.noKP).subscribe();
+    this.penilaianService.idPenilaian$.subscribe(id => {
+      if (id !== null) {
+        this.idPenilaian = id;
       }
     });
 
-    // Subscribe to idPenilaian from service
-    this.penilaian.idPenilaian$.subscribe(id => {
-      this.idPenilaian = id;
-      console.log(" idPenilaian from service:", id);
-
-      // Once we have idPenilaian, we can load markah soalan
-      if (this.markah && this.idPenilaian) {
-        this.markahSoalan.getMarkahSoalan(this.markah).subscribe({
-          next: (info) => {
-            console.log("API response:", info);
-            this.products = info;
-          },
-          error: (error) => {
-            console.error("API Error:", error);
-          }
-        });
-      }
-    });
+    if (this.markah) {
+      this.markahSoalan.getMarkahSoalan(this.markah).subscribe({
+        next: (info) => {
+          console.log("API response:", info);
+          this.products = info;
+        },
+        error: (error) => {
+          console.error("API Error:", error);
+        }
+      });
+    }
   }
 
   simpan(): void {
@@ -162,27 +156,6 @@ export class SenaraiSoalanComponent implements OnInit {
         icon: 'error',
         title: 'Ralat!',
         text: 'ID Penilaian tidak ditemukan. Sila cuba lagi.',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-    if (
-      !this.formValues.ilmuPengetahuan ||
-      !this.formValues.kuantitiHasil ||
-      !this.formValues.kualitiHasil ||
-      !this.formValues.penganalisisan ||
-      !this.formValues.nilaiTambah ||
-      !this.formValues.integriti ||
-      !this.formValues.disiplin ||
-      !this.formValues.kepimpinan ||
-      !this.formValues.kreatifProaktif ||
-      !this.formValues.kawalanDiri ||
-      !this.formValues.jalinanHubungan
-    ) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Markah tidak diisi dengan lengkap!',
-        text: 'Sila lengkapkan semua markah.',
         confirmButtonText: 'OK'
       });
       return;
@@ -260,16 +233,15 @@ export class SenaraiSoalanComponent implements OnInit {
 
     console.log('Records to save:', records);
 
+    // Call the service to save multiple records
     this.markahSoalan.simpanMultipleMarkahSoalan(records).subscribe({
       next: (info) => {
-        console.log('Save successful:', info);
+        console.log("API response:", info);
         Swal.fire({
           icon: 'success',
           title: 'Berjaya!',
           text: `${records.length} rekod markah berjaya disimpan.`,
           confirmButtonText: 'OK'
-        }).then(() => {
-          this.router.navigate(['/penilaian-prestasi']);
         });
         return;
       },

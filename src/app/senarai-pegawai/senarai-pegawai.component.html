@@ -1,12 +1,17 @@
 <p-breadcrumb [home]="home" [model]="items" />
 <h4>Senarai Pegawai</h4><br>
-<p-table class="p-datatable-customers" [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+<p-select [options]="units" [(ngModel)]="details.id" optionLabel="namaUnit" optionValue="id" [filter]="true"
+  filterBy="namaUnit" [showClear]="true" placeholder="Pilih Unit" class="act_setting" (onChange)="onUnitChange($event)">
+</p-select>
+<p-table [value]="products" [paginator]="true" [rows]="rows2" [first]="first2" [totalRecords]="products.length"
+  (onPage)="onPageChange2($event)" [tableStyle]="{ 'min-width': '50rem' }">
   <ng-template pTemplate="header">
     <tr>
       <th>Nama</th>
       <th>Tarikh Mula</th>
       <th>Tarikh Akhir</th>
       <!-- <th>Tempoh Sudah Berkhidmat</th> -->
+      <th>Unit</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -22,6 +27,7 @@
       </td>
       <td>{{ product.tarikhMulaKontrak}}</td>
       <td>{{ product.tarikhAkhirKontrak }}</td>
+      <td>{{ product.namaUnit }}</td>
       <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
 
       <td>
@@ -38,13 +44,13 @@
         [disabled]="!!product?.isActive"
         (onClick)="aktifkan(product); showDialog()">
         </p-button> -->
-        <p-button
-          rounded="true"
-          variant="outlined"
+        <!-- <p-button rounded="true" variant="outlined"
           [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-          [label]="product.buttonOption"
-          [disabled]="!!product.isActive"
-          (onClick)="aktifkan(product); showDialog()">
+          [label]="product.buttonOption" [disabled]="!!product.isActive" (onClick)="aktifkan(product); showDialog()">
+        </p-button> -->
+        <p-button rounded="true" variant="outlined" [severity]="product.buttonOption === 'Aktifkan' ? 'success' : 
+              (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')" [label]="product.buttonOption"
+          [disabled]="product.isActive || product.bolehDinilaiClicked" (onClick)="handleAction(product)">
         </p-button>
 
       </td>
@@ -52,50 +58,39 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '450px' }">
+<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false"
+  [style]="{ width: '450px' }">
   <div class="field">
     <label for="tahunPenilaian">Tahun Penilaian *</label>
-    <p-select
-      id="tahunPenilaian"
-      [(ngModel)]="tahunPenilaian"
-      [options]="tahunOptions"
-      placeholder="Pilih Tahun Penilaian"
-      [style]="{ width: '100%' }"
-      optionLabel="label"
-      optionValue="value">
+    <p-select id="tahunPenilaian" [(ngModel)]="tahunPenilaian" [options]="tahunOptions"
+      placeholder="Pilih Tahun Penilaian" [style]="{ width: '100%' }" optionLabel="label" optionValue="value">
     </p-select>
   </div>
 
   <div class="field">
     <label for="kategoriPenilaian">Kategori Penilaian *</label>
-    <p-select
-      id="kategoriPenilaian"
-      [(ngModel)]="kategoriPenilaian"
-      [options]="kategoriOptions"
-      placeholder="Pilih Kategori Penilaian"
-      [style]="{ width: '100%' }"
-      optionLabel="label"
-      optionValue="value">
+    <p-select id="kategoriPenilaian" [(ngModel)]="kategoriPenilaian" [options]="kategoriOptions"
+      placeholder="Pilih Kategori Penilaian" [style]="{ width: '100%' }" optionLabel="label" optionValue="value">
     </p-select>
   </div>
 
   <ng-template pTemplate="footer">
-    <button
-      type="button"
-      pButton
-      label="Batal"
-      icon="pi pi-times"
-      class="p-button-secondary"
+    <button type="button" pButton label="Batal" icon="pi pi-times" class="p-button-secondary"
       (click)="cancelActivation()">
     </button>
 
-    <button
-      type="button"
-      pButton
-      label="Aktifkan"
-      icon="pi pi-check"
-      [loading]="selectedPegawai?._busy ?? false"
+    <button type="button" pButton label="Aktifkan" icon="pi pi-check" [loading]="selectedPegawai?._busy ?? false"
       (click)="confirmActivation()">
     </button>
   </ng-template>
 </p-dialog>
+
+<div class="flex items-center justify-end">
+  <span class="mx-1 text-color">Items per page: </span>
+  <p-select [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows2"
+    (ngModelChange)="first2 = 0" />
+  <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="120" (onPageChange)="onPageChange2($event)"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} of {totalRecords}"
+    [showPageLinks]="false" [showFirstLastIcon]="false">
+  </p-paginator>
+</div>

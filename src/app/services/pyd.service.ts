@@ -32,6 +32,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { pegawaiDinilai } from '../model/pegawai.model';
 import { Observable } from 'rxjs';
+import { pegawai } from '../model/employee.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class PydService {
 
   constructor(private httpClient: HttpClient) { }
 
+  //GET
   getPegawaiDinilai(): Observable<pegawaiDinilai[]> {
     return this.httpClient.get<pegawaiDinilai[]>(this.baseUrl + 'PegawaiDinilais/GetPegawaiDinilai');
   }
@@ -54,6 +56,15 @@ export class PydService {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetMaklumatPenilai/${noKP}`);
   }
 
+  getMaklumatPyd(noKP: string): Observable<pegawaiDinilai> {
+    return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}Pegawais/pyd/${noKP}`);
+  }
+
+  // getUnitPyd(namaUnit: string): Observable<pegawaiDinilai> {
+  //   return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetUnitPyd/${namaUnit}`);
+  // }
+
+  //PUT
   updatePegawai(id: number, pegawai: pegawaiDinilai): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/${id}`, pegawai);
   }
@@ -62,4 +73,8 @@ export class PydService {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
 
+  //POST
+  bolehDinilai(id: number) {
+    return this.httpClient.post<any>(`${this.baseUrl} PegawaiDinilai/${id}/bolehDinilai`, {});
+  }
 }

@@ -31,9 +31,11 @@
                      [(ngModel)]="details.gredDisandang"><br><br>
 
               <label>Tempat Bertugas</label>
-              <p-select [options]="units" [(ngModel)]="details.id" optionLabel="namaUnit" optionValue="id"
-                     [filter]="true" filterBy="namaUnit" [showClear]="true" placeholder="Pilih Unit" class="act_setting" (onChange)="onUnitChange($event)">
+              <p-select [options]="units" [(ngModel)]="details.idUnit" optionLabel="namaUnit" optionValue="id"
+                     [filter]="true" filterBy="namaUnit" [showClear]="true" placeholder="Pilih Unit" class="act_setting"
+                     (onChange)="onUnitChange($event)">
               </p-select>
+
               <br><br>
 
               <label> Tarikh Mula Kontrak </label>

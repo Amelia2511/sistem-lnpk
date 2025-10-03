@@ -14,6 +14,7 @@ import { PenilaianPrestasiComponent } from './penilaian-prestasi/penilaian-prest
 import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
 import { SenaraiSoalanComponent } from './senarai-soalan/senarai-soalan.component';
 import { PenilaianComponent } from './penilaian/penilaian.component';
+import { PenilaianPpkComponent } from './penilaian-ppk/penilaian-ppk.component';
 
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
@@ -30,6 +31,7 @@ export const routes: Routes = [
     { path: 'penilaian-prestasi', component: PenilaianPrestasiComponent},
     { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
     { path: 'senarai-soalan', component: SenaraiSoalanComponent},
-    { path: 'penilaian', component: PenilaianComponent}
+    { path: 'penilaian', component: PenilaianComponent},
+    { path: 'penilaian-ppk', component: PenilaianPpkComponent}
     // { path: '', redirectTo: '/laman-utama', pathMatch: 'full' }
 ];
