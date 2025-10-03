@@ -2,23 +2,44 @@
   <h1>Pencapaian Sasaran Kerja</h1>
   <span>
     <div style="display: flex; gap: 5px;">
-      <p-tag value="2025" [rounded]="true"/>
-      <p-tag value="Utama" [rounded]="true"/>
+      <p-tag [value]="(tahunPenilaian ?? '-') + ''" [rounded]="true" />
+      <p-tag [value]="namaKategoriPenilaian || '-'" [rounded]="true" />
     </div>
   </span>
 </div>
 <div style="display: flex; justify-content: flex-end;">
   <p-button (onClick)="onButtonClick()" label="Tambah Aktiviti" icon="pi pi-plus" size="small"/>
 </div>
-<p-table [tableStyle]="{ 'min-width': '25rem' }">
-    <ng-template #header>
-        <tr>
-            <th>Aktiviti</th>
-            <th>Petunjuk Prestasi</th>
-            <th>Sasaran Kerja</th>
-            <th>Pencapaian Sebenar</th>
-            <th>Ulasan</th>
-            <th>Lampiran</th>
-        </tr>
-    </ng-template>
+<p-table
+  [value]="rows"
+  [loading]="loading"
+  [tableStyle]="{ 'min-width': '48rem' }"
+  [paginator]="true"
+  [rows]="10"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 22%">Aktiviti</th>
+      <th style="width: 12%">Petunjuk</th>
+      <th style="width: 22%">Keterangan</th>
+      <th style="width: 12%">Sasaran Kerja</th>
+      <th style="width: 14%">Pencapaian Sebenar</th>
+      <th style="width: 18%">Ulasan</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-row>
+    <tr>
+      <td>{{ row.aktiviti }}</td>
+      <td>{{ row.jenisPetunjuk || '-' }}</td>
+      <td>{{ row.keterangan || '-' }}</td>
+      <td class="text-right">{{ row.sasaranKerja ?? '-' }}</td>
+      <td class="text-right">{{ row.pencapaianSebenar ?? '-' }}</td>
+      <td>{{ row.ulasan || '-' }}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr><td colspan="6" class="text-center">Tiada rekod.</td></tr>
+  </ng-template>
 </p-table>

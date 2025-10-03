@@ -8,22 +8,23 @@ import { TambahAktivitiComponent } from './tambah-aktiviti/tambah-aktiviti.compo
 import { SenaraiPegawaiComponent } from './senarai-pegawai/senarai-pegawai.component';
 import { MaklumatPegawaiComponent } from './maklumat-pegawai/maklumat-pegawai.component';
 import { LaporanSasaranComponent } from './laporan-sasaran/laporan-sasaran.component';
-import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
-import { PenilaianComponent } from './penilaian/penilaian.component';
 import { DaftarAkaunComponent } from './daftar-akaun/daftar-akaun.component';
 import { PegawaiDinilaiComponent } from './pegawai-dinilai/pegawai-dinilai.component';
 import { SenaraiPerananComponent } from './senarai-peranan/senarai-peranan.component';
+import { PenilaianComponent } from './penilaian/penilaian.component';
 import { PenilaianPrestasiComponent } from './penilaian-prestasi/penilaian-prestasi.component';
 import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
 import { SenaraiSoalanComponent } from './senarai-soalan/senarai-soalan.component';
-import { PenilaianComponent } from './penilaian/penilaian.component';
+import { sktMetaResolver } from './resolvers/skt-meta.resolver';
 
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
     { path: 'laman-utama', component: LamanUtamaComponent },
     { path: 'daftar-anggota', component: DaftarKakitanganBaruComponent},
     { path: 'senarai-sasaran', component: SenaraiSasaranComponent},
-    { path: 'sasaran', component: SasaranComponent},
+    { path: 'sasaran', component: SasaranComponent, resolve: { skt: sktMetaResolver },
+    // ensure resolver re-runs when query params change (idSkt changes)
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'},
     { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
     { path: 'maklumat-sasaran', component: LaporanSasaranComponent},
     { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},

@@ -1,21 +1,75 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { sasaranKerja } from '../model/sasaran-kerja.model';
+// import { sasaranKerja } from '../model/sasaran-kerja.model';
 import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs';
+
+export interface sasaranKerja {
+  idSkt: number;
+  tahunPenilaian: number;
+  namaKategoriPenilaian: string;
+  namaStatus: string;
+
+  idPYD: number | undefined;
+  idStatus: number | undefined;
+  idKategoriPenilaian: number | undefined;
+  idPPP: number | undefined;
+  idPPK: number | undefined;
+  tarikhHantar: Date | undefined;
+  tarikhSah: Date | undefined;
+  createdAt: Date | undefined;
+  updateAt: Date | undefined;
+}
+
+export interface SasaranAktivitiRow {
+  idAktiviti: number;
+  aktiviti: string;
+  idPprestasi: number;
+  jenisPetunjuk?: string | null;
+  keterangan?: string | null;
+  sasaranKerja?: number | null;
+  pencapaianSebenar?: number | null;
+  ulasan?: string | null;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class SasaranKerjaService {
 
+export class SasaranKerjaService {
   baseUrl = environment.baseUrl;
 
   constructor(private httpClient: HttpClient) { }
 
-  //skt
   getSasaranKerja(noKP: string): Observable<sasaranKerja[]> {
-    return this.httpClient.get<sasaranKerja[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerja/${noKP}`);
+    return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerja/${noKP}`)
+      .pipe(map(rows => rows.map(r => ({
+        idSkt: r.idSkt ?? r.id,
+        tahunPenilaian: r.tahunPenilaian,
+        namaKategoriPenilaian: r.namaKategoriPenilaian,
+        namaStatus: r.namaStatus,
+        idPYD: r.idPyd,
+        idStatus: r.idStatus,
+        idKategoriPenilaian: r.idKategoriPenilaian,
+        idPPP: r.idPpp,
+        idPPK: r.idPpk,
+        tarikhHantar: r.tarikhHantar,
+        tarikhSah: r.tarikhSah,
+        createdAt: r.createdAt,
+        updateAt: r.updateAt
+      } as sasaranKerja))));
   }
 
+  getSasaranKerjaById(idSkt: number) {
+    return this.httpClient.get<Pick<sasaranKerja, 'idSkt'|'tahunPenilaian'|'namaKategoriPenilaian'>>(
+      `${this.baseUrl}SasaranKerjas/${idSkt}`
+    );
+  }
+
+  getAktivitiRows(idSkt: number): Observable<SasaranAktivitiRow[]> {
+    return this.httpClient.get<SasaranAktivitiRow[]>(
+      `${this.baseUrl}SasaranKerjas/${idSkt}/rows`
+    );
+  }
 }

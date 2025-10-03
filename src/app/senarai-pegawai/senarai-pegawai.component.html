@@ -85,34 +85,39 @@
     </tr>
   </ng-template>
 </p-table>
+<!-- [(visible)]="visible" [modal]="true" [style]="{width: '50rem'}" -->
+<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '50rem', 'min-height': '400px' }" [contentStyle]="{ 'padding': '2rem', 'overflow': 'visible' }">
+  <ng-template pTemplate="body">
+    <div style="min-height: 200px; padding: 1rem 0;">
+      <div class="field" style="margin-bottom: 2rem;">
+        <label for="tahunPenilaian" style="display: block; margin-bottom: 0.5rem;">Tahun Penilaian *</label>
+        <p-select
+          id="tahunPenilaian"
+          [(ngModel)]="tahunPenilaian"
+          [options]="tahunOptions"
+          placeholder="Pilih Tahun Penilaian"
+          [style]="{ width: '100%' }"
+          optionLabel="label"
+          optionValue="value"
+          [appendTo]="'body'">
+        </p-select>
+      </div>
 
-<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '450px' }">
-  <div class="field">
-    <label for="tahunPenilaian">Tahun Penilaian *</label>
-    <p-select
-      id="tahunPenilaian"
-      [(ngModel)]="tahunPenilaian"
-      [options]="tahunOptions"
-      placeholder="Pilih Tahun Penilaian"
-      [style]="{ width: '100%' }"
-      optionLabel="label"
-      optionValue="value">
-    </p-select>
-  </div>
-
-  <div class="field">
-    <label for="kategoriPenilaian">Kategori Penilaian *</label>
-    <p-select
-      id="kategoriPenilaian"
-      [(ngModel)]="kategoriPenilaian"
-      [options]="kategoriOptions"
-      placeholder="Pilih Kategori Penilaian"
-      [style]="{ width: '100%' }"
-      optionLabel="label"
-      optionValue="value">
-    </p-select>
-  </div>
-
+      <div class="field" style="margin-bottom: 2rem;">
+        <label for="kategoriPenilaian" style="display: block; margin-bottom: 0.5rem;">Kategori Penilaian *</label>
+        <p-select
+          id="kategoriPenilaian"
+          [(ngModel)]="kategoriPenilaian"
+          [options]="kategoriOptions"
+          placeholder="Pilih Kategori Penilaian"
+          [style]="{ width: '100%' }"
+          optionLabel="label"
+          optionValue="value"
+          [appendTo]="'body'">
+        </p-select>
+      </div>
+    </div>
+  </ng-template>
   <ng-template pTemplate="footer">
     <button
       type="button"

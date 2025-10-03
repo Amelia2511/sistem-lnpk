@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -10,21 +10,23 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TextareaModule } from 'primeng/textarea';
 import { Router } from '@angular/router';
+import { AttachmentService } from '../services/attachment.service';
+import Swal from 'sweetalert2';
+import { firstValueFrom } from 'rxjs';
+import { attachment } from '../model/attachment.model';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// Selected file with File object
 interface Lampiran {
   file: File;
   namaFail: string;
   lampiranId?: number;
 }
 
-// For payload to backend after upload
 interface UploadedLampiran {
   namaFail: string;
   lampiranId: number;
 }
 
-// Petunjuk Prestasi row
 interface PetunjukPrestasiRow {
   jenis: string;
   keterangan: string;
@@ -46,21 +48,35 @@ interface PetunjukPrestasiRow {
 export class TambahAktivitiComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
-  backendUrl = 'https://localhost:44324'; // Your backend URL
+  backendUrl = 'http://localhost:5015'; // your backend
 
-  // Form fields
+  idSkt!: number | null;
+  tahunPenilaian?: number | null;
+  namaKategoriPenilaian?: string | null;
+
+  ngOnInit() {
+    this.idSkt = history.state?.idSkt ?? null;
+    this.tahunPenilaian = history.state?.tahunPenilaian ?? null;
+    this.namaKategoriPenilaian = history.state?.namaKategoriPenilaian ?? null;
+  }
+
   namaAktiviti = '';
   petunjukPrestasiRows: PetunjukPrestasiRow[] = [];
   uploadedFiles: Lampiran[] = [];
   uploadedLampiran: UploadedLampiran[] = [];
+  file: File | null = null;
+  atts: attachment = {} as attachment;
 
-  // Dialog
   visible = false;
   selectedPetunjukJenis = '';
   keterangan = '';
   sasaranKerjaDialog = '';
   pencapaianSebenarDialog = '';
   ulasanDialog = '';
+
+  constructor(public attService: AttachmentService) {
+    this.idSkt = (history.state?.idSkt ?? null);
+  }
 
   petunjukPrestasiOptions = [
     { label: 'Kos', value: 'Kos' },
@@ -69,7 +85,6 @@ export class TambahAktivitiComponent {
     { label: 'Masa', value: 'Masa' }
   ];
 
-  // --- Petunjuk Prestasi Dialog ---
   showDialog() {
     this.visible = true;
     this.selectedPetunjukJenis = '';
@@ -92,92 +107,174 @@ export class TambahAktivitiComponent {
 
   cancelPetunjukPrestasi() { this.visible = false; }
 
-  // --- Lampiran File Handling ---
-  handleFileSelect(event: any) {
-    if (!event || !event.files || event.files.length === 0) {
-      console.log('No files selected');
-      return; // User clicked Choose but didn't select any files
-    }
+  onFileSelected(event: any) {
+  const selectedFile: File = event.target.files[0];
+  if (!selectedFile) return;
 
-    for (let f of event.files) {
-      if (!f) continue; // guard against undefined
+  if (selectedFile.size > 12 * 1024 * 1024) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Fail terlalu besar',
+      text: 'Saiz fail tidak boleh melebihi 12 MB'
+    });
+    return;
+  }
+
+  this.file = selectedFile;
+  this.atts.namaFail = selectedFile.name;
+
+  console.log('Fail dipilih:', this.file);
+}
+
+  // --- FileUpload handlers ---
+  handleFileSelect(event: any) {
+    if (!event?.files || event.files.length === 0) return; // guard for Choose without selection
+    for (const f of event.files) {
+      if (!f) continue;
       this.uploadedFiles.push({ file: f, namaFail: f.name });
     }
     console.log('Files selected:', this.uploadedFiles);
   }
 
   async onCustomUpload(event: any) {
+    // Guard against missing or empty files
     if (!event || !event.files || event.files.length === 0) {
       console.log('No files to upload');
-      return; // User clicked Upload without files
+      return;
     }
-
-    this.uploadedLampiran = [];
-
-    for (const f of event.files) {
-      if (!f) continue;
-
-      // Step 1: Save metadata
-      const lampiranIdResponse: number | undefined = await this.http.post<number>(
-        `${this.backendUrl}/api/lampiran/metadata`,
-        { NamaFail: f.name }
-      ).toPromise();
-
-      if (lampiranIdResponse === undefined || lampiranIdResponse === null) {
-        throw new Error(`Lampiran ID not returned for file: ${f.name}`);
-      }
-
-      // Step 2: Upload actual file
-      const formData = new FormData();
-      formData.append('file', f, f.name);
-      await this.http.post(`${this.backendUrl}/api/lampiran/${lampiranIdResponse}`, formData).toPromise();
-
-      // Add to uploadedLampiran array for payload
-      this.uploadedLampiran.push({ namaFail: f.name, lampiranId: lampiranIdResponse });
-
-      // Also store lampiranId in uploadedFiles object
-      const uf = this.uploadedFiles.find(x => x.file === f);
-      if (uf) uf.lampiranId = lampiranIdResponse;
-    }
-
-    if (event.clear) event.clear();
-    console.log('All files uploaded:', this.uploadedLampiran);
   }
 
-  // --- Submit Aktiviti ---
+  onCancel() {
+    this.router.navigate(['/sasaran'], {
+      queryParams: { idSkt: this.idSkt },
+      state: {
+        idSkt: this.idSkt,
+        tahunPenilaian: this.tahunPenilaian,
+        namaKategoriPenilaian: this.namaKategoriPenilaian
+      }
+    });
+  }
+
+
+  // onCancel() {
+  //   if (!this.idSkt) {
+  //     // Fallback: just go to /sasaran without id (or to list)
+  //     this.router.navigate(['/sasaran']);
+  //     return;
+  //   }
+  //   this.router.navigate(['/sasaran'], {
+  //     queryParams: { idSkt: this.idSkt },
+  //     state: {
+  //       idSkt: this.idSkt,
+  //       tahunPenilaian: this.tahunPenilaian,
+  //       namaKategoriPenilaian: this.namaKategoriPenilaian
+  //      }
+  //   });
+  // }
+
   async onSubmit() {
     if (!this.namaAktiviti) {
-      alert('Nama Aktiviti is required');
+      await Swal.fire({ icon: 'warning', title: 'Nama Aktiviti diperlukan', text: 'Sila isi Nama Aktiviti sebelum simpan.' });
+      return;
+    }
+    if (!this.idSkt) {
+      await Swal.fire({ icon: 'warning', title: 'Rujukan SKT hilang', text: 'Tidak dapat mengenal pasti SKT untuk Aktiviti ini.' });
       return;
     }
 
     try {
-      // Ensure files are uploaded before submitting
-      if (this.uploadedFiles.length && this.uploadedLampiran.length === 0) {
-        alert('Please upload selected Lampiran files first');
-        return;
-      }
-
-      // Prepare payload
+      // (optional) upload lampiran...
       const payload = {
+        idSkt: this.idSkt,
         namaAktiviti: this.namaAktiviti,
         petunjukPrestasi: this.petunjukPrestasiRows,
         lampiran: this.uploadedLampiran
       };
 
-      // Submit Aktiviti
-      const response = await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
-      console.log('Aktiviti saved successfully:', response);
-      alert('Aktiviti saved successfully!');
+      await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
 
-      // Reset form
-      this.namaAktiviti = '';
-      this.petunjukPrestasiRows = [];
-      this.uploadedFiles = [];
-      this.uploadedLampiran = [];
-    } catch (err) {
-      console.error('Error submitting Aktiviti:', err);
-      alert('Error submitting Aktiviti. Check console.');
+      // success modal
+      await Swal.fire({ icon: 'success', title: 'Aktiviti berjaya disimpan', confirmButtonText: 'OK' });
+
+      this.router.navigate(['/sasaran'], {
+        queryParams: { idSkt: this.idSkt },
+        state: {
+          idSkt: this.idSkt,
+          tahunPenilaian: this.tahunPenilaian,
+          namaKategoriPenilaian: this.namaKategoriPenilaian
+        }
+      });
+    } catch (err: any) {
+      console.error(err);
+      await Swal.fire({ icon: 'error', title: 'Simpan gagal', text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.' });
     }
   }
+
+
+  // async onSubmit() {
+  //   if (!this.namaAktiviti) {
+  //     await Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Nama Aktiviti diperlukan',
+  //       text: 'Sila isi Nama Aktiviti sebelum simpan.'
+  //     });
+  //     return;
+  //   }
+  //   if (!this.idSkt) {
+  //     await Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Rujukan SKT hilang',
+  //       text: 'Tidak dapat mengenal pasti SKT untuk Aktiviti ini.'
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     // (optional) upload lampiran
+  //     if (this.file) {
+  //       const lampiranId = await firstValueFrom(this.attService.postAttachment(this.atts));
+  //       await firstValueFrom(this.attService.postFile(lampiranId, this.file));
+  //       this.uploadedLampiran.push({ namaFail: this.file.name, lampiranId });
+  //     }
+
+  //     const payload = {
+  //       idSkt: this.idSkt,
+  //       namaAktiviti: this.namaAktiviti,
+  //       petunjukPrestasi: this.petunjukPrestasiRows,
+  //       lampiran: this.uploadedLampiran
+  //     };
+
+  //     await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
+
+  //     // clear local state (optional)
+  //     this.namaAktiviti = '';
+  //     this.petunjukPrestasiRows = [];
+  //     this.uploadedFiles = [];
+  //     this.uploadedLampiran = [];
+
+  //     // success → show Swal, then navigate back to that SKT’s page
+  //     await Swal.fire({
+  //       icon: 'success',
+  //       title: 'Aktiviti berjaya disimpan',
+  //       confirmButtonText: 'Kembali ke Laporan Pencapaian Sasaran'
+  //     });
+
+  //     this.router.navigate(['/sasaran'], {
+  //       queryParams: { idSkt: this.idSkt },
+  //       state: {
+  //         idSkt: this.idSkt,
+  //         tahunPenilaian: this.tahunPenilaian,
+  //         namaKategoriPenilaian: this.namaKategoriPenilaian
+  //       }
+  //     });
+
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     await Swal.fire({
+  //       icon: 'error',
+  //       title: 'Simpan gagal',
+  //       text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.'
+  //     });
+  //   }
+  // }
 }

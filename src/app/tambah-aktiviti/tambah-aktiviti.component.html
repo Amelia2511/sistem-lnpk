@@ -1,11 +1,19 @@
 <h1>Tambah Aktiviti</h1>
 
+<br>
+
 <label>Nama Aktiviti</label>
 <input type="text" pInputText [(ngModel)]="namaAktiviti" />
 
-<!-- Petunjuk Prestasi -->
+<br>
+<br>
+
+<div style="display: flex; justify-content: space-between;">
 <label>Petunjuk Prestasi</label>
-<p-button label="Tambah Petunjuk" icon="pi pi-plus" (click)="showDialog()"></p-button>
+  <span>
+<p-button display="flex" align-self="flex-end" label="Tambah Petunjuk" icon="pi pi-plus" (click)="showDialog()" ></p-button>
+  </span>
+</div>
 
 <p-dialog header="Tambah Petunjuk Prestasi" [(visible)]="visible" [modal]="true" [style]="{width: '50rem'}">
   <div class="mb-4">
@@ -35,12 +43,16 @@
 </p-dialog>
 
 <p-table [value]="petunjukPrestasiRows">
-  <ng-template #header>
+  <ng-template pTemplate="header">
     <tr>
-      <th>Jenis</th><th>Keterangan</th><th>Sasaran Kerja</th><th>Pencapaian</th><th>Ulasan</th>
+      <th>Jenis</th>
+      <th>Keterangan</th>
+      <th>Sasaran Kerja</th>
+      <th>Pencapaian</th>
+      <th>Ulasan</th>
     </tr>
   </ng-template>
-  <ng-template #body let-row>
+  <ng-template pTemplate="body" let-row>
     <tr>
       <td>{{row.jenis}}</td>
       <td>{{row.keterangan}}</td>
@@ -51,19 +63,25 @@
   </ng-template>
 </p-table>
 
+
+<br>
+<br>
+
 <!-- <label>Lampiran</label>
 <p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload> -->
 <label>Lampiran</label>
-<p-fileUpload 
-  name="files[]" 
-  [auto]="false" 
-  [customUpload]="true" 
+<p-fileUpload
+  name="files[]"
+  [auto]="false"
+  [customUpload]="true"
   [multiple]="true"
   (onAdd)="handleFileSelect($event)"
   (uploadHandler)="onCustomUpload($event)">
 </p-fileUpload>
 
+<br>
+
 <div class="flex justify-end gap-2 mt-4">
-  <p-button label="Batal"></p-button>
+  <p-button label="Batal" severity="secondary" (click)="onCancel()"></p-button>
   <p-button label="Simpan" (click)="onSubmit()"></p-button>
 </div>
