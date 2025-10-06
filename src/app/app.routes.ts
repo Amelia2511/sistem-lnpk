@@ -16,6 +16,7 @@ import { PenilaianPrestasiComponent } from './penilaian-prestasi/penilaian-prest
 import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
 import { SenaraiSoalanComponent } from './senarai-soalan/senarai-soalan.component';
 import { sktMetaResolver } from './resolvers/skt-meta.resolver';
+import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
 
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: 'sasaran', component: SasaranComponent, resolve: { skt: sktMetaResolver },
     // ensure resolver re-runs when query params change (idSkt changes)
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'},
+    { path: 'aktiviti/edit/:id', component: EditAktivitiComponent },
     { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
     { path: 'maklumat-sasaran', component: LaporanSasaranComponent},
     { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},

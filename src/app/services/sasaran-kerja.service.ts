@@ -33,6 +33,21 @@ export interface SasaranAktivitiRow {
   ulasan?: string | null;
 }
 
+export interface AktivitiDetail {
+  idAktiviti: number;
+  idSkt: number | null;
+  namaAktiviti: string | null;
+  petunjuk: {
+    idPprestasi?: number | null;
+    jenis?: string | null;
+    keterangan?: string | null;
+    sasaranKerja?: number | null;
+    pencapaianSebenar?: number | null;
+    ulasan?: string | null;
+  }[];
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,20 +59,20 @@ export class SasaranKerjaService {
 
   getSasaranKerja(noKP: string): Observable<sasaranKerja[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerja/${noKP}`)
-      .pipe(map(rows => rows.map(r => ({
-        idSkt: r.idSkt ?? r.id,
-        tahunPenilaian: r.tahunPenilaian,
-        namaKategoriPenilaian: r.namaKategoriPenilaian,
-        namaStatus: r.namaStatus,
-        idPYD: r.idPyd,
-        idStatus: r.idStatus,
-        idKategoriPenilaian: r.idKategoriPenilaian,
-        idPPP: r.idPpp,
-        idPPK: r.idPpk,
-        tarikhHantar: r.tarikhHantar,
-        tarikhSah: r.tarikhSah,
-        createdAt: r.createdAt,
-        updateAt: r.updateAt
+    .pipe(map(rows => rows.map(r => ({
+      idSkt: r.idSkt ?? r.id,
+      tahunPenilaian: r.tahunPenilaian,
+      namaKategoriPenilaian: r.namaKategoriPenilaian,
+      namaStatus: r.namaStatus,
+      idPYD: r.idPyd,
+      idStatus: r.idStatus,
+      idKategoriPenilaian: r.idKategoriPenilaian,
+      idPPP: r.idPpp,
+      idPPK: r.idPpk,
+      tarikhHantar: r.tarikhHantar,
+      tarikhSah: r.tarikhSah,
+      createdAt: r.createdAt,
+      updateAt: r.updateAt
       } as sasaranKerja))));
   }
 
@@ -72,4 +87,17 @@ export class SasaranKerjaService {
       `${this.baseUrl}SasaranKerjas/${idSkt}/rows`
     );
   }
+
+  getAktivitiDetail(idAktiviti: number) {
+    return this.httpClient.get<AktivitiDetail>(`${this.baseUrl}Aktiviti/${idAktiviti}`);
+  }
+
+  updateAktiviti(idAktiviti: number, body: { namaAktiviti: string; petunjuk: any[] }) {
+    return this.httpClient.put(`${this.baseUrl}Aktiviti/${idAktiviti}`, body);
+  }
+
+  deleteAktiviti(idAktiviti: number) {
+    return this.httpClient.delete(`${this.baseUrl}Aktiviti/${idAktiviti}`);
+  }
+
 }

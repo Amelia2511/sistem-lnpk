@@ -1,7 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { FormsModule, NgModel } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -9,12 +11,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TextareaModule } from 'primeng/textarea';
-import { Router } from '@angular/router';
-import { AttachmentService } from '../services/attachment.service';
+import { TooltipModule } from 'primeng/tooltip';
 import Swal from 'sweetalert2';
 import { firstValueFrom } from 'rxjs';
 import { attachment } from '../model/attachment.model';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AttachmentService } from '../services/attachment.service';
 
 interface Lampiran {
   file: File;
@@ -35,12 +36,13 @@ interface PetunjukPrestasiRow {
   ulasan: string;
 }
 
+
 @Component({
   selector: 'app-tambah-aktiviti',
   standalone: true,
   imports: [
     CommonModule, FormsModule, ButtonModule, DialogModule, FileUploadModule,
-    InputTextModule, SelectModule, TableModule, TextareaModule, HttpClientModule
+    InputTextModule, SelectModule, TableModule, TextareaModule, TooltipModule, HttpClientModule
   ],
   templateUrl: './tambah-aktiviti.component.html',
   styleUrls: ['./tambah-aktiviti.component.css']
@@ -48,7 +50,7 @@ interface PetunjukPrestasiRow {
 export class TambahAktivitiComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
-  backendUrl = 'http://localhost:5015'; // your backend
+  backendUrl = 'http://localhost:5015';
 
   idSkt!: number | null;
   tahunPenilaian?: number | null;
@@ -62,6 +64,7 @@ export class TambahAktivitiComponent {
 
   namaAktiviti = '';
   petunjukPrestasiRows: PetunjukPrestasiRow[] = [];
+  petunjukSubmitted = false;
   uploadedFiles: Lampiran[] = [];
   uploadedLampiran: UploadedLampiran[] = [];
   file: File | null = null;
@@ -85,8 +88,12 @@ export class TambahAktivitiComponent {
     { label: 'Masa', value: 'Masa' }
   ];
 
+  editingPetunjukIndex: number | null = null;
+
   showDialog() {
     this.visible = true;
+    this.petunjukSubmitted = false;
+    this.editingPetunjukIndex = null;
     this.selectedPetunjukJenis = '';
     this.keterangan = '';
     this.sasaranKerjaDialog = '';
@@ -94,18 +101,75 @@ export class TambahAktivitiComponent {
     this.ulasanDialog = '';
   }
 
-  savePetunjukPrestasi() {
-    this.petunjukPrestasiRows.push({
-      jenis: this.selectedPetunjukJenis,
-      keterangan: this.keterangan,
-      sasaranKerja: this.sasaranKerjaDialog,
-      pencapaianSebenar: this.pencapaianSebenarDialog,
-      ulasan: this.ulasanDialog
-    });
-    this.visible = false;
+  onEditPetunjuk(row: PetunjukPrestasiRow, index: number) {
+    this.visible = true;
+    this.petunjukSubmitted = false;
+    this.editingPetunjukIndex = index; // <— edit mode
+
+    this.selectedPetunjukJenis = row.jenis;
+    this.keterangan = row.keterangan;
+    this.sasaranKerjaDialog = row.sasaranKerja;
+    this.pencapaianSebenarDialog = row.pencapaianSebenar;
+    this.ulasanDialog = row.ulasan;
   }
 
-  cancelPetunjukPrestasi() { this.visible = false; }
+  onDeletePetunjuk(index: number) {
+    this.petunjukPrestasiRows.splice(index, 1);
+  }
+
+  isInvalid(ctrl: NgModel | null | undefined): boolean {
+    return !!ctrl && !!ctrl.invalid && (ctrl.touched || this.petunjukSubmitted);
+  }
+
+savePetunjukPrestasi(
+  jenisCtrl?: NgModel,
+  keteranganCtrl?: NgModel,
+  sasaranCtrl?: NgModel,
+  pencapaianCtrl?: NgModel
+) {
+  this.petunjukSubmitted = true;
+
+  if (
+    this.isInvalid(jenisCtrl) ||
+    this.isInvalid(keteranganCtrl) ||
+    this.isInvalid(sasaranCtrl) ||
+    this.isInvalid(pencapaianCtrl)
+  ) {
+    return;
+  }
+
+  const payload: PetunjukPrestasiRow = {
+    jenis: this.selectedPetunjukJenis,
+    keterangan: this.keterangan.trim(),
+    sasaranKerja: this.sasaranKerjaDialog.trim(),
+    pencapaianSebenar: this.pencapaianSebenarDialog.trim(),
+    ulasan: (this.ulasanDialog || '').trim()
+  };
+
+  if (this.editingPetunjukIndex !== null) {
+    // EDIT: replace row at index
+    this.petunjukPrestasiRows[this.editingPetunjukIndex] = payload;
+  } else {
+    // ADD: push new row
+    this.petunjukPrestasiRows.push(payload);
+  }
+
+  // reset dialog state
+  this.visible = false;
+  this.petunjukSubmitted = false;
+  this.editingPetunjukIndex = null;
+  this.selectedPetunjukJenis = '';
+  this.keterangan = '';
+  this.sasaranKerjaDialog = '';
+  this.pencapaianSebenarDialog = '';
+  this.ulasanDialog = '';
+}
+
+cancelPetunjukPrestasi() {
+  this.visible = false;
+  this.petunjukSubmitted = false;
+  this.editingPetunjukIndex = null;
+}
 
   onFileSelected(event: any) {
   const selectedFile: File = event.target.files[0];
@@ -155,23 +219,6 @@ export class TambahAktivitiComponent {
     });
   }
 
-
-  // onCancel() {
-  //   if (!this.idSkt) {
-  //     // Fallback: just go to /sasaran without id (or to list)
-  //     this.router.navigate(['/sasaran']);
-  //     return;
-  //   }
-  //   this.router.navigate(['/sasaran'], {
-  //     queryParams: { idSkt: this.idSkt },
-  //     state: {
-  //       idSkt: this.idSkt,
-  //       tahunPenilaian: this.tahunPenilaian,
-  //       namaKategoriPenilaian: this.namaKategoriPenilaian
-  //      }
-  //   });
-  // }
-
   async onSubmit() {
     if (!this.namaAktiviti) {
       await Swal.fire({ icon: 'warning', title: 'Nama Aktiviti diperlukan', text: 'Sila isi Nama Aktiviti sebelum simpan.' });
@@ -209,72 +256,4 @@ export class TambahAktivitiComponent {
       await Swal.fire({ icon: 'error', title: 'Simpan gagal', text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.' });
     }
   }
-
-
-  // async onSubmit() {
-  //   if (!this.namaAktiviti) {
-  //     await Swal.fire({
-  //       icon: 'warning',
-  //       title: 'Nama Aktiviti diperlukan',
-  //       text: 'Sila isi Nama Aktiviti sebelum simpan.'
-  //     });
-  //     return;
-  //   }
-  //   if (!this.idSkt) {
-  //     await Swal.fire({
-  //       icon: 'warning',
-  //       title: 'Rujukan SKT hilang',
-  //       text: 'Tidak dapat mengenal pasti SKT untuk Aktiviti ini.'
-  //     });
-  //     return;
-  //   }
-
-  //   try {
-  //     // (optional) upload lampiran
-  //     if (this.file) {
-  //       const lampiranId = await firstValueFrom(this.attService.postAttachment(this.atts));
-  //       await firstValueFrom(this.attService.postFile(lampiranId, this.file));
-  //       this.uploadedLampiran.push({ namaFail: this.file.name, lampiranId });
-  //     }
-
-  //     const payload = {
-  //       idSkt: this.idSkt,
-  //       namaAktiviti: this.namaAktiviti,
-  //       petunjukPrestasi: this.petunjukPrestasiRows,
-  //       lampiran: this.uploadedLampiran
-  //     };
-
-  //     await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
-
-  //     // clear local state (optional)
-  //     this.namaAktiviti = '';
-  //     this.petunjukPrestasiRows = [];
-  //     this.uploadedFiles = [];
-  //     this.uploadedLampiran = [];
-
-  //     // success → show Swal, then navigate back to that SKT’s page
-  //     await Swal.fire({
-  //       icon: 'success',
-  //       title: 'Aktiviti berjaya disimpan',
-  //       confirmButtonText: 'Kembali ke Laporan Pencapaian Sasaran'
-  //     });
-
-  //     this.router.navigate(['/sasaran'], {
-  //       queryParams: { idSkt: this.idSkt },
-  //       state: {
-  //         idSkt: this.idSkt,
-  //         tahunPenilaian: this.tahunPenilaian,
-  //         namaKategoriPenilaian: this.namaKategoriPenilaian
-  //       }
-  //     });
-
-  //   } catch (err: any) {
-  //     console.error(err);
-  //     await Swal.fire({
-  //       icon: 'error',
-  //       title: 'Simpan gagal',
-  //       text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.'
-  //     });
-  //   }
-  // }
 }
