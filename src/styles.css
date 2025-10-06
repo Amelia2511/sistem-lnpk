@@ -2,7 +2,7 @@
 /* @import "tailwindcss";
 @plugin "tailwindcss-primeui"; */
 body {
-  font-family: "TikTok Sans", sans-serif;
+  font-family: "Inter Tight", Manrope, Fustat, "TikTok Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -13,7 +13,7 @@ body {
 html, body { height: 100%; }
 body {
   margin: 0;
-  font-family: "TikTok Sans", "Helvetica Neue", sans-serif;
+  font-family: "Inter Tight", Manrope, Fustat, "TikTok Sans", "Helvetica Neue", sans-serif;
   min-height: 100dvh;
   background: var(--app-bg);
   background-attachment: fixed;
@@ -76,8 +76,4 @@ app-root, #root {
   display: block;
   min-height: 100dvh;
   background: transparent;
-}
-
-.mat-card {
-  font-family: "TikTok Sans";
 }
