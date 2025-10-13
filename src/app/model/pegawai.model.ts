@@ -20,6 +20,7 @@ export class pegawaiDinilai {
     buttonOption?: string;
     id?: number;
     gambar?: string;
+    // details?: { label: string; label2: string }[];
     details?: string;
     namaPPP: string | undefined;
     namaPPK: string | undefined;

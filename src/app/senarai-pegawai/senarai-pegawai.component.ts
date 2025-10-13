@@ -8,6 +8,7 @@ import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
@@ -22,8 +23,9 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [ButtonModule, DatePickerModule, TagModule, RouterModule, TableModule, BreadcrumbModule, DialogModule, SelectModule, FormsModule, PaginatorModule],
   templateUrl: './senarai-pegawai.component.html',
-  styleUrls: ['./senarai-pegawai.component.css'],
+  styleUrl: './senarai-pegawai.component.css',
 })
+
 export class SenaraiPegawaiComponent implements OnInit {
   openActivationDialog(_t17: any) {
     throw new Error('Method not implemented.');
@@ -40,6 +42,7 @@ export class SenaraiPegawaiComponent implements OnInit {
   // Form data for the dialog
   tahunPenilaian: number | null = null;
   kategoriPenilaian: number | null = null;
+
 
   tahunOptions: { label: string; value: number }[] = [];
   // Map to your real DB IDs
@@ -196,7 +199,7 @@ export class SenaraiPegawaiComponent implements OnInit {
         (this.selectedPegawai as any)._busy = false;
       }
     });
-  }
+  };
 
   cancelActivation() {
     this.display = false;

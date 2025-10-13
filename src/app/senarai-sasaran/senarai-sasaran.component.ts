@@ -2,19 +2,18 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { pegawaiDinilai } from '../model/pegawai.model';
 import { AuthService } from '../auth/auth.service';
-import { PydService } from '../services/pyd.service';
 import { userDTO } from '../model/userDTO.model';
-import { SasaranKerjaService } from '../services/sasaran-kerja.service';
-import { sasaranKerja } from '../model/sasaran-kerja.model';
+import { sasaranKerja, SasaranKerjaService } from '../services/sasaran-kerja.service';
+// import { sasaranKerja } from '../model/sasaran-kerja.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-senarai-sasaran',
-  imports: [ButtonModule, CardModule, TableModule, TagModule, CommonModule],
+  imports: [CommonModule, ButtonModule, CardModule, DialogModule, TableModule, TagModule],
   templateUrl: './senarai-sasaran.component.html',
   styleUrl: './senarai-sasaran.component.css'
 })
@@ -22,7 +21,7 @@ export class SenaraiSasaranComponent {
   private router = inject(Router);
 
   user: userDTO = {} as userDTO;
-  products: sasaranKerja[] = [];
+  skts: sasaranKerja[] = [];
 
   constructor(
     private authService: AuthService,
@@ -39,7 +38,7 @@ export class SenaraiSasaranComponent {
           this.sasaranKerjaService.getSasaranKerja(this.user.noKP).subscribe({
             next: (info) => {
               console.log("API response:", info);
-              this.products = info;
+              this.skts = info;
             },
             error: (error) => {
               console.error("API Error:", error);
@@ -50,40 +49,17 @@ export class SenaraiSasaranComponent {
     });
   }
 
-  onButtonClick() {
-    this.router.navigate(['/sasaran']);
-  }
-
-  // products = [
-  //   {
-  //     tahunPenilaian: 2025,
-  //     kategoriPenilaian: 'Semula',
-  //     status: 'Draf'
-  //   },
-  //   {
-  //     tahunPenilaian: 2025,
-  //     kategoriPenilaian: 'Utama',
-  //     status: 'Sah'
-  //   },
-  //   {
-  //     tahunPenilaian: 2024,
-  //     kategoriPenilaian: 'Semula',
-  //     status: 'Sah'
-  //   },
-  //   {
-  //     tahunPenilaian: 2024,
-  //     kategoriPenilaian: 'Utama',
-  //     status: 'Sah'
-  //   },
-  //   {
-  //     tahunPenilaian: 2023,
-  //     kategoriPenilaian: 'Semula',
-  //     status: 'Sah'
-  //   },
-  //   {
-  //     tahunPenilaian: 2023,
-  //     kategoriPenilaian: 'Utama',
-  //     status: 'Sah'
-  //   },
-  // ];
+onButtonClick(skt: sasaranKerja) {
+  this.router.navigate(
+    ['/sasaran'],
+    {
+    queryParams: { idSkt: skt.idSkt },
+    state: {
+      idSkt: skt.idSkt,
+      tahunPenilaian: skt.tahunPenilaian,
+      namaKategoriPenilaian: skt.namaKategoriPenilaian
+    }
+    }
+  );
+}
 }

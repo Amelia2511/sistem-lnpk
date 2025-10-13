@@ -1,11 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
-    <h1>Penilaian Prestasi</h1>
-    <span>
-        <div style="display: flex; gap: 5px;">
-            <p-tag value="2025" [rounded]="true" />
-            <p-tag value="Utama" [rounded]="true" />
-        </div>
-    </span>
+  <h1>Penilaian Prestasi</h1>
+  <span>
+    <div style="display: flex; gap: 5px;">
+      <p-tag value="2025" [rounded]="true"/>
+      <p-tag value="Utama" [rounded]="true"/>
+    </div>
+  </span>
 </div>
 
 <p-stepper [value]="1" class="basis-[50rem]">
@@ -24,8 +24,7 @@
                         <app-maklumat-pyd></app-maklumat-pyd>
                     </div><br>
                     <div class="flex pt-6 justify-end">
-                        <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
-                            (onClick)="activateCallback(2)" />
+                        <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(2)" />
                     </div>
                 </div>
             </ng-template>
@@ -241,11 +240,12 @@
                             </div>
 
                         </div>
+                        <app-senarai-soalan></app-senarai-soalan>
                     </div>
                 </div>
                 <div class="flex pt-6 justify-between">
-                    <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
-                        (onClick)="activateCallback(3)" />
+                    <p-button label="Kembali" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1)" />
+                    <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(3)" />
                 </div>
             </ng-template>
         </p-step-panel>
@@ -254,29 +254,16 @@
             <ng-template #content let-activateCallback="activateCallback">
                 <div class="flex flex-col h-48">
                     <div
-                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                    >
                         <h4>Ulasan Keseluruhan</h4>
-                        <p-divider />
+                        <p-divider/>
                         <h6>Pegawai Penilai Pertama</h6>
-                        <p>Sepanjang tempoh penilaian ini, Encik Ee Zhe telah menunjukkan komitmen yang tinggi dalam
-                            melaksanakan tugasan harian. Beliau menunjukkan tahap kefahaman yang baik terhadap polisi
-                            dan prosedur organisasi, serta mampu menyelesaikan tugasan dalam tempoh masa yang
-                            ditetapkan. Walau bagaimanapun, terdapat ruang untuk penambahbaikan dalam aspek komunikasi
-                            dengan ahli pasukan, terutamanya dalam situasi yang memerlukan koordinasi yang lebih rapat.
-                            Beliau disarankan untuk mengambil inisiatif yang lebih proaktif dalam aktiviti pembangunan
-                            kendiri dan meningkatkan kemahiran kepimpinan. Secara keseluruhannya, prestasi yang
-                            ditunjukkan adalah memuaskan dan selaras dengan jangkaan untuk peringkat jawatan ini.</p>
-                        <p-divider />
+                        <p>Sepanjang tempoh penilaian ini, Encik Ee Zhe telah menunjukkan komitmen yang tinggi dalam melaksanakan tugasan harian. Beliau menunjukkan tahap kefahaman yang baik terhadap polisi dan prosedur organisasi, serta mampu menyelesaikan tugasan dalam tempoh masa yang ditetapkan. Walau bagaimanapun, terdapat ruang untuk penambahbaikan dalam aspek komunikasi dengan ahli pasukan, terutamanya dalam situasi yang memerlukan koordinasi yang lebih rapat. Beliau disarankan untuk mengambil inisiatif yang lebih proaktif dalam aktiviti pembangunan kendiri dan meningkatkan kemahiran kepimpinan. Secara keseluruhannya, prestasi yang ditunjukkan adalah memuaskan dan selaras dengan jangkaan untuk peringkat jawatan ini.</p>
+                        <p-divider/>
                         <h6>Pegawai Penilai Kedua</h6>
-                        <p>Berdasarkan pemerhatian saya sepanjang tempoh kontrak, Encik Ee Zhe menunjukkan dedikasi yang
-                            konsisten terhadap tanggungjawab yang diamanahkan. Beliau memiliki kemahiran teknikal yang
-                            kukuh dan mampu bekerja secara berdikari dengan pengawasan yang minimum. Kualiti kerja yang
-                            dihasilkan adalah pada tahap yang boleh diterima dan jarang memerlukan pembetulan yang
-                            ketara. Namun demikian, beliau perlu meningkatkan kemahiran dalam pengurusan masa,
-                            terutamanya apabila mengendalikan pelbagai tugasan serentak. Saya mencadangkan agar beliau
-                            menghadiri kursus berkaitan pengurusan projek untuk meningkatkan kecekapan kerja. Prestasi
-                            keseluruhan menunjukkan potensi yang baik untuk pembangunan kerjaya yang berterusan.</p>
-                    </div>
+                        <p>Berdasarkan pemerhatian saya sepanjang tempoh kontrak, Encik Ee Zhe menunjukkan dedikasi yang konsisten terhadap tanggungjawab yang diamanahkan. Beliau memiliki kemahiran teknikal yang kukuh dan mampu bekerja secara berdikari dengan pengawasan yang minimum. Kualiti kerja yang dihasilkan adalah pada tahap yang boleh diterima dan jarang memerlukan pembetulan yang ketara. Namun demikian, beliau perlu meningkatkan kemahiran dalam pengurusan masa, terutamanya apabila mengendalikan pelbagai tugasan serentak. Saya mencadangkan agar beliau menghadiri kursus berkaitan pengurusan projek untuk meningkatkan kecekapan kerja. Prestasi keseluruhan menunjukkan potensi yang baik untuk pembangunan kerjaya yang berterusan.</p>
+                      </div>
                 </div>
                 <div class="flex pt-6 justify-start">
                     <p-button label="Kembali" icon="pi pi-arrow-left" iconPos="right" (onClick)="activateCallback(2)" />

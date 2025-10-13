@@ -34,6 +34,13 @@ import { pegawaiDinilai } from '../model/pegawai.model';
 import { Observable } from 'rxjs';
 import { pegawai } from '../model/employee.model';
 
+export interface SasaranKerjaListItem {
+  idSkt: number;
+  tahunPenilaian: number;
+  kategoriPenilaian: string;
+  status: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -72,9 +79,22 @@ export class PydService {
   aktifkanPegawai(id: number, payload: { tahunPenilaian: number; idKategoriPenilaian: number }): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
+  // aktifkanPegawai(id: number): Observable<any> {
+  //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
+  // }
+
+
+  // getSasaranByPyd(pydId: number) {
+  // return this.httpClient.get<SasaranKerjaListItem[]>(
+  //   `${this.baseUrl}SasaranKerjas/ByPyd/${pydId}`
+  // );
+  // aktifkanPegawai(id: number): Observable<any> {
+  //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
+  // }
 
   //POST
   bolehDinilai(id: number) {
     return this.httpClient.post<any>(`${this.baseUrl} PegawaiDinilai/${id}/bolehDinilai`, {});
   }
 }
+

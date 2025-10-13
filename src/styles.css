@@ -1,5 +1,6 @@
 @import "primeicons/primeicons.css";
-
+/* @import "tailwindcss";
+@plugin "tailwindcss-primeui"; */
 body {
   font-family: "TikTok Sans", sans-serif;
   font-optical-sizing: auto;
@@ -10,7 +11,13 @@ body {
     "wdth" 100;
 }
 html, body { height: 100%; }
-body { margin: 0; font-family: "TikTok Sans", Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: "TikTok Sans", "Helvetica Neue", sans-serif;
+  min-height: 100dvh;
+  background: var(--app-bg);
+  background-attachment: fixed;
+ }
 
 :root {
   --app-bg:

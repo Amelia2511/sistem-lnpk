@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { MaklumatPpComponent } from '../maklumat-pp/maklumat-pp.component';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -13,10 +15,11 @@ import { pegawaiDinilai } from '../model/pegawai.model';
 import { MaklumatPydComponent } from '../maklumat-pyd/maklumat-pyd.component';
 import { PenilaianService } from '../services/penilaian.service';
 import { AuthService } from '../auth/auth.service';
+import { SenaraiSoalanComponent } from '../senarai-soalan/senarai-soalan.component';
 
 @Component({
   selector: 'app-penilaian',
-  imports: [ButtonModule, CardModule, DialogModule, DividerModule, StepperModule, TableModule, TagModule, CommonModule, InputNumber, FormsModule, MaklumatPydComponent],
+  imports: [SenaraiSoalanComponent, MaklumatPydComponent, FormsModule, CommonModule, InputNumber, ButtonModule, CardModule, DialogModule, DividerModule, StepperModule, TableModule, TagModule],
   templateUrl: './penilaian.component.html',
   styleUrl: './penilaian.component.css'
 })

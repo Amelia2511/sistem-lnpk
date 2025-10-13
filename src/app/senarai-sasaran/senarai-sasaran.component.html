@@ -1,24 +1,31 @@
 <h1>Laporan Pencapaian Sasaran Kerja</h1>
-<p-table [value]="products" [tableStyle]="{ 'min-width': '25rem' }">
-    <ng-template #header>
-        <tr>
-            <th>Tahun Penilaian</th>
-            <th>Kategori Penilaian</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
+
+<p-table [value]="skts" [tableStyle]="{ 'min-width': '25rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Tahun Penilaian</th>
+      <th>Kategori Penilaian</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-skt>
+    <tr>
+      <td>{{ skt.tahunPenilaian }}</td>
+      <td>{{ skt.namaKategoriPenilaian }}</td>
+      <td><p-tag value="{{ skt.namaStatus }}" [severity]="skt.namaStatus === 'Draf' ? 'warn' : null" />
+      </td>
+      <td>
+        <p-button
+          (onClick)="onButtonClick(skt)"
+          [label]="skt.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
+          [rounded]="true"
+          [severity]="skt.namaStatus === 'Draf' ? 'warn' : null"
+          size="small" />
+      </td>
+      </tr>
     </ng-template>
-    <ng-template #body let-product>
-        <tr>
-            <td>{{ product.tahunPenilaian }}</td>
-            <td>{{ product.namaKategoriPenilaian }}</td>
-            <td><p-tag value="{{ product.namaStatus }}" [severity]="product.namaStatus === 'Draf' ? 'warn' : null" />
-            </td>
-            <td><p-button (onClick)="onButtonClick()" [label]="product.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
-                    [rounded]="true" [severity]="product.namaStatus === 'Draf' ? 'warn' : null" size="small" /></td>
-        </tr>
-    </ng-template>
-    <div *ngFor="let item of products">
+    <div *ngFor="let item of skts">
         {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
     </div>
 
