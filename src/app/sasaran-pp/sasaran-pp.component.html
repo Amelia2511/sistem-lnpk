@@ -7,16 +7,16 @@
     </div>
   </span>
 </div>
-<div style="display: flex; justify-content: flex-end;">
+<!-- <div style="display: flex; justify-content: flex-end;">
   <p-button (onClick)="onButtonClick()" label="Tambah Aktiviti" icon="pi pi-plus" size="small"/>
-</div>
+</div> -->
 <p-table
   [value]="rows"
   [loading]="loading"
   [tableStyle]="{ 'min-width': '48rem' }"
   [paginator]="true"
-  [rows]="10"
->
+  [rows]="10">
+  
   <ng-template pTemplate="header">
     <tr>
       <th style="width: 22%">Aktiviti</th>

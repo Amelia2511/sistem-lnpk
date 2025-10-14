@@ -35,7 +35,9 @@ export class SideMenuComponent {
     { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran', roles: [2], order: 2 },
     { name: 'Markah Penilaian', icon: 'bi bi-person-vcard', route: '/', roles: [2], order: 3 }, // cari icon
     //PPP/PPK
-    { name: 'Penilaian Prestasi', icon: 'bi bi-clipboard2', route: '/penilaian-prestasi', roles: [3, 4], order: 4 }, // cari icon
+    // { name: 'Penilaian Prestasi', icon: 'bi bi-clipboard2', route: '/penilaian-prestasi', roles: [3], order: 4 }, // cari icon
+    { name: 'Senarai Pegawai Dinilai', icon: 'bi bi-people', route: '/senarai-pyd-pp', roles: [3, 4], order: 12},
+    { name: 'Penilaian Prestasi', icon: 'bi bi-clipboard2', route:'/penilaian-ppk', roles: [4], order: 13},
     //PPSM
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota', roles: [5], order: 5 },
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai', roles: [5], order: 6 },

@@ -1,51 +1,50 @@
-import { Component } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { CommonModule } from '@angular/common';
-import { userDTO } from '../model/userDTO.model';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { RoleStateService } from '../services/role-state.service';
 import { PydService } from '../services/pyd.service';
-import { pegawaiDinilai } from '../model/pegawai.model';
-import { EmployeeService } from '../services/employee.service';
+import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-maklumat-pyd',
-  imports: [CardModule, CommonModule],
+  imports: [CommonModule, CardModule],
   templateUrl: './maklumat-pyd.component.html',
-  styleUrl: './maklumat-pyd.component.css'
+  styleUrls: ['./maklumat-pyd.component.css']
 })
-export class MaklumatPydComponent {
-  user: userDTO = {} as userDTO;
-  details!: pegawaiDinilai;
+export class MaklumatPydComponent implements OnInit {
+  details: any;
 
   constructor(
-    private authService: AuthService,
-    private pydService: PydService
+    private roleState: RoleStateService,
+    private pydService: PydService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(res => {
-      if (res) {
-        this.user = res;
-
-        this.pydService.getMaklumatPyd(this.user.noKP).subscribe(res => {
-          console.log("Maklumat Pyd API Response:", res);
-
-          this.details = Array.isArray(res) ? res[0] : res;
-
-          console.log("Details set:", this.details);
-        });
-
+    this.roleState.idPyd$.subscribe(id => {
+      if (id) {
+        this.loadMaklumatPyd(id);
       }
     });
   }
 
-  // capitalizeWords(value: string | null | undefined): string {
-  //   if (!value) return 'Tiada maklumat';
-  //   return value
-  //     .toLowerCase()
-  //     .split(' ')
-  //     .filter(word => word.trim() !== '')
-  //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-  //     .join(' ');
-  // }
+  loadMaklumatPyd(idPyd: number): void {
+    this.pydService.getMaklumatPydById(idPyd).subscribe({
+      next: (res) => {
+        this.details = res;
+        console.log('Maklumat PYD:', res);
+      },
+      error: (err) => {
+        console.error('Error fetching maklumat PYD:', err);
+      }
+    });
+  }
+
+  goToSasaranPyd() {
+    if (this.details?.idPyd) {
+      this.roleState.setIdPyd(this.details.idPyd);
+      this.router.navigate(['/sasaran-pyd']);
+    }
+  }
+
 }

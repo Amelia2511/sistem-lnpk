@@ -31,6 +31,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { markahSoalan } from '../model/markah-soalan.model';
+import { penilaian } from '../model/penilaian.model';
+import { pegawaiDinilai } from '../model/pegawai.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,9 +61,57 @@ export class PenilaianService {
     );
   }
 
+  getLatestPydPenilaianByPppNoKp(noKp: string): Observable<any> {
+    return this.httpClient.get<any>(
+      `${this.baseUrl}Penilaians/GetLatestPydPenilaianByPppNoKp/${noKp}`
+    );
+  }
+
+  getSasaranPyd(id: number): Observable<pegawaiDinilai> {
+    console.log("id", id)
+    return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}Penilaians/pyd/${id}`);
+  }
+
+  getMarkahByPenilaian(idPenilaian: number): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}GetMarkahByPenilaian/${idPenilaian}`);
+  }
+
+  // getPenilaianById(id: number): Observable<any> {
+  //   return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetPenilaian/${id}`).pipe(
+  //     tap(res => {
+  //       if (res && res.idPenilaian) {
+  //         this.setIdPenilaian(res.idPenilaian); // save globally
+  //         console.log("Got idPenilaian:", res.idPenilaian);
+  //       } else {
+  //         console.warn("No idPenilaian returned from GetPenilaian API");
+  //       }
+  //     })
+  //   );
+  // }
+
+  getPenilaianById(idPyd: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetPenilaianByIdPyd/${idPyd}`);
+  }
+
   getMarkah(noKP: string): Observable<number[]> {
     return this.httpClient.get<number[]>(`${this.baseUrl}MarkahSoalans/GetMarkah/${noKP}`);
   }
+
+  getMarkahSoalan(idPenilaian: number): Observable<markahSoalan[]> {
+    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}MarkahSoalan/GetMarkahSoalan/${idPenilaian}`);
+  }
+
+  getSasaranById(idPyd: number): Observable<number[]> {
+    return this.httpClient.get<number[]>(`${this.baseUrl}SasaranKerjas/GetSasaranByIdPyd/${idPyd}`);
+  }
+
+  getIdSktByIdPyd(idPyd: number) {
+    return this.httpClient.get<{ idSkt: number }>(`${this.baseUrl}SasaranKerjas/GetIdSktByIdPyd/${idPyd}`);
+  }
+
+  // getMaklumatPenilaian(idPenilaian: number): Observable<any> {
+  //   return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetMaklumatPenilaian/${idPenilaian}`);
+  // }
 
   ///// POST ///////
   simpanPenilaian(object: any) {
@@ -70,6 +121,17 @@ export class PenilaianService {
     return this.httpClient.post<any>(
       this.baseUrl + 'Penilaians/SimpanPenilaian',
       object,
+      httpOptions
+    );
+  }
+
+  createPenilaianForSKT(idSkt: number) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.httpClient.post<any>(
+      this.baseUrl + 'Penilaians/CreatePenilaianForSKT/',
+      idSkt,
       httpOptions
     );
   }

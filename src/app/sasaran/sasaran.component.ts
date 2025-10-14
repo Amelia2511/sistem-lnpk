@@ -28,11 +28,13 @@ export class SasaranComponent {
     const meta = this.route.snapshot.data['skt'] as { idSkt: number; tahunPenilaian: number | null; namaKategoriPenilaian: string | null } | null;
 
     if (!meta) {
+      console.log("No meta found");
       // resolver already navigated if invalid; safe guard
       return;
     }
 
     this.idSkt = meta.idSkt;
+    console.log("id skt:" , this.idSkt)
     this.tahunPenilaian = meta.tahunPenilaian;
     this.namaKategoriPenilaian = meta.namaKategoriPenilaian;
 
@@ -44,8 +46,6 @@ export class SasaranComponent {
       });
     }
   }
-
-
 
   onButtonClick() {
     // pass meta in state to make returning to /sasaran snappy

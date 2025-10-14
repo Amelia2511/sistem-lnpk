@@ -39,4 +39,5 @@ export class pegawaiDinilai {
     bahagianPPK: string | undefined;
     unitPPK: string | undefined;
     _busy?: boolean;
+    idPyd?: number;
 }

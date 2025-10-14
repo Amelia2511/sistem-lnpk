@@ -1,6 +1,6 @@
 <p-card *ngIf="details">
   <ng-template #title>Pegawai Yang Dinilai</ng-template>
-  <ng-template #subtitle></ng-template>
+
   <p style="line-height: 1.7;">
     <b>{{ details.nama || 'Tiada maklumat' }}</b><br>
     <b>Jawatan:
@@ -13,11 +13,6 @@
         {{ details.gredHakiki || 'Tiada maklumat' }}
       </span>
     </b><br>
-    <!-- <b>Bahagian:
-      <span [ngStyle]="{ 'color': !details.bahagian ? 'gray' : 'inherit', 'fontStyle': !details.bahagian ? 'italic' : 'normal' }">
-        {{ details.bahagian || 'Tiada maklumat' }}
-      </span>
-    </b><br> -->
     <b>Unit:
       <span [ngStyle]="{ 'color': !details.namaUnit ? 'gray' : 'inherit', 'fontStyle': !details.namaUnit ? 'italic' : 'normal' }">
         {{ details.namaUnit || 'Tiada maklumat' }}

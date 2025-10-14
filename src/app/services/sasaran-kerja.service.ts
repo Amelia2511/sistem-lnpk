@@ -126,4 +126,8 @@ export class SasaranKerjaService {
     return this.httpClient.get<PengesahanHistory[]>(`${this.baseUrl}/${idSkt}/history`);
   }
 
+  tandakanBolehDinilai(idSkt: number): Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}/${idSkt}/tandakan-boleh-dinilai`, {});
+  }
+
 }

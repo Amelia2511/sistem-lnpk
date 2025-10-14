@@ -32,9 +32,10 @@ export class SenaraiSoalanComponent implements OnInit {
   markah: string | null = null;
   products: any[] = [];
 
-  // Add these properties for the evaluation context
-  idPenilaian: number | null = null; // You'll need to set this value
-  evaluatorType: string = 'self'; // or 'supervisor', 'peer', etc.
+  idPenilaian: number | null = null; 
+  idPyd: number | null = null;
+  idSkt: number | null = null;
+  evaluatorType: string = 'self'; 
 
   formValues = {
     // Pengetahuan, Kemahiran dan Penghasilan Kerja - Column 1
@@ -132,28 +133,45 @@ export class SenaraiSoalanComponent implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       if (user && user.noKP) {
-        this.penilaian.getLatestPenilaianByNoKp(user.noKP).subscribe();
-      }
-    });
+        console.log("PPP noKp:", user.noKP);
 
-    // Subscribe to idPenilaian from service
-    this.penilaian.idPenilaian$.subscribe(id => {
-      this.idPenilaian = id;
-      console.log(" idPenilaian from service:", id);
+        this.penilaian.getLatestPydPenilaianByPppNoKp(user.noKP).subscribe({
+          next: (res) => {
+            console.log("PYD Penilaian Info:", res);
 
-      // Once we have idPenilaian, we can load markah soalan
-      if (this.markah && this.idPenilaian) {
-        this.markahSoalan.getMarkahSoalan(this.markah).subscribe({
-          next: (info) => {
-            console.log("API response:", info);
-            this.products = info;
+            this.idPyd = res.idPyd;
+            this.idSkt = res.idSkt;
+            this.idPenilaian = res.idPenilaian ?? null;
+
+            if (this.idPenilaian) {
+              this.penilaian.setIdPenilaian(this.idPenilaian);
+            } else {
+              console.warn("No Penilaian ID found for this PYD.");
+            }
           },
-          error: (error) => {
-            console.error("API Error:", error);
+          error: (err) => {
+            console.error("Error fetching PYD info:", err);
           }
         });
+      } else {
+        console.warn("No PPP or noKp found in authService.");
       }
     });
+
+    if (this.markah && this.idPenilaian) {
+      this.markahSoalan.getMarkahSoalan(this.markah).subscribe({
+        next: (info) => {
+          console.log("API response:", info);
+          this.products = info;
+        },
+        error: (error) => {
+          console.error("API Error:", error.status, error.message);
+        }
+      });
+    }
+    else {
+      console.log("Waiting for markah or idPenilaian:", { markah: this.markah, idPenilaian: this.idPenilaian });
+    }
   }
 
   simpan(): void {

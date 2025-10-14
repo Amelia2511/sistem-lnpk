@@ -11,6 +11,9 @@ export class RoleStateService {
   private rolesSource = new BehaviorSubject<number[]>([]);
   roles$ = this.rolesSource.asObservable();
 
+  private idPydSource = new BehaviorSubject<number | null>(null);
+  idPyd$ = this.idPydSource.asObservable();
+
   // update roles (lepas login atau fetch dari API)
   setRoles(roles: number[]): void {
     this.rolesSource.next(roles);
@@ -34,6 +37,14 @@ export class RoleStateService {
   // helper: check ada salah satu role
   hasAnyRole(roles: number[]): boolean {
     return roles.some(r => this.rolesSource.value.includes(r));
+  }
+
+  setIdPyd(id: number) {
+    this.idPydSource.next(id);
+  }
+
+  getCurrentIdPyd(): number | null {
+    return this.idPydSource.value;
   }
 
 }

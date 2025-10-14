@@ -14,6 +14,7 @@ import { AttachmentService } from '../services/attachment.service';
 import Swal from 'sweetalert2';
 import { firstValueFrom } from 'rxjs';
 import { attachment } from '../model/attachment.model';
+import { environment } from '../environments/environment';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 interface Lampiran {
@@ -48,7 +49,8 @@ interface PetunjukPrestasiRow {
 export class TambahAktivitiComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
-  backendUrl = 'http://localhost:5015'; // your backend
+  // backendUrl = 'http://localhost:5015'; // your backend
+  baseUrl = environment.baseUrl;
 
   idSkt!: number | null;
   tahunPenilaian?: number | null;
@@ -191,7 +193,7 @@ export class TambahAktivitiComponent {
         lampiran: this.uploadedLampiran
       };
 
-      await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
+      await this.http.post(`${this.baseUrl}Aktivitis/tambah`, payload).toPromise();
 
       // success modal
       await Swal.fire({ icon: 'success', title: 'Aktiviti berjaya disimpan', confirmButtonText: 'OK' });
@@ -209,7 +211,6 @@ export class TambahAktivitiComponent {
       await Swal.fire({ icon: 'error', title: 'Simpan gagal', text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.' });
     }
   }
-
 
   // async onSubmit() {
   //   if (!this.namaAktiviti) {

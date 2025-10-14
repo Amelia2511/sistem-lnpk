@@ -28,7 +28,7 @@
                             </div><br>
                             <div class="flex pt-6 justify-end">
                                 <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
-                                    (onClick)="activateCallback(2)" />
+                                    (onClick)="activateCallback(3)" />
                             </div>
                         </div>
                     </ng-template>
@@ -45,9 +45,9 @@
                         </div>
                         <div class="flex pt-6 justify-between">
                             <p-button label="Kembali" severity="secondary" icon="pi pi-arrow-left"
-                                (onClick)="activateCallback(1)" />
+                                (onClick)="activateCallback(2)" />
                             <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right"
-                                (onClick)="activateCallback(3)" />
+                                (onClick)="activateCallback(4)" />
                         </div>
                     </ng-template>
                 </p-step-panel>
@@ -67,7 +67,7 @@
                                 <input class="ulasan" type="text" pInputText ngModel [(ngModel)]="ulasanPPK" />
                             </div><br>
                             <div class="example-button-row">
-                               <p-button label="Simpan" icon="pi pi-check" (onClick)="simpan()" />
+                                <p-button label="Simpan" icon="pi pi-check" (onClick)="simpan()" />
                             </div>
                         </div>
                         <div class="flex pt-6 justify-start">

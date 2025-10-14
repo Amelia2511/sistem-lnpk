@@ -35,6 +35,8 @@ export class PenilaianPrestasiComponent implements OnInit {
   ulasanPPP: string = '';
   ulasanPPK: string = '';
   idPenilaian: number | null = null;
+  idPyd: number | null = null;
+  idSkt: number | null = null;
   details: penilaian = {} as penilaian;
 
   constructor(private router: Router, private route: ActivatedRoute, private penilaian: PenilaianService, private authService: AuthService) { }
@@ -42,14 +44,46 @@ export class PenilaianPrestasiComponent implements OnInit {
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       if (user && user.noKP) {
-        this.penilaian.getLatestPenilaianByNoKp(user.noKP).subscribe();
+        console.log("PPP noKp:", user.noKP);
+
+        this.penilaian.getLatestPydPenilaianByPppNoKp(user.noKP).subscribe({
+          next: (res) => {
+            console.log("PYD Penilaian Info:", res);
+
+            this.idPyd = res.idPyd;
+            this.idSkt = res.idSkt;
+            console.log("Id Skt:", this.idSkt);
+            this.idPenilaian = res.idPenilaian ?? null;
+
+            if (this.idPenilaian) {
+              this.penilaian.setIdPenilaian(this.idPenilaian);
+            } else {
+              console.warn("No Penilaian ID found for this PYD.");
+            }
+          },
+          error: (err) => {
+            console.error("Error fetching PYD info:", err);
+          }
+        });
+      } else {
+        console.warn("No PPP or noKp found in authService.");
+      }
+      if (this.idSkt !== null) {
+        this.penilaian.getSasaranPyd(this.idSkt).subscribe(res => {
+          console.log("Maklumat Pyd API Response:", res);
+
+          this.details = Array.isArray(res) ? res[0] : res;
+
+          console.log("Details set to:", this.details);
+        });
       }
     });
 
-    // Subscribe to the shared service
-    this.penilaian.idPenilaian$.subscribe(id => {
-      this.idPenilaian = id;
-      console.log(" idPenilaian from service:", id);
+    this.roleState.idPyd$.subscribe(id => {
+      if (id) {
+        this.idPyd = id;
+        console.log("Received idPyd from Laman Utama:", id);
+      }
     });
 
     // Roles
@@ -124,5 +158,4 @@ export class PenilaianPrestasiComponent implements OnInit {
       }
     });
   }
-
 }

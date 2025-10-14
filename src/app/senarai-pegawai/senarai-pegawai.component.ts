@@ -118,7 +118,11 @@ export class SenaraiPegawaiComponent implements OnInit {
             ...p,
             namaUnit: unitName,
             status: p.isActive ? 'Aktif' : 'Tidak Aktif',
-            buttonOption: p.isActive ? 'Boleh Dinilai' : 'Aktifkan'
+            buttonOption: p.isActive ? 'Boleh Dinilai' : 'Aktifkan',
+            tempohBerkhidmat: this.calculateDuration(
+              p.tarikhMulaKontrak instanceof Date ? p.tarikhMulaKontrak.toISOString().slice(0, 10) : p.tarikhMulaKontrak,
+              p.tarikhAkhirKontrak instanceof Date ? p.tarikhAkhirKontrak.toISOString().slice(0, 10) : p.tarikhAkhirKontrak
+            )
           };
         });
         this.products = [...this.allProducts];
@@ -213,35 +217,127 @@ export class SenaraiPegawaiComponent implements OnInit {
       this.aktifkan(product);
       this.showDialog();
     }
-    else if (product.buttonOption === 'Boleh Dinilai') {
-      this.bolehDinilai(product);
-    }
+    // else if (product.buttonOption === 'Boleh Dinilai') {
+    //   this.bolehDinilai(product);
+    // }
     else {
       console.log('No action available for', product.buttonOption);
     }
   }
 
-  bolehDinilai(pegawai: any) {
-    this.pydService.bolehDinilai(pegawai.id).subscribe({
-      next: (res) => {
-        console.log(res.message);
-        pegawai.bolehDinilaiClicked = true;
+  // calculateDuration(startDate: string): string {
+  //   if (!startDate) return '-';
+  //   const start = new Date(startDate.split('/').reverse().join('-'));
+  //   const today = new Date();
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Berjaya!',
-          text: res.message,
-          confirmButtonText: 'OK'
-        });
-      },
-      error: (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ralat!',
-          text: 'Tidak dapat proses Boleh Dinilai',
-          confirmButtonText: 'OK'
-        });
+  //   let years = today.getFullYear() - start.getFullYear();
+  //   let months = today.getMonth() - start.getMonth();
+
+  //   if (months < 0) {
+  //     years--;
+  //     months += 12;
+  //   }
+
+  //   if (years < 0) return '-';
+
+  //   return years > 0
+  //     ? `${years} thn ${months} bln`
+  //     : `${months} bln`;
+  // }
+
+  private parseDate(dateStr?: string | null): Date | null {
+    if (!dateStr) return null;
+
+    // dd/MM/yyyy  -> 29/09/2025
+    if (dateStr.includes('/')) {
+      const parts = dateStr.split('/');
+      if (parts.length === 3) {
+        const d = Number(parts[0]);
+        const m = Number(parts[1]) - 1;
+        const y = Number(parts[2]);
+        return new Date(y, m, d);
       }
-    });
+    }
+
+    // yyyy-MM-dd -> 2025-09-29
+    if (dateStr.includes('-')) {
+      const parts = dateStr.split('-');
+      // assume yyyy-mm-dd
+      if (parts.length === 3 && parts[0].length === 4) {
+        const y = Number(parts[0]);
+        const m = Number(parts[1]) - 1;
+        const d = Number(parts[2]);
+        return new Date(y, m, d);
+      }
+      // fallback: dd-mm-yyyy
+      if (parts.length === 3 && parts[2].length === 4) {
+        const d = Number(parts[0]);
+        const m = Number(parts[1]) - 1;
+        const y = Number(parts[2]);
+        return new Date(y, m, d);
+      }
+    }
+
+    // Last resort - let JS try
+    const dt = new Date(dateStr);
+    return isNaN(dt.getTime()) ? null : dt;
   }
+
+  calculateDuration(startStr?: string | null, endStr?: string | null): string {
+    const start = this.parseDate(startStr);
+    if (!start) return '-';
+
+    const end = this.parseDate(endStr) ?? new Date(); // use end if provided, otherwise today
+
+    // if end < start return 0
+    if (end.getTime() < start.getTime()) return '0 hari';
+
+    let years = end.getFullYear() - start.getFullYear();
+    let months = end.getMonth() - start.getMonth();
+    let days = end.getDate() - start.getDate();
+
+    // if days negative, borrow days from previous month
+    if (days < 0) {
+      months -= 1;
+      // last day of previous month relative to 'end'
+      const lastDayPrevMonth = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+      days += lastDayPrevMonth;
+    }
+
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+
+    const parts: string[] = [];
+    if (years > 0) parts.push(`${years} thn`);
+    if (months > 0) parts.push(`${months} bln`);
+    if (days > 0) parts.push(`${days} hari`);
+    if (parts.length === 0) return '0 hari';
+    return parts.join(' ');
+  }
+
+  // bolehDinilai(pegawai: any) {
+  //   this.pydService.bolehDinilai(pegawai.id).subscribe({
+  //     next: (res) => {
+  //       console.log(res.message);
+  //       pegawai.bolehDinilaiClicked = true;
+
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Berjaya!',
+  //         text: res.message,
+  //         confirmButtonText: 'OK'
+  //       });
+  //     },
+  //     error: (err) => {
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Ralat!',
+  //         text: 'Tidak dapat proses Boleh Dinilai',
+  //         confirmButtonText: 'OK'
+  //       });
+  //     }
+  //   });
+  // }
 }
