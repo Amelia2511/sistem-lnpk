@@ -56,6 +56,6 @@ export class PydService {
   }
 
   bolehDinilai(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
-    return this.httpClient.post<BolehDinilaiResponse>(`${this.baseUrl}SasaranKerjas/${id}/bolehDinilai`, payload);
+    return this.httpClient.post<BolehDinilaiResponse>(`${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpp`, payload);
   }
 }
