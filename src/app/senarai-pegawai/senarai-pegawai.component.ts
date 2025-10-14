@@ -153,9 +153,25 @@ export class SenaraiPegawaiComponent implements OnInit {
     if (unitId) {
       this.products = this.allProducts.filter(p => p.idUnit === unitId);
     } else {
-      this.products = [...this.allProducts];
-    }
-  }
+      this.products = [...this.allProducts];}}
+
+// getPegawaiList() {
+//   this.pydService.getPegawaiDinilai().subscribe({
+//     next: (data: pegawaiDinilai[]) => {
+//       console.log('Raw data from backend:', data); // Debug: check what you're getting
+
+//       this.products = data.map(p => ({
+//         ...p,
+//         status: p.statusPenilaianTerkini || 'Tiada Penilaian',
+//         buttonOption: this.getButtonOption(p.statusPenilaianTerkini) // Use the function!
+//       }));
+
+//       console.log('Mapped products:', this.products); // Debug: check mapped data
+//     },
+//     error: (err) => {
+//       console.error('Error with PydService:', err);
+//     }
+//   }
 
   aktifkan(row: pegawaiDinilai) {
     this.selectedPegawai = row;
@@ -170,6 +186,50 @@ export class SenaraiPegawaiComponent implements OnInit {
     this.tahunPenilaian = null;
     this.kategoriPenilaian = null;
   }
+getButtonOption(status: string | undefined): string {
+  if (!status || status === '' || status === null) {
+    return 'Aktifkan'; // No evaluation yet - empty status
+  }
+
+  if (status === 'Draf' || status === 'Pengesahan PPP') {
+    return 'SKT'; // Evaluation in progress
+  }
+
+  if (status === 'SKT Selesai') {
+    return 'Boleh Dinilai'; // SKT completed, ready for PPSM to activate evaluation
+  }
+
+  if (status === 'Penilaian PPP' || status === 'Penilaian PPK' || status === 'Penilaian Selesai') {
+    return 'Sedang Dinilai'; // Evaluation in progress
+  }
+
+  if (status === 'Penilaian Selesai PPSM') {
+    return 'Aktifkan Semula'; // Completed, can start new evaluation
+  }
+
+  return 'N/A'; // Default fallback
+}
+
+// aktifkan(row: pegawaiDinilai) {
+//   this.selectedPegawai = row;
+//   this.display = true;
+//   this.tahunPenilaian = null;
+//   this.kategoriPenilaian = null;
+// }
+
+bolehDinilaikan(row: pegawaiDinilai) {
+  this.selectedPegawai = row;
+  this.display = true;
+  this.tahunPenilaian = null;
+  this.kategoriPenilaian = null;
+}
+
+// showDialog() {
+//   this.display = true;
+//   // Reset form values
+//   this.tahunPenilaian = null;
+//   this.kategoriPenilaian = null;
+// }
 
   confirmActivation() {
     console.log('confirmActivation clicked', this.tahunPenilaian, this.kategoriPenilaian, this.selectedPegawai?.id);
@@ -340,4 +400,98 @@ export class SenaraiPegawaiComponent implements OnInit {
   //     }
   //   });
   // }
+
+handleButtonClick(product: pegawaiDinilai) {
+  switch (product.buttonOption) {
+    case 'Aktifkan':
+    case 'Aktifkan Semula':
+      this.aktifkan(product); // Show dialog to create new evaluation
+      break;
+    case 'Boleh Dinilai':
+      this.confirmBolehDinilai(product); // Allow evaluation without dialog
+      break;
+    case 'Sedang Dinilai':
+      // Disabled, do nothing
+      break;
+  }
 }
+
+confirmBolehDinilai(product?: pegawaiDinilai) {
+  const pegawai = product || this.selectedPegawai;
+
+  if (!pegawai?.id) return;
+
+  // Since backend already provides latest SKT info, just use it
+  if (!pegawai.tahunPenilaianTerkini || !pegawai.kategoriPenilaianTerkini) {
+    alert('Maklumat penilaian tidak lengkap. Pegawai ini tidak mempunyai SKT.');
+    return;
+  }
+
+  const payload = {
+    tahunPenilaian: pegawai.tahunPenilaianTerkini,
+    idKategoriPenilaian: pegawai.kategoriPenilaianTerkini === "Penilaian Utama" ? 1 : 2
+  };
+
+  (pegawai as any)._busy = true;
+
+  if (!pegawai.idSktTerkini) {
+    alert('ID SKT tidak dijumpai');
+    (pegawai as any)._busy = false;
+    return;
+  }
+
+  this.pydService.bolehDinilai(pegawai.idSktTerkini, payload).subscribe({
+    next: (response) => {
+      (pegawai as any)._busy = false;
+      console.log(response.message);
+
+      // Update UI to reflect new status
+      pegawai.buttonOption = 'Sedang Dinilai';
+      // pegawai.status = 'Boleh Dinilai';
+    },
+    error: (error) => {
+      (pegawai as any)._busy = false;
+      console.error('Error:', error);
+      alert('Gagal membenarkan pegawai dinilai');
+    }
+  });
+}
+getKategoriLabel(kategoriId: number | string | undefined): string {
+  if (typeof kategoriId === 'string') return kategoriId;
+
+  switch (kategoriId) {
+    case 1: return 'Utama';
+    case 2: return 'Semula';
+    default: return '-';
+  }
+}
+getStatusSeverity(status: string | undefined): string {
+  switch (status) {
+    case 'SKT Selesai':
+      return 'warn'; // Waiting for PPSM action
+    case 'Boleh Dinilai':
+    case 'Penilaian PPP':
+    case 'Penilaian PPK':
+      return 'info'; // In progress
+    case 'Penilaian Selesai':
+    case 'Penilaian Selesai PPSM':
+      return 'success'; // Completed
+    case 'Tiada Penilaian':
+      return 'secondary';
+    default:
+      return 'secondary';
+  }
+}
+
+getButtonSeverity(buttonOption: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | null | undefined {
+  switch (buttonOption) {
+    case 'Aktifkan':
+    case 'Aktifkan Semula':
+      return 'success';
+    case 'Benarkan Dinilai':
+      return 'info';
+    case 'Sedang Dinilai':
+      return 'secondary';
+    default:
+      return 'secondary';
+  }}}

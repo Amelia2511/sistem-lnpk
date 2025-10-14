@@ -1,35 +1,52 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SasaranKerjaService, SasaranAktivitiRow } from '../services/sasaran-kerja.service';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { TooltipModule } from 'primeng/tooltip';
-import { SasaranAktivitiRow, SasaranKerjaService } from '../services/sasaran-kerja.service';
 import Swal from 'sweetalert2';
 
-type GroupMeta = Record<number, { start: number; size: number }>;
+type Petunjuk = Pick<SasaranAktivitiRow,
+  'idPprestasi' | 'jenisPetunjuk' | 'keterangan' | 'sasaranKerja' | 'pencapaianSebenar' | 'ulasan'>;
+
+type AktivitiGroup = {
+  idAktiviti: number;
+  aktiviti: string;
+  petunjuk: Petunjuk[];
+};
 
 @Component({
   selector: 'app-sasaran',
-  imports: [ButtonModule, TableModule, TagModule, TooltipModule],
+  standalone: true,
   templateUrl: './sasaran.component.html',
-  styleUrl: './sasaran.component.css'
+  // ✅ ensure these are imported somewhere (standalone or parent module)
+  imports: [CommonModule, TableModule, TagModule, ButtonModule, PaginatorModule]
 })
 export class SasaranComponent {
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private skService = inject(SasaranKerjaService);
 
   idSkt!: number | null;
-  tahunPenilaian?: number | null = null;
-  namaKategoriPenilaian?: string | null = null;
+  tahunPenilaian: number | null = null;
+  namaKategoriPenilaian: string | null = null;
+  namaStatus: string | null = null;
 
+  // raw flat rows from API
   rows: SasaranAktivitiRow[] = [];
   loading = false;
-  rowGroupMeta: GroupMeta = {};
+
+  // grouped view model
+  groups: AktivitiGroup[] = [];
+  pagedGroups: AktivitiGroup[] = [];
+
+  // pagination (by Aktiviti)
+  pageSize = 10;   // 10 Aktiviti per page
+  first = 0;       // offset (0-based)
 
   ngOnInit() {
-    // Resolver result is available on snapshot.data (or subscribe to data for reactive)
     const meta = this.route.snapshot.data['skt'] as { idSkt: number; tahunPenilaian: number | null; namaKategoriPenilaian: string | null } | null;
 
     if (!meta) {
@@ -38,6 +55,8 @@ export class SasaranComponent {
       return;
     }
 
+    if (!meta) return;
+
     this.idSkt = meta.idSkt;
     console.log("id skt:" , this.idSkt)
     this.tahunPenilaian = meta.tahunPenilaian;
@@ -45,10 +64,18 @@ export class SasaranComponent {
 
     if (this.idSkt) {
       this.loading = true;
+
+      this.skService.getSasaranById(this.idSkt).subscribe(meta => {
+      this.tahunPenilaian = meta.tahunPenilaian ?? null;
+      this.namaKategoriPenilaian = meta.namaKategoriPenilaian ?? null;
+      this.namaStatus = meta.namaStatus ?? null;
+    });
+
+
       this.skService.getAktivitiRows(this.idSkt).subscribe({
         next: r => {
           this.rows = r ?? [];
-          this.buildRowGroupMeta();       // <-- build after data loads
+          this.buildGroups();
           this.loading = false;
         },
         error: e => { console.error(e); this.loading = false; }
@@ -56,42 +83,77 @@ export class SasaranComponent {
     }
   }
 
+  /** Build Aktiviti-level groups from flat rows */
+  private buildGroups() {
+    const map = new Map<number, AktivitiGroup>();
+    for (const r of this.rows) {
+      if (!map.has(r.idAktiviti)) {
+        map.set(r.idAktiviti, { idAktiviti: r.idAktiviti, aktiviti: r.aktiviti, petunjuk: [] });
+      }
+      map.get(r.idAktiviti)!.petunjuk.push({
+        idPprestasi: r.idPprestasi,
+        jenisPetunjuk: r.jenisPetunjuk,
+        keterangan: r.keterangan,
+        sasaranKerja: r.sasaranKerja,
+        pencapaianSebenar: r.pencapaianSebenar,
+        ulasan: r.ulasan
+      });
+    }
+    this.groups = Array.from(map.values());
+    this.sliceGroups();
+  }
+
+  private cdr = inject(ChangeDetectorRef);
+
+  /** Slice groups for current page */
+  private sliceGroups() {
+    const start = this.first;
+    const end = start + this.pageSize;
+    this.pagedGroups = this.groups.slice(start, end);
+  }
+
   onButtonClick() {
-    // pass meta in state to make returning to /sasaran snappy
-    this.router.navigate(['/tambah-aktiviti'], {
-      state: {
-        idSkt: this.idSkt,
-        tahunPenilaian: this.tahunPenilaian,
-        namaKategoriPenilaian: this.namaKategoriPenilaian
-      }
-    });
+  // pass meta in state to make returning to /sasaran snappy
+  this.router.navigate(['/tambah-aktiviti'], {
+    state: {
+      idSkt: this.idSkt,
+      tahunPenilaian: this.tahunPenilaian,
+      namaKategoriPenilaian: this.namaKategoriPenilaian
+    }
+  });
+}
+
+  /** Paginator event */
+  onPageChange(e: { first: number; rows: number }) {
+    this.first = e.first;
+    this.pageSize = e.rows;
+    this.sliceGroups();
   }
 
-    // Recompute when the list changes (e.g., after delete)
-  private buildRowGroupMeta(): void {
-    this.rowGroupMeta = {};
-    // rows must be grouped by idAktiviti contiguously (API already orders; if unsure, sort here)
-    // this.rows.sort((a,b) => a.idAktiviti - b.idAktiviti || a.idPprestasi - b.idPprestasi);
+  /** After deleting an Aktiviti, refresh view model */
+  private removeAktivitiLocally(idAktiviti: number) {
+    // keep source-of-truth and view model in sync (immutably)
+    this.rows   = this.rows.filter(r => r.idAktiviti !== idAktiviti);
+    this.groups = this.groups.filter(g => g.idAktiviti !== idAktiviti);
 
-    this.rows.forEach((row, i) => {
-      const key = row.idAktiviti;
-      if (this.rowGroupMeta[key]) {
-        this.rowGroupMeta[key].size++;
-      } else {
-        this.rowGroupMeta[key] = { start: i, size: 1 };
-      }
-    });
+    // if current page is past the end (e.g., deleted the last item on last page), pull back
+    const total = this.groups.length;
+    if (total === 0) {
+      this.first = 0;
+    } else if (this.first >= total) {
+      const lastPageStart = Math.floor((total - 1) / this.pageSize) * this.pageSize;
+      this.first = Math.max(0, lastPageStart);
+    }
+
+    this.sliceGroups();
+    this.cdr.markForCheck(); // only needed if ChangeDetectionStrategy.OnPush
   }
 
-  isFirstOfGroup(index: number): boolean {
-    const row = this.rows[index];
-    const meta = this.rowGroupMeta[row.idAktiviti];
-    return meta?.start === index;
-  }
-
-  onEditAktiviti(row: SasaranAktivitiRow) {
-    this.router.navigate(['/aktiviti/edit', row.idAktiviti], {
-      queryParams: { idSkt: this.idSkt }, // so we can return to the right SKT
+  // === Existing handlers, unchanged in signature ===
+  onEditAktiviti(group: { idAktiviti: number; aktiviti?: string } | SasaranAktivitiRow) {
+    const idAktiviti = (group as any).idAktiviti;
+    this.router.navigate(['/aktiviti/edit', idAktiviti], {
+      queryParams: { idSkt: this.idSkt },
       state: {
         idSkt: this.idSkt,
         tahunPenilaian: this.tahunPenilaian,
@@ -117,6 +179,7 @@ export class SasaranComponent {
 
         // Remove all rows for this Aktiviti from the table
         this.rows = this.rows.filter(r => r.idAktiviti !== id);
+        this.removeAktivitiLocally(id);
 
         Swal.fire({ icon: 'success', title: 'Aktiviti dipadam' });
       } catch (e: any) {
@@ -125,4 +188,88 @@ export class SasaranComponent {
       }
     });
   }
+
+  get editable(): boolean {
+    // return (this.namaStatus || '').toLowerCase() === 'draf';
+    return (this.namaStatus || '').toLowerCase() === 'draf';
+  }
+
+  get submitted(): boolean {
+    // return (this.namaStatus || '').toLowerCase() === 'draf';
+    return (this.namaStatus || '').toLowerCase() === 'pengesahan ppp';
+  }
+
+async onHantar() {
+  if (!this.idSkt) return;
+  try {
+    await this.skService.hantarSasaran(this.idSkt).toPromise();
+
+    // Success message as requested
+    await Swal.fire({
+      icon: 'success',
+      title: `Sasaran Kerja Tahunan ${this.tahunPenilaian ?? '-'} ${this.namaKategoriPenilaian ?? '-'}`,
+      text: 'anda telah berjaya dihantar untuk semakan PPP'
+    });
+
+    // Redirect to list
+    this.router.navigate(['/senarai-sasaran']);
+  } catch (e: any) {
+    console.error(e);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Hantar gagal',
+      text: e?.error?.error ?? 'Ralat berlaku semasa menghantar.'
+    });
+  }
 }
+
+async onSah() {
+  if (!this.idSkt) return;
+  try {
+    await this.skService.sahkanSasaran(this.idSkt).toPromise();
+
+    // Success message as requested
+    await Swal.fire({
+      icon: 'success',
+      title: `Sasaran Kerja Tahunan ${this.tahunPenilaian ?? '-'} ${this.namaKategoriPenilaian ?? '-'}`,
+      text: 'telah disahkan'
+    });
+
+    // Redirect to list
+    this.router.navigate(['/senarai-sasaran']);
+  } catch (e: any) {
+    console.error(e);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Hantar gagal',
+      text: e?.error?.error ?? 'Ralat berlaku semasa pengesahan.'
+    });
+  }
+}
+
+// async onTidakSah() {
+//   if (!this.idSkt) return;
+//   try {
+//     await this.skService.hantarSasaran(this.idSkt).toPromise();
+
+//     // Success message as requested
+//     await Swal.fire({
+//       icon: 'success',
+//       title: `Sasaran Kerja Tahunan ${this.tahunPenilaian ?? '-'} ${this.namaKategoriPenilaian ?? '-'}`,
+//       text: 'anda telah berjaya dihantar untuk semakan PPP'
+//     });
+
+//     // Redirect to list
+//     this.router.navigate(['/senarai-sasaran']);
+//   } catch (e: any) {
+//     console.error(e);
+//     await Swal.fire({
+//       icon: 'error',
+//       title: 'Hantar gagal',
+//       text: e?.error?.error ?? 'Ralat berlaku semasa menghantar.'
+//     });
+//   }
+// }
+
+}
+

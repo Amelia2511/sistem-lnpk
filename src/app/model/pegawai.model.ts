@@ -15,6 +15,11 @@ export class pegawaiDinilai {
     tarikhAkhirKontrak: Date | undefined;
     tempatBertugas: number | undefined;
     idUnit: string | undefined;
+    idSktTerkini?: number | undefined;
+    tahunPenilaianTerkini: number | undefined;
+    kategoriPenilaianTerkini: string | undefined;
+    statusPenilaianTerkini: string | undefined;
+    idBahagian: string | undefined;
     isActive: boolean | undefined;
     status?: string;
     buttonOption?: string;

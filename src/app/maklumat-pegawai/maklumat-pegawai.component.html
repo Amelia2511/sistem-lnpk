@@ -88,11 +88,11 @@
   <p-breadcrumb [home]="home" [model]="items" />
   <h4>Maklumat Pegawai</h4><br>
 
-  <button 
-    pButton 
-    label="{{ isEditMode ? 'Simpan' : 'Edit' }}" 
+  <button
+    pButton
+    label="{{ isEditMode ? 'Simpan' : 'Edit' }}"
     (click)="toggleEdit()"
-    icon="{{ isEditMode ? 'pi pi-save' : 'pi pi-pencil' }}" 
+    icon="{{ isEditMode ? 'pi pi-save' : 'pi pi-pencil' }}"
     class="mb-3"
     [severity]="isEditMode ? 'success' : 'secondary'">
   </button>

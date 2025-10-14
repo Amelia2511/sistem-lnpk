@@ -3,46 +3,46 @@
     <ng-template #title>Pegawai Penilai Pertama</ng-template>
     <ng-template #subtitle></ng-template>
     <p style="line-height: 1.7;">
-      <b>{{ capitalizeWords(details?.namaPPP || 'Tiada maklumat') }}</b><br>
-      <b>Jawatan: <span
+      {{ capitalizeWords(details?.namaPPP || 'Tiada maklumat') }}<br>
+      Jawatan: <span
           [ngStyle]="{ 'color': !details?.jawatanPPP ? 'gray' : 'inherit', 'fontStyle': !details?.jawatanPPP ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.jawatanPPP || 'Tiada maklumat') }}
-        </span> </b> <br>
-      <b>Gred: <span
+        </span>  <br>
+      Gred: <span
           [ngStyle]="{ 'color': !details?.gredPPP ? 'gray' : 'inherit', 'fontStyle': !details?.gredPPP ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.gredPPP || 'Tiada maklumat') }}
-        </span> </b> <br>
-      <b>Bahagian: <span
+        </span>  <br>
+      Bahagian: <span
           [ngStyle]="{ 'color': !details?.bahagianPPP ? 'gray' : 'inherit', 'fontStyle': !details?.bahagianPPP ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.bahagianPPP || 'Tiada maklumat') }}
-        </span> </b> <br>
-      <b>Unit: <span
+        </span>  <br>
+      Unit: <span
           [ngStyle]="{ 'color': !details?.unitPPP ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPP ? 'italic' : 'normal' }">
           {{ details?.unitPPP || 'Tiada maklumat' }}
-        </span> </b>
+        </span>
     </p>
   </p-card>
   <p-card>
     <ng-template #title>Pegawai Penilai Kedua </ng-template>
     <ng-template #subtitle></ng-template>
     <p style="line-height: 1.7;">
-      <b>{{ capitalizeWords(details?.namaPPK || 'Tiada maklumat') }}</b> <br>
-      <b>Jawatan:  <span
+      {{ capitalizeWords(details?.namaPPK || 'Tiada maklumat') }} <br>
+      Jawatan:  <span
           [ngStyle]="{ 'color': !details?.jawatanPPK ? 'gray' : 'inherit', 'fontStyle': !details?.jawatanPPK ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.jawatanPPK || 'Tiada maklumat') }}
-        </span></b> <br>
-      <b>Gred:  <span
+        </span> <br>
+      Gred:  <span
           [ngStyle]="{ 'color': !details?.gredPPK ? 'gray' : 'inherit', 'fontStyle': !details?.gredPPK ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.gredPPK || 'Tiada maklumat') }}
-        </span></b> <br>
-      <b>Bahagian:  <span
+        </span> <br>
+      Bahagian:  <span
           [ngStyle]="{ 'color': !details?.bahagianPPK ? 'gray' : 'inherit', 'fontStyle': !details?.bahagianPPK ? 'italic' : 'normal' }">
           {{ capitalizeWords(details?.bahagianPPK || 'Tiada maklumat') }}
-        </span></b> <br>
-      <b>Unit:  <span
+        </span> <br>
+      Unit:  <span
           [ngStyle]="{ 'color': !details?.unitPPK ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPK ? 'italic' : 'normal' }">
           {{ details?.unitPPK || 'Tiada maklumat' }}
-        </span></b>
+        </span>
     </p>
   </p-card>
 </div>

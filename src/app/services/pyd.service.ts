@@ -1,32 +1,3 @@
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { unit } from '../model/unit.model';
-// import { environment } from '../environments/environment';
-// import { pegawaiDinilai } from '../model/pegawai.model';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class PydService {
-
-//   updatePegawai(id: any, pegawai: any) {
-//     throw new Error('Method not implemented.');
-//   }
-//   getPegawaiById(id: number) {
-//     throw new Error('Method not implemented.');
-//   }
-//   baseUrl = environment.baseUrl;
-
-//   constructor(private httpClient: HttpClient) { }
-
-//   ///// GET ////////
-//   getPegawaiDinilai() {
-//     return this.httpClient.get<pegawaiDinilai[]>(this.baseUrl + 'PegawaiDinilais/GetPegawaiDinilai')
-//   }
-
-//   ///// POST ///////
-// }
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
@@ -39,6 +10,20 @@ export interface SasaranKerjaListItem {
   tahunPenilaian: number;
   kategoriPenilaian: string;
   status: string;
+}
+
+export interface BolehDinilaiRequest {
+  tahunPenilaian: number;
+  idKategoriPenilaian: number;
+}
+
+export interface BolehDinilaiResponse {
+  message: string;
+  idPegawai: number;
+  idSasaranKerja: number;
+  idStatus: number;
+  tahun: number;
+  kategori: number;
 }
 
 @Injectable({
@@ -61,6 +46,10 @@ export class PydService {
     return this.httpClient.get<pegawaiDinilai[]>(this.baseUrl + 'PegawaiDinilais/GetPegawaiDinilai');
   }
 
+  getPegawaiById(id: number): Observable<pegawaiDinilai> {
+    return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/${id}`);
+  }
+
   getMaklumatPenilai(noKP: string): Observable<pegawaiDinilai> {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetMaklumatPenilai/${noKP}`);
   }
@@ -69,9 +58,9 @@ export class PydService {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}Pegawais/pyd/${noKP}`);
   }
 
-  getPegawaiById(id: number): Observable<pegawaiDinilai> {
-    return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetById/${id}`);
-  }
+  // getPegawaiById(id: number): Observable<pegawaiDinilai> {
+  //   return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetById/${id}`);
+  // }
 
   getUnitPyd(namaUnit: string): Observable<pegawaiDinilai> {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetUnitPyd/${namaUnit}`);
@@ -95,18 +84,6 @@ export class PydService {
   aktifkanPegawai(id: number, payload: { tahunPenilaian: number; idKategoriPenilaian: number }): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, payload);
   }
-  // aktifkanPegawai(id: number): Observable<any> {
-  //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
-  // }
-
-
-  // getSasaranByPyd(pydId: number) {
-  // return this.httpClient.get<SasaranKerjaListItem[]>(
-  //   `${this.baseUrl}SasaranKerjas/ByPyd/${pydId}`
-  // );
-  // aktifkanPegawai(id: number): Observable<any> {
-  //   return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/Aktifkan/${id}`, {});
-  // }
 
   //POST
   // bolehDinilai(id: number) {
@@ -124,4 +101,9 @@ export class PydService {
   setKategoriPenilaian(namaKategori: string | null) {
     this.kategoriPenilaianSource.next(namaKategori);
   }
+
+  bolehDinilai(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
+    return this.httpClient.post<BolehDinilaiResponse>(`${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpp`, payload);
+  }
+
 }

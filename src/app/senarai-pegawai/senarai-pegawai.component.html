@@ -29,8 +29,10 @@
       <th>Nama</th>
       <th>Tarikh Mula</th>
       <th>Tarikh Akhir</th>
+
       <th>Tempoh Berkhidmat</th>
       <th>Unit</th>
+      <th>Penilaian Terkini</th>
       <th>Status</th>
       <th>Aksi</th>
     </tr>
@@ -47,6 +49,22 @@
       <td>{{ product.tarikhAkhirKontrak }}</td>
       <td>{{ product.tempohBerkhidmat }}</td>
       <td>{{ product.namaUnit }}</td>
+
+      <!-- Penilaian Terkini Column - FIXED property names -->
+      <td>
+        <div *ngIf="product.tahunPenilaianTerkini" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <p-tag
+            [value]="product.tahunPenilaianTerkini"
+            severity="secondary">
+          </p-tag>
+          <p-tag
+            [value]="product.kategoriPenilaianTerkini"
+            severity="info">
+          </p-tag>
+        </div>
+        <span *ngIf="!product.tahunPenilaianTerkini" style="color: #999;">-</span>
+      </td>
+
       <td>
         <p-tag [value]="product.status"
                [severity]="product.status === 'Aktif' ? 'success' : 'danger'">
@@ -59,10 +77,36 @@
                   [disabled]="product.isActive || product.bolehDinilaiClicked"
                   (onClick)="handleAction(product)">
         </p-button>
+
+      <td class="button-n">
+  <p-button rounded="true" variant="outlined"
+    [severity]="getButtonSeverity(product.buttonOption)"
+    [label]="product.buttonOption"
+    [disabled]="product.buttonOption === 'Sedang Dinilai'"
+    [loading]="product?._busy ?? false"
+    (onClick)="handleButtonClick(product)">
+  </p-button>
       </td>
     </tr>
   </ng-template>
 </p-table>
+
+<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '50rem', 'min-height': '400px' }" [contentStyle]="{ 'padding': '2rem', 'overflow': 'visible' }">
+  <ng-template pTemplate="body">
+    <div style="min-height: 200px; padding: 1rem 0;">
+      <div class="field" style="margin-bottom: 2rem;">
+        <label for="tahunPenilaian" style="display: block; margin-bottom: 0.5rem;">Tahun Penilaian *</label>
+        <p-select
+          id="tahunPenilaian"
+          [(ngModel)]="tahunPenilaian"
+          [options]="tahunOptions"
+          placeholder="Pilih Tahun Penilaian"
+          [style]="{ width: '100%' }"
+          optionLabel="label"
+          optionValue="value"
+          [appendTo]="'body'">
+        </p-select>
+      </div>
 
 <!-- Items per page + paginator -->
 <div class="flex items-center justify-end mt-3">

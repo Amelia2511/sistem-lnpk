@@ -28,37 +28,6 @@ export class MaklumatPpComponent {
   pegawaiDinilai = this.pegawaiService.pegawaiDinilai;
   pegawaiPenilaiPertama = this.pegawaiService.pegawaiPenilaiPertama;
   pegawaiPenilaiKedua = this.pegawaiService.pegawaiPenilaiKedua;
-  // pegawaiDinilai = {
-  //   nama: 'Yaya',
-  //   gambar: 'https://imgs.search.brave.com/8kCKM_jpOXqInK09U--KJjMEaXU_RuaR-XpcUmivzWs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hdmF0/YXJmaWxlcy5hbHBo/YWNvZGVycy5jb20v/Mzc1L3RodW1iLTM1/MC0zNzU5MTEud2Vi/cA',
-  //   noKp: '123456789012',
-  //   jawatan: 'Pegawai Teknologi Maklumat Gred',
-  //   bahagian: 'Bahagian Perkhidmatan dan Sokongan',
-  //   gred: 'F14',
-  //   unit: 'Unit Teknologi Maklumat',
-  //   idPPP: 1,
-  //   idPPK: 2,
-  // };
-
-  // pegawaiPenilaiPertama = {
-  //   nama: 'Saraliza',
-  //   gambar: 'https://imgs.search.brave.com/8kCKM_jpOXqInK09U--KJjMEaXU_RuaR-XpcUmivzWs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hdmF0/YXJmaWxlcy5hbHBo/YWNvZGVycy5jb20v/Mzc1L3RodW1iLTM1/MC0zNzU5MTEud2Vi/cA',
-  //   noKp: '123456789012',
-  //   jawatan: 'Pegawai Teknologi Maklumat Gred',
-  //   bahagian: 'Bahagian Perkhidmatan dan Sokongan',
-  //   gred: 'F84',
-  //   unit: 'Unit Teknologi Maklumat'
-  // };
-
-  // pegawaiPenilaiKedua = {
-  //   nama: 'Mimi Safinaz Jamaluddin',
-  //   gambar: 'https://imgs.search.brave.com/8kCKM_jpOXqInK09U--KJjMEaXU_RuaR-XpcUmivzWs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hdmF0/YXJmaWxlcy5hbHBo/YWNvZGVycy5jb20v/Mzc1L3RodW1iLTM1/MC0zNzU5MTEud2Vi/cA',
-  //   noKp: '123456789014',
-  //   jawatan: 'Pegawai Teknologi Maklumat Gred',
-  //   bahagian: 'Bahagian Perkhidmatan dan Sokongan',
-  //   gred: 'F54',
-  //   unit: 'Unit Teknologi Maklumat'
-  // };
 
   user: userDTO = {} as userDTO;
   details: pegawaiDinilai | null = null;
