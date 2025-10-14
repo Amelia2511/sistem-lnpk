@@ -32,31 +32,20 @@ export interface SasaranAktivitiRow {
   ulasan?: string | null;
 }
 
-export interface PendingSKT {
-  idSkt: number;
-  idPyd: number;
-  namaPyd: string;
-  noKpPyd: string;
-  idPpp: number;
-  idPpk: number;
-  tahunPenilaian: number;
-  tarikhHantar: Date;
-  namaKategori: string;
-  namaStatus: string;
+export interface AktivitiDetail {
+  idAktiviti: number;
+  idSkt: number | null;
+  namaAktiviti: string | null;
+  petunjuk: {
+    idPprestasi?: number | null;
+    jenis?: string | null;
+    keterangan?: string | null;
+    sasaranKerja?: number | null;
+    pencapaianSebenar?: number | null;
+    ulasan?: string | null;
+  }[];
 }
 
-export interface PengesahanRequest {
-  idPegawaiPengesah: number;
-  catatan?: string;
-}
-
-export interface PengesahanHistory {
-  idPengesahan: number;
-  idPegawaiPengesah: number;
-  isSah: boolean;
-  catatan: string;
-  tarikhPengesahan: Date;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -69,20 +58,20 @@ export class SasaranKerjaService {
 
   getSasaranKerja(noKP: string): Observable<sasaranKerja[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerja/${noKP}`)
-      .pipe(map(rows => rows.map(r => ({
-        idSkt: r.idSkt ?? r.id,
-        tahunPenilaian: r.tahunPenilaian,
-        namaKategoriPenilaian: r.namaKategoriPenilaian,
-        namaStatus: r.namaStatus,
-        idPYD: r.idPyd,
-        idStatus: r.idStatus,
-        idKategoriPenilaian: r.idKategoriPenilaian,
-        idPPP: r.idPpp,
-        idPPK: r.idPpk,
-        tarikhHantar: r.tarikhHantar,
-        tarikhSah: r.tarikhSah,
-        createdAt: r.createdAt,
-        updateAt: r.updateAt
+    .pipe(map(rows => rows.map(r => ({
+      idSkt: r.idSkt ?? r.id,
+      tahunPenilaian: r.tahunPenilaian,
+      namaKategoriPenilaian: r.namaKategoriPenilaian,
+      namaStatus: r.namaStatus,
+      idPYD: r.idPyd,
+      idStatus: r.idStatus,
+      idKategoriPenilaian: r.idKategoriPenilaian,
+      idPPP: r.idPpp,
+      idPPK: r.idPpk,
+      tarikhHantar: r.tarikhHantar,
+      tarikhSah: r.tarikhSah,
+      createdAt: r.createdAt,
+      updateAt: r.updateAt
       } as sasaranKerja))));
   }
 
@@ -106,28 +95,16 @@ export class SasaranKerjaService {
     );
   }
 
-  // getPendingPengesahan(idPpp?: number): Observable<PendingSKT[]> {
-  //   const params = idPpp ? { idPpp: idPpp.toString() } : {};
-  //   return this.httpClient.get<PendingSKT[]>(`${this.baseUrl}/pending`, { params });
-  // }
-
-  // Sahkan SKT
-  sahkanSkt(idSkt: number, request: PengesahanRequest): Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}/${idSkt}/sah`, request);
+  getAktivitiDetail(idAktiviti: number) {
+    return this.httpClient.get<AktivitiDetail>(`${this.baseUrl}Aktiviti/${idAktiviti}`);
   }
 
-  // Tidak sahkan SKT
-  tidakSahkanSkt(idSkt: number, request: PengesahanRequest): Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}/${idSkt}/tidak-sah`, request);
+  updateAktiviti(idAktiviti: number, body: { namaAktiviti: string; petunjuk: any[] }) {
+    return this.httpClient.put(`${this.baseUrl}Aktiviti/${idAktiviti}`, body);
   }
 
-  // Get pengesahan history
-  getPengesahanHistory(idSkt: number): Observable<PengesahanHistory[]> {
-    return this.httpClient.get<PengesahanHistory[]>(`${this.baseUrl}/${idSkt}/history`);
-  }
-
-  tandakanBolehDinilai(idSkt: number): Observable<any> {
-    return this.httpClient.post(`${this.baseUrl}/${idSkt}/tandakan-boleh-dinilai`, {});
+  deleteAktiviti(idAktiviti: number) {
+    return this.httpClient.delete(`${this.baseUrl}Aktiviti/${idAktiviti}`);
   }
 
 }

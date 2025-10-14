@@ -20,7 +20,7 @@ import { sktMetaResolver } from './resolvers/skt-meta.resolver';
 import { SenaraiPydPpComponent } from './senarai-pyd-pp/senarai-pyd-pp.component';
 import { MaklumatPydComponent } from './maklumat-pyd/maklumat-pyd.component';
 import { SasaranPpComponent } from './sasaran-pp/sasaran-pp.component';
-
+import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
     { path: 'laman-utama', component: LamanUtamaComponent },
@@ -29,6 +29,7 @@ export const routes: Routes = [
     { path: 'sasaran', component: SasaranComponent, resolve: { skt: sktMetaResolver },
     // ensure resolver re-runs when query params change (idSkt changes)
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'},
+    { path: 'aktiviti/edit/:id', component: EditAktivitiComponent },
     { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
     { path: 'maklumat-sasaran', component: LaporanSasaranComponent},
     { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},

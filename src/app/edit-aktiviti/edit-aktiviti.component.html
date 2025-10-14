@@ -1,6 +1,4 @@
-<h1>Tambah Aktiviti</h1>
-
-<br>
+<h1>{{ title }}</h1>
 
 <label>Nama Aktiviti</label>
 <input type="text" pInputText [(ngModel)]="namaAktiviti" />
@@ -108,34 +106,20 @@
       <td>{{row.pencapaianSebenar}}</td>
       <td>{{row.ulasan}}</td>
       <td class="text-center">
-        <button pTooltip="Edit" tooltipPosition="top" pButton type="button" icon="pi pi-pencil" [rounded]="true" [text]="true"
+        <button pButton type="button" icon="pi pi-pencil" [rounded]="true" [text]="true"
                 (click)="onEditPetunjuk(row, rowIndex)" class="mr-1"></button>
-        <button pTooltip="Padam" tooltipPosition="top" pButton type="button" icon="pi pi-trash" [rounded]="true" [text]="true"
+        <button pButton type="button" icon="pi pi-trash" [rounded]="true" [text]="true"
                 severity="danger" (click)="onDeletePetunjuk(rowIndex)"></button>
       </td>
+
     </tr>
   </ng-template>
 </p-table>
 
-
 <br>
-<br>
-
-<!-- <label>Lampiran</label>
-<p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload> -->
-<label>Lampiran</label>
-<p-fileUpload
-  name="files[]"
-  [auto]="false"
-  [customUpload]="true"
-  [multiple]="true"
-  (onAdd)="handleFileSelect($event)"
-  (uploadHandler)="onCustomUpload($event)">
-</p-fileUpload>
-
 <br>
 
 <div class="flex justify-end gap-2 mt-4">
   <p-button label="Batal" severity="secondary" (click)="onCancel()"></p-button>
-  <p-button label="Simpan" (click)="onSubmit()"></p-button>
+  <p-button label="Simpan" (click)="onSave()"></p-button>
 </div>
