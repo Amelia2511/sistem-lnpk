@@ -28,101 +28,6 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
   styleUrls: ['./senarai-pegawai.component.css'],
 })
 
-// <<<<<<< HEAD
-// export class SenaraiPegawaßiComponent implements OnInit{
-//   statuses!: any[];
-//   employees: Pegawai[] = [];
-//   loading: boolean = false;
-
-//   constructor(private pegawaiService: PegawaiService) {}
-
-//   ngOnInit() {
-//     this.loadEmployees();
-//   }
-
-//   loadEmployees() {
-//     this.loading = true;
-//     this.pegawaiService.getAllPegawai().subscribe({
-//       next: (data) => {
-//         this.employees = data;
-//         this.loading = false;
-//         console.log('Loaded employees:', data);
-//       },
-//       error: (error) => {
-//         console.error('Error loading employees:', error);
-//         this.loading = false;
-//         // Fallback to dummy data if API fails
-//         this.employees = this.getDummyData();
-//       }
-//     });
-//   }
-
-//   getDummyData(): Pegawai[] {
-//     // Fallback dummy data in case API is not available
-//     return [
-//       {
-//         id: 1,
-//         nama: 'Mas Salwa Alie',
-//         noKp: '920315-14-5678',
-//         emel: 'mas.salwa@company.gov.my',
-//         namaJawatan: 'HR Officer',
-//         skimPerkhidmatan: 'Kontrak',
-//         gredHakiki: 'S29',
-//         gredDisandang: 'S29',
-//         kementerian: 'Kementerian Pembangunan Luar Bandar',
-//         idBahagian: 'HR001',
-//         idUnit: 'UN001',
-//         isActive: true,
-//         createdAt: '2023-08-12T00:00:00',
-//         noFail: 'HR2023001'
-//       }
-//     ] as Pegawai[];
-//   }
-
-//   // Convert Pegawai data to match your existing table structure
-//   get products() {
-//     return this.employees.map(emp => ({
-//       nama: emp.nama,
-//       namaJawatan: emp.namaJawatan,
-//       noKp: emp.noKp,
-//       emel: emp.emel,
-//       bahagian: emp.idBahagianNavigation?.namaBahagian || emp.idBahagian,
-//       unit: emp.idUnitNavigation?.namaUnit || emp.idUnit,
-//       status: emp.isActive ? 'Aktif' : 'Tidak Aktif',
-//       buttonOption: emp.isActive ? 'Boleh Dinilai' : 'Aktifkan',
-//       skimPerkhidmatan: emp.skimPerkhidmatan,
-//       gred: emp.gredHakiki,
-//       // Calculate tempoh berkhidmat from createdAt
-//       tempohBerkhidmat: this.calculateServicePeriod(emp.createdAt),
-//       // Mock contract dates for now
-//       tarikhMulaKontrak: new Date(emp.createdAt).toLocaleDateString('ms-MY'),
-//       tarikhAkhirKontrak: this.calculateEndDate(emp.createdAt)
-//     }));
-//   }
-
-//   calculateServicePeriod(startDate: string): string {
-//     const start = new Date(startDate);
-//     const now = new Date();
-//     const diffTime = Math.abs(now.getTime() - start.getTime());
-//     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-//     const years = Math.floor(diffDays / 365);
-//     const months = Math.floor((diffDays % 365) / 30);
-
-//     if (years > 0) {
-//       return `${years} tahun ${months > 0 ? months + ' bulan' : ''}`;
-//     } else {
-//       return `${months} bulan`;
-//     }
-//   }
-
-//   calculateEndDate(startDate: string): string {
-//     const start = new Date(startDate);
-//     const end = new Date(start);
-//     end.setFullYear(start.getFullYear() + 3); // Assuming 3-year contracts
-//     return end.toLocaleDateString('ms-MY');
-//   }
-// }
-// =======
 export class SenaraiPegawaiComponent implements OnInit {
 openActivationDialog(_t17: any) {
 throw new Error('Method not implemented.');
@@ -168,24 +73,57 @@ throw new Error('Method not implemented.');
     });
   }
 
-  getPegawaiList() {
+getPegawaiList() {
   this.pydService.getPegawaiDinilai().subscribe({
     next: (data: pegawaiDinilai[]) => {
+      console.log('Raw data from backend:', data); // Debug: check what you're getting
+
       this.products = data.map(p => ({
         ...p,
-        status: p.isActive ? 'Aktif' : 'Tidak Aktif',
-        buttonOption: p.isActive ? 'Boleh Dinilai' : 'Aktifkan'
+        status: p.statusPenilaianTerkini || 'Tiada Penilaian',
+        buttonOption: this.getButtonOption(p.statusPenilaianTerkini) // Use the function!
       }));
+
+      console.log('Mapped products:', this.products); // Debug: check mapped data
     },
     error: (err) => {
-      console.error('Error with PydService, trying API instead:', err);
-      // If the original service fails, try the API
-      // this.loadPegawaiFromAPI();
+      console.error('Error with PydService:', err);
     }
   });
 }
 
+getButtonOption(status: string | undefined): string {
+  if (!status || status === '' || status === null) {
+    return 'Aktifkan'; // No evaluation yet - empty status
+  }
+
+  if (status === 'Draf' || status === 'Pengesahan PPP') {
+    return 'SKT'; // Evaluation in progress
+  }
+
+  if (status === 'SKT Selesai') {
+    return 'Boleh Dinilai'; // SKT completed, ready for PPSM to activate evaluation
+  }
+
+  if (status === 'Penilaian PPP' || status === 'Penilaian PPK' || status === 'Penilaian Selesai') {
+    return 'Sedang Dinilai'; // Evaluation in progress
+  }
+
+  if (status === 'Penilaian Selesai PPSM') {
+    return 'Aktifkan Semula'; // Completed, can start new evaluation
+  }
+
+  return 'N/A'; // Default fallback
+}
+
 aktifkan(row: pegawaiDinilai) {
+  this.selectedPegawai = row;
+  this.display = true;
+  this.tahunPenilaian = null;
+  this.kategoriPenilaian = null;
+}
+
+bolehDinilaikan(row: pegawaiDinilai) {
   this.selectedPegawai = row;
   this.display = true;
   this.tahunPenilaian = null;
@@ -239,4 +177,100 @@ showDialog() {
     this.tahunPenilaian = null;
     this.kategoriPenilaian = null;
   }
+
+handleButtonClick(product: pegawaiDinilai) {
+  switch (product.buttonOption) {
+    case 'Aktifkan':
+    case 'Aktifkan Semula':
+      this.aktifkan(product); // Show dialog to create new evaluation
+      break;
+    case 'Boleh Dinilai':
+      this.confirmBolehDinilai(product); // Allow evaluation without dialog
+      break;
+    case 'Sedang Dinilai':
+      // Disabled, do nothing
+      break;
+  }
+}
+
+confirmBolehDinilai(product?: pegawaiDinilai) {
+  const pegawai = product || this.selectedPegawai;
+
+  if (!pegawai?.id) return;
+
+  // Since backend already provides latest SKT info, just use it
+  if (!pegawai.tahunPenilaianTerkini || !pegawai.kategoriPenilaianTerkini) {
+    alert('Maklumat penilaian tidak lengkap. Pegawai ini tidak mempunyai SKT.');
+    return;
+  }
+
+  const payload = {
+    tahunPenilaian: pegawai.tahunPenilaianTerkini,
+    idKategoriPenilaian: pegawai.kategoriPenilaianTerkini === "Penilaian Utama" ? 1 : 2
+  };
+
+  (pegawai as any)._busy = true;
+
+  if (!pegawai.idSktTerkini) {
+    alert('ID SKT tidak dijumpai');
+    (pegawai as any)._busy = false;
+    return;
+  }
+
+  this.pydService.bolehDinilai(pegawai.idSktTerkini, payload).subscribe({
+    next: (response) => {
+      (pegawai as any)._busy = false;
+      console.log(response.message);
+
+      // Update UI to reflect new status
+      pegawai.buttonOption = 'Sedang Dinilai';
+      // pegawai.status = 'Boleh Dinilai';
+    },
+    error: (error) => {
+      (pegawai as any)._busy = false;
+      console.error('Error:', error);
+      alert('Gagal membenarkan pegawai dinilai');
+    }
+  });
+}
+getKategoriLabel(kategoriId: number | string | undefined): string {
+  if (typeof kategoriId === 'string') return kategoriId;
+
+  switch (kategoriId) {
+    case 1: return 'Utama';
+    case 2: return 'Semula';
+    default: return '-';
+  }
+}
+getStatusSeverity(status: string | undefined): string {
+  switch (status) {
+    case 'SKT Selesai':
+      return 'warn'; // Waiting for PPSM action
+    case 'Boleh Dinilai':
+    case 'Penilaian PPP':
+    case 'Penilaian PPK':
+      return 'info'; // In progress
+    case 'Penilaian Selesai':
+    case 'Penilaian Selesai PPSM':
+      return 'success'; // Completed
+    case 'Tiada Penilaian':
+      return 'secondary';
+    default:
+      return 'secondary';
+  }
+}
+
+getButtonSeverity(buttonOption: string): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | null | undefined {
+  switch (buttonOption) {
+    case 'Aktifkan':
+    case 'Aktifkan Semula':
+      return 'success';
+    case 'Benarkan Dinilai':
+      return 'info';
+    case 'Sedang Dinilai':
+      return 'secondary';
+    default:
+      return 'secondary';
+  }
+}
 }

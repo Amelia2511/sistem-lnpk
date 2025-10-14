@@ -8,42 +8,12 @@
       <th>Nama</th>
       <th>Tarikh Mula</th>
       <th>Tarikh Akhir</th>
-      <!-- <th>Tempoh Sudah Berkhidmat</th> -->
+      <th>Penilaian Terkini</th>
       <th>Status</th>
       <th></th>
     </tr>
   </ng-template>
 
-<div class="card">
-    <p-table [value]="products"  [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template #header>
-            <tr>
-                <th>Nama</th>
-                <th>Tarikh Mula</th>
-                <th>Tarikh Akhir</th>
-                <th>Tempoh Sudah Berkhidmat</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </ng-template>
-        <ng-template #body let-product>
-            <tr>
-                <td>{{ product.nama }}</td>
-                <td>{{ product.tarikhMulaKontrak }}</td>
-                <td>{{ product.tarikhAkhirKontrak }}</td>
-                <td>{{ product.tempohBerkhidmat }}</td>
-                <td>
-                    <div class="card flex justify-center">
-                        <p-tag [severity]="product.status === 'Tidak Aktif'? 'secondary': null ">{{ product.status }}</p-tag>
-                    </div>
-                </td>
-                <td>
-                    <p-button variant="outlined" [severity]="product.buttonOption === 'Aktifkan'? 'success': null ">{{ product.buttonOption }}</p-button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
   <ng-template pTemplate="body" let-product>
     <tr>
       <td>
@@ -51,41 +21,43 @@
           {{ product.nama }}
         </a>
       </td>
-      <td>{{ product.tarikhMulaKontrak}}</td>
+      <td>{{ product.tarikhMulaKontrak }}</td>
       <td>{{ product.tarikhAkhirKontrak }}</td>
-      <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
+
+      <!-- Penilaian Terkini Column - FIXED property names -->
+      <td>
+        <div *ngIf="product.tahunPenilaianTerkini" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <p-tag
+            [value]="product.tahunPenilaianTerkini"
+            severity="secondary">
+          </p-tag>
+          <p-tag
+            [value]="product.kategoriPenilaianTerkini"
+            severity="info">
+          </p-tag>
+        </div>
+        <span *ngIf="!product.tahunPenilaianTerkini" style="color: #999;">-</span>
+      </td>
 
       <td>
         <p-tag [value]="product.status"
           [severity]="product.status === 'Aktif' ? 'success' : (product.status === 'Tidak Aktif' ? 'danger' : 'secondary')">
         </p-tag>
       </td>
-      <td class="button-n">
-        <!-- <p-button
-        rounded="true"
-        variant="outlined"
-        [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-        [label]="product?.buttonOption"
-        [disabled]="!!product?.isActive"
-        (onClick)="aktifkan(product); showDialog()">
-        </p-button> -->
-        <!-- <p-button
-          rounded="true"
-          variant="outlined"
-          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : (product.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-          [label]="product.buttonOption"
-          [disabled]="!!product.isActive"
-          (onClick)="aktifkan(product); showDialog()"> -->
-        <p-button rounded="true" variant="outlined"
-          [severity]="product?.buttonOption === 'Aktifkan' ? 'success' : (product?.buttonOption === 'Boleh Dinilai' ? 'info' : 'secondary')"
-          [label]="product?.buttonOption" [disabled]="!!product?.isActive" (onClick)="aktifkan(product); showDialog()">
-        </p-button>
 
+      <td class="button-n">
+  <p-button rounded="true" variant="outlined"
+    [severity]="getButtonSeverity(product.buttonOption)"
+    [label]="product.buttonOption"
+    [disabled]="product.buttonOption === 'Sedang Dinilai'"
+    [loading]="product?._busy ?? false"
+    (onClick)="handleButtonClick(product)">
+  </p-button>
       </td>
     </tr>
   </ng-template>
 </p-table>
-<!-- [(visible)]="visible" [modal]="true" [style]="{width: '50rem'}" -->
+
 <p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '50rem', 'min-height': '400px' }" [contentStyle]="{ 'padding': '2rem', 'overflow': 'visible' }">
   <ng-template pTemplate="body">
     <div style="min-height: 200px; padding: 1rem 0;">

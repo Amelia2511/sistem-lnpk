@@ -11,6 +11,7 @@ export interface sasaranKerja {
   namaKategoriPenilaian: string;
   namaStatus: string;
 
+  namaPegawaiDinilai: string;
   idPYD: number | undefined;
   idStatus: number | undefined;
   idKategoriPenilaian: number | undefined;
@@ -76,6 +77,26 @@ export class SasaranKerjaService {
       } as sasaranKerja))));
   }
 
+  getSasaranKerjaPpp(noKP: string): Observable<sasaranKerja[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerjaPPP/${noKP}`)
+    .pipe(map(rows => rows.map(r => ({
+      idSkt: r.idSkt ?? r.id,
+      tahunPenilaian: r.tahunPenilaian,
+      namaKategoriPenilaian: r.namaKategoriPenilaian,
+      namaStatus: r.namaStatus,
+      idPYD: r.idPyd,
+      namaPegawaiDinilai: r.namaPegawaiDinilai,
+      idStatus: r.idStatus,
+      idKategoriPenilaian: r.idKategoriPenilaian,
+      idPPP: r.idPpp,
+      idPPK: r.idPpk,
+      tarikhHantar: r.tarikhHantar,
+      tarikhSah: r.tarikhSah,
+      createdAt: r.createdAt,
+      updateAt: r.updateAt
+      } as sasaranKerja))));
+  }
+
   getSasaranKerjaById(idSkt: number) {
     return this.httpClient.get<Pick<sasaranKerja, 'idSkt'|'tahunPenilaian'|'namaKategoriPenilaian'>>(
       `${this.baseUrl}SasaranKerjas/${idSkt}`
@@ -100,4 +121,29 @@ export class SasaranKerjaService {
     return this.httpClient.delete(`${this.baseUrl}Aktiviti/${idAktiviti}`);
   }
 
+  // updateStatusPenilaian(idSkt: number, status: number) {
+  //   return this.httpClient.patch(`${this.baseUrl}SasaranKerjas/${idSkt}/status`, status);
+  // }
+
+  hantarSasaran(idSkt: number) {
+    return this.httpClient.post(`${this.baseUrl}SasaranKerjas/${idSkt}/hantar`, {});
+  }
+
+  sahkanSasaran(idSkt: number) {
+    return this.httpClient.post(`${this.baseUrl}SasaranKerjas/${idSkt}/sahkan`, {});
+  }
+
+  tidakSahSasaran(idSkt: number) {
+    return this.httpClient.post(`${this.baseUrl}SasaranKerjas/${idSkt}/tidakSahkan`, {});
+  }
+
+  getSasaranById(idSkt: number) {
+    return this.httpClient.get<{
+      idSkt: number;
+      tahunPenilaian: number;
+      namaKategoriPenilaian: string;
+      idStatus: number | null;
+      namaStatus: string | null;
+    }>(`${this.baseUrl}SasaranKerjas/${idSkt}`);
+  }
 }

@@ -1,0 +1,36 @@
+<p-card header="Sasaran Kerja Tahunan">
+  <p-table [value]="skts" [tableStyle]="{ 'min-width': '25rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nama Pegawai</th>
+        <th>Tahun Penilaian</th>
+        <th>Kategori Penilaian</th>
+        <th>Tarikh Hantar</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-skt>
+      <tr>
+        <td>{{ skt.namaPegawaiDinilai }}</td>
+        <td>{{ skt.tahunPenilaian }}</td>
+        <td>{{ skt.namaKategoriPenilaian }}</td>
+        <td>{{ skt.tarikhHantar }}</td>
+        <td><p-tag value="{{ skt.namaStatus }}" [severity]="skt.namaStatus === 'Draf' ? 'warn' : null" />
+        </td>
+        <td>
+          <p-button
+            (onClick)="onButtonClick(skt)"
+            [label]="skt.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
+            [rounded]="true"
+            [severity]="skt.namaStatus === 'Draf' ? 'warn' : null"
+            size="small" />
+        </td>
+        </tr>
+      </ng-template>
+      <div *ngFor="let item of skts">
+          {{ item.namaPegawaiDinilai }} - {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
+      </div>
+
+  </p-table>
+</p-card>
