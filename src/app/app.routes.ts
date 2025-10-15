@@ -21,6 +21,7 @@ import { SenaraiPydPpComponent } from './senarai-pyd-pp/senarai-pyd-pp.component
 import { MaklumatPydComponent } from './maklumat-pyd/maklumat-pyd.component';
 import { SasaranPpComponent } from './sasaran-pp/sasaran-pp.component';
 import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
+import { SenaraiSasaranPppComponent } from './senarai-sasaran-ppp/senarai-sasaran-ppp.component';
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
     { path: 'laman-utama', component: LamanUtamaComponent },
@@ -49,5 +50,6 @@ export const routes: Routes = [
     { path: 'maklumat-pyd', component: MaklumatPydComponent},
     { path: 'senarai-pyd-pp', component: SenaraiPydPpComponent},
     { path: 'sasaran-pp', component: SasaranPpComponent},
+    { path: 'senarai-sasaran-ppp', component: SenaraiSasaranPppComponent}
     // { path: '', redirectTo: '/laman-utama', pathMatch: 'full' }
 ];

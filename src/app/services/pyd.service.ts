@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { pegawaiDinilai } from '../model/pegawai.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { pegawai } from '../model/employee.model';
+import { markahSoalan } from '../model/markah-soalan.model';
 
 export interface SasaranKerjaListItem {
   idSkt: number;
@@ -76,6 +77,10 @@ export class PydService {
     );
   }
 
+  getMarkahByPyd(idPyd: number): Observable<markahSoalan[]> {
+    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}Penilaian/pyd/${idPyd}`);
+  }
+
   //PUT
   updatePegawai(id: number, pegawai: pegawaiDinilai): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/${id}`, pegawai);
@@ -103,7 +108,10 @@ export class PydService {
   }
 
   bolehDinilai(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
-    return this.httpClient.post<BolehDinilaiResponse>(`${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpp`, payload);
+    return this.httpClient.post<BolehDinilaiResponse>(
+      `${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpp`,
+      payload
+    );
   }
 
 }

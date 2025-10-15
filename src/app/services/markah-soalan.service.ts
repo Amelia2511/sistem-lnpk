@@ -47,7 +47,7 @@ export class MarkahSoalanService {
   }
 
   getMarkahSoalanByPenilaian(idPenilaian: number): Observable<markahSoalan[]> {
-    return this.httpClient.get<markahSoalan[]>(this.baseUrl + `MarkahSoalans/ByPenilaian/${idPenilaian}`);
+    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}ByPenilaian/${idPenilaian}`);
   }
 
 }

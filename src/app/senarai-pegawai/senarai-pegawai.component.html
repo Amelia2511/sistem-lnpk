@@ -3,38 +3,39 @@
 <h4>Senarai Pegawai</h4>
 
 <!-- Dropdown filter by Unit -->
-<p-select [options]="units"
-          [(ngModel)]="details.id"
-          optionLabel="namaUnit"
-          optionValue="id"
-          [filter]="true"
-          filterBy="namaUnit"
-          [showClear]="true"
-          placeholder="Pilih Unit"
-          class="act_setting"
-          (onChange)="onUnitChange($event)">
+<p-select 
+  [options]="units"
+  [(ngModel)]="details.id"
+  optionLabel="namaUnit"
+  optionValue="id"
+  [filter]="true"
+  filterBy="namaUnit"
+  [showClear]="true"
+  placeholder="Pilih Unit"
+  class="act_setting"
+  (onChange)="onUnitChange($event)">
 </p-select>
 
 <!-- Data table -->
-<p-table [value]="products"
-         [paginator]="true"
-         [rows]="rows2"
-         [first]="first2"
-         [totalRecords]="products.length"
-         (onPage)="onPageChange2($event)"
-         [tableStyle]="{ 'min-width': '70rem' }">
+<p-table 
+  [value]="products"
+  [paginator]="true"
+  [rows]="rows2"
+  [first]="first2"
+  [totalRecords]="products.length"
+  (onPage)="onPageChange2($event)"
+  [tableStyle]="{ 'min-width': '70rem' }">
 
   <ng-template pTemplate="header">
     <tr>
       <th>Nama</th>
       <th>Tarikh Mula</th>
       <th>Tarikh Akhir</th>
-
       <th>Tempoh Berkhidmat</th>
       <th>Unit</th>
       <th>Penilaian Terkini</th>
       <th>Status</th>
-      <th>Aksi</th>
+      <th></th>
     </tr>
   </ng-template>
 
@@ -50,7 +51,7 @@
       <td>{{ product.tempohBerkhidmat }}</td>
       <td>{{ product.namaUnit }}</td>
 
-      <!-- Penilaian Terkini Column - FIXED property names -->
+      <!-- Penilaian Terkini Column -->
       <td>
         <div *ngIf="product.tahunPenilaianTerkini" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
           <p-tag
@@ -65,110 +66,108 @@
         <span *ngIf="!product.tahunPenilaianTerkini" style="color: #999;">-</span>
       </td>
 
+      <!-- Status Column -->
       <td>
-        <p-tag [value]="product.status"
-               [severity]="product.status === 'Aktif' ? 'success' : 'danger'">
+        <p-tag 
+          [value]="product.status"
+          [severity]="getStatusSeverity(product.status)">
         </p-tag>
       </td>
-      <td>
-        <p-button rounded="true" variant="outlined"
-                  [severity]="product.buttonOption === 'Aktifkan' ? 'success' : 'info'"
-                  [label]="product.buttonOption"
-                  [disabled]="product.isActive || product.bolehDinilaiClicked"
-                  (onClick)="handleAction(product)">
-        </p-button>
 
+      <!-- Action Button -->
       <td class="button-n">
-  <p-button rounded="true" variant="outlined"
-    [severity]="getButtonSeverity(product.buttonOption)"
-    [label]="product.buttonOption"
-    [disabled]="product.buttonOption === 'Sedang Dinilai'"
-    [loading]="product?._busy ?? false"
-    (onClick)="handleButtonClick(product)">
-  </p-button>
+        <p-button 
+          rounded="true" 
+          variant="outlined"
+          [severity]="getButtonSeverity(product.buttonOption)"
+          [label]="product.buttonOption"
+          [disabled]="product.buttonOption === 'Sedang Dinilai' || product.buttonOption === 'SKT'"
+          [loading]="product?._busy ?? false"
+          (onClick)="handleButtonClick(product)">
+        </p-button>
       </td>
     </tr>
   </ng-template>
 </p-table>
 
-<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false" [style]="{ width: '50rem', 'min-height': '400px' }" [contentStyle]="{ 'padding': '2rem', 'overflow': 'visible' }">
+<!-- Items per page + paginator -->
+<div class="flex items-center justify-end mt-3">
+  <span class="mx-1 text-color">Items per page: </span>
+  <p-select 
+    [options]="options"
+    optionLabel="label"
+    optionValue="value"
+    [(ngModel)]="rows2"
+    (ngModelChange)="first2 = 0">
+  </p-select>
+
+  <p-paginator 
+    [first]="first2"
+    [rows]="rows2"
+    [totalRecords]="products.length"
+    (onPageChange)="onPageChange2($event)"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} of {totalRecords}"
+    [showPageLinks]="true"
+    [showFirstLastIcon]="true">
+  </p-paginator>
+</div>
+
+<!-- Activation Dialog -->
+<p-dialog 
+  header="Aktifkan Pegawai"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false"
+  [style]="{ width: '450px' }">
+
   <ng-template pTemplate="body">
     <div style="min-height: 200px; padding: 1rem 0;">
-      <div class="field" style="margin-bottom: 2rem;">
+      <div class="field" style="margin-bottom: 1.5rem;">
         <label for="tahunPenilaian" style="display: block; margin-bottom: 0.5rem;">Tahun Penilaian *</label>
-        <p-select
+        <p-select 
           id="tahunPenilaian"
           [(ngModel)]="tahunPenilaian"
           [options]="tahunOptions"
           placeholder="Pilih Tahun Penilaian"
           [style]="{ width: '100%' }"
           optionLabel="label"
-          optionValue="value"
-          [appendTo]="'body'">
+          optionValue="value">
         </p-select>
       </div>
 
-<!-- Items per page + paginator -->
-<div class="flex items-center justify-end mt-3">
-  <span class="mx-1 text-color">Items per page: </span>
-  <p-select [options]="options"
-            optionLabel="label"
-            optionValue="value"
-            [(ngModel)]="rows2"
-            (ngModelChange)="first2 = 0">
-  </p-select>
-
-  <p-paginator [first]="first2"
-               [rows]="rows2"
-               [totalRecords]="products.length"
-               (onPageChange)="onPageChange2($event)"
-               [showCurrentPageReport]="true"
-               currentPageReportTemplate="{first} - {last} of {totalRecords}"
-               [showPageLinks]="true"
-               [showFirstLastIcon]="true">
-  </p-paginator>
-</div>
-
-<!-- Activation Dialog -->
-<p-dialog header="Aktifkan Pegawai"
-          [(visible)]="display"
-          [modal]="true"
-          [closable]="false"
-          [style]="{ width: '450px' }">
-
-  <div class="field">
-    <label for="tahunPenilaian">Tahun Penilaian *</label>
-    <p-select id="tahunPenilaian"
-              [(ngModel)]="tahunPenilaian"
-              [options]="tahunOptions"
-              placeholder="Pilih Tahun Penilaian"
-              [style]="{ width: '100%' }"
-              optionLabel="label"
-              optionValue="value">
-    </p-select>
-  </div>
-
-  <div class="field">
-    <label for="kategoriPenilaian">Kategori Penilaian *</label>
-    <p-select id="kategoriPenilaian"
-              [(ngModel)]="kategoriPenilaian"
-              [options]="kategoriOptions"
-              placeholder="Pilih Kategori Penilaian"
-              [style]="{ width: '100%' }"
-              optionLabel="label"
-              optionValue="value">
-    </p-select>
-  </div>
+      <div class="field">
+        <label for="kategoriPenilaian" style="display: block; margin-bottom: 0.5rem;">Kategori Penilaian *</label>
+        <p-select 
+          id="kategoriPenilaian"
+          [(ngModel)]="kategoriPenilaian"
+          [options]="kategoriOptions"
+          placeholder="Pilih Kategori Penilaian"
+          [style]="{ width: '100%' }"
+          optionLabel="label"
+          optionValue="value">
+        </p-select>
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template pTemplate="footer">
-    <button type="button" pButton label="Batal" icon="pi pi-times"
-            class="p-button-secondary"
-            (click)="cancelActivation()">
+    <button 
+      type="button" 
+      pButton 
+      label="Batal" 
+      icon="pi pi-times"
+      class="p-button-secondary"
+      (click)="cancelActivation()">
     </button>
 
-    <button type="button" pButton label="Aktifkan" icon="pi pi-check"
-            [loading]="selectedPegawai?._busy ?? false"
-            (click)="confirmActivation()">
+    <button 
+      type="button" 
+      pButton 
+      label="Aktifkan" 
+      icon="pi pi-check"
+      [loading]="selectedPegawai?._busy ?? false"
+      (click)="confirmActivation()">
     </button>
   </ng-template>
 </p-dialog>

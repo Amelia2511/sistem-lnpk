@@ -41,6 +41,11 @@ export class PenilaianPrestasiComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private penilaian: PenilaianService, private authService: AuthService) { }
 
+  resetForm(): void {
+    this.ulasanPPP = '';
+    this.ulasanPPK = '';
+  }
+
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       if (user && user.noKP) {
@@ -143,8 +148,9 @@ export class PenilaianPrestasiComponent implements OnInit {
           title: 'Berjaya!',
           text: 'Ulasan berjaya disimpan.',
           confirmButtonText: 'OK'
+        }).then(() => {
+          this.resetForm();
         });
-        return;
       },
       error: (err) => {
         console.error("Save failed:", err);

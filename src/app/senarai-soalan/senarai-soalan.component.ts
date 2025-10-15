@@ -32,10 +32,10 @@ export class SenaraiSoalanComponent implements OnInit {
   markah: string | null = null;
   products: any[] = [];
 
-  idPenilaian: number | null = null; 
+  idPenilaian: number | null = null;
   idPyd: number | null = null;
   idSkt: number | null = null;
-  evaluatorType: string = 'self'; 
+  evaluatorType: string = 'self';
 
   formValues = {
     // Pengetahuan, Kemahiran dan Penghasilan Kerja - Column 1
@@ -128,6 +128,35 @@ export class SenaraiSoalanComponent implements OnInit {
   // Method to handle input changes
   onInputChange(): void {
     this.calculateMarkahKeseluruhan();
+  }
+
+  resetForm(): void {
+    this.formValues = {
+      ilmuPengetahuan: null,
+      kuantitiHasil: null,
+      kualitiHasil: null,
+      penganalisisan: null,
+      nilaiTambah: null,
+      ilmuPengetahuan2: null,
+      kuantitiHasil2: null,
+      kualitiHasil2: null,
+      penganalisisan2: null,
+      nilaiTambah2: null,
+      integriti: null,
+      disiplin: null,
+      kepimpinan: null,
+      kreatifProaktif: null,
+      kawalanDiri: null,
+      jalinanHubungan: null,
+      integriti2: null,
+      disiplin2: null,
+      kepimpinan2: null,
+      kreatifProaktif2: null,
+      kawalanDiri2: null,
+      jalinanHubungan2: null
+    };
+    this.markahKeseluruhan = 0;
+    this.markahKeseluruhan2 = 0;
   }
 
   ngOnInit(): void {
@@ -287,6 +316,7 @@ export class SenaraiSoalanComponent implements OnInit {
           text: `${records.length} rekod markah berjaya disimpan.`,
           confirmButtonText: 'OK'
         }).then(() => {
+          this.resetForm();
           this.router.navigate(['/penilaian-prestasi']);
         });
         return;
