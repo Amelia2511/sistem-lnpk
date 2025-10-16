@@ -36,7 +36,7 @@
             severity="info">
           </p-tag>
         </div>
-        <span *ngIf="!product.tahunPenilaianTerkini" style="color: #999;">-</span>
+        <span *ngIf="!product.tahunPenilaianTerkini" style="color: #999;"></span>
       </td>
 
       <td>
@@ -46,7 +46,7 @@
       </td>
 
       <td class="button-n">
-  <p-button rounded="true" variant="outlined"
+  <p-button size="small" rounded="true" variant="outlined"
     [severity]="getButtonSeverity(product.buttonOption)"
     [label]="product.buttonOption"
     [disabled]="product.buttonOption === 'Sedang Dinilai'"
@@ -97,7 +97,7 @@
       label="Batal"
       icon="pi pi-times"
       class="p-button-secondary"
-      (click)="cancelActivation()">
+      (onClick)="cancelActivation()">
     </button>
 
     <button
@@ -106,7 +106,7 @@
       label="Aktifkan"
       icon="pi pi-check"
       [loading]="selectedPegawai?._busy ?? false"
-      (click)="confirmActivation()">
+      (onClick)="confirmActivation()">
     </button>
   </ng-template>
 </p-dialog>

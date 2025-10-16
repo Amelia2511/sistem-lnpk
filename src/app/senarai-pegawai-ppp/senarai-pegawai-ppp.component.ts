@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-senarai-pegawai-ppp',
-  imports: [],
+  imports: [CardModule],
   templateUrl: './senarai-pegawai-ppp.component.html',
   styleUrl: './senarai-pegawai-ppp.component.css'
 })

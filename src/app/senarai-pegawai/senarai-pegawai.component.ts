@@ -113,7 +113,7 @@ getButtonOption(status: string | undefined): string {
     return 'Aktifkan Semula'; // Completed, can start new evaluation
   }
 
-  return 'N/A'; // Default fallback
+  return 'Sedang Dinilai'; // Default fallback
 }
 
 aktifkan(row: pegawaiDinilai) {
