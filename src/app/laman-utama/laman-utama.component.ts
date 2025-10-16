@@ -10,10 +10,11 @@ import { pegawaiDinilai } from '../model/pegawai.model';
 import { RoleStateService } from '../services/role-state.service';
 import { CommonModule } from '@angular/common';
 import { SenaraiSasaranPppComponent } from "../senarai-sasaran-ppp/senarai-sasaran-ppp.component";
+import { SenaraiPegawaiPppComponent } from '../senarai-pegawai-ppp/senarai-pegawai-ppp.component';
 
 @Component({
   selector: 'app-laman-utama',
-  imports: [StatusPenilaianComponent, MaklumatPpComponent, CommonModule, DashboardPpsmComponent, SenaraiSasaranPppComponent],
+  imports: [StatusPenilaianComponent, MaklumatPpComponent, CommonModule, DashboardPpsmComponent, SenaraiSasaranPppComponent, SenaraiPegawaiPppComponent],
   templateUrl: './laman-utama.component.html',
   styleUrl: './laman-utama.component.css'
 })
