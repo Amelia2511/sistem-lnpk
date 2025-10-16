@@ -1,7 +1,7 @@
 <div style="display: flex; flex-direction: column; gap: 1rem;">
 
     <!-- TESTING PANEL - Remove this section when going to production -->
-    <div *ngIf="testMode"
+    <!-- <div *ngIf="testMode"
         style="background-color: #fff3cd; border: 2px solid #ffc107; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
         <h5 style="color: #856404; margin: 0 0 1rem 0;">TEST MODE ACTIVE</h5>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
@@ -30,7 +30,7 @@
             <strong>Current idPenilaian:</strong> {{ idPenilaian || 'Not set' }} |
             <strong>Loading:</strong> {{ isLoadingMarks ? 'Yes' : 'No' }}
         </div>
-    </div>
+    </div> -->
     <!-- END TESTING PANEL -->
 
     <h4>Skala</h4>
@@ -70,7 +70,7 @@
                 mengenalpasti, menganalisis serta menyelesaikan masalah.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.ilmuPengetahuan" placeholder="-" size="large"
@@ -108,7 +108,7 @@
                 kuantiti kerja, mengikut tempoh masa yang ditetapkan.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kuantitiHasil" placeholder="-" size="large"
@@ -145,7 +145,7 @@
             <p>Dinilai dari segi kesempurnaan, teratur, kemas dan mengikut peraturan yang ditetapkan.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kualitiHasil" placeholder="-" size="large"
@@ -183,7 +183,7 @@
                 penyelesaian yang membina.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.penganalisisan" placeholder="-" size="large"
@@ -220,7 +220,7 @@
             <p>Menghasilkan nilai tambah kepada proses dan penghasilan kerja yang lebih baik.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.nilaiTambah" placeholder="-" size="large"
@@ -262,7 +262,7 @@
                 dan bijaksana dalam setiap tindakan.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.integriti" placeholder="-" size="large"
@@ -300,7 +300,7 @@
                 menunaikan janji dan bersifat sabar.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.disiplin" placeholder="-" size="large"
@@ -339,7 +339,7 @@
                 menggerak dan memberi dorongan kepada kakitangan ke arah pencapaian objektif organisasi.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kepimpinan" placeholder="-" size="large"
@@ -377,7 +377,7 @@
                 pembaharuan kepada proses kerja bagi mempertingkatkan kualiti dan produktiviti.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kreatifProaktif" placeholder="-" size="large"
@@ -415,7 +415,7 @@
                 perasaan, memotivasikan diri, menghadapi tekanan kerja dan mempunyai daya tahan.</p>
         </div>
         <div style="display: flex; gap: 10px; align-items: center;">
-            <!-- Column 1: Self-Evaluation (Employee's marks) -->
+            <!-- Column 1: Self-Evaluation (PPP's marks) -->
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kawalanDiri" placeholder="-" size="large"

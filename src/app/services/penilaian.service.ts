@@ -109,6 +109,12 @@ export class PenilaianService {
     return this.httpClient.get<{ idSkt: number }>(`${this.baseUrl}SasaranKerjas/GetIdSktByIdPyd/${idPyd}`);
   }
 
+  getPppMarkahSoalanByPpkPenilaian(idPenilaian: number): Observable<markahSoalan[]> {
+    return this.httpClient.get<markahSoalan[]>(
+      `${this.baseUrl}MarkahSoalan/penilaian/${idPenilaian}/ppp`
+    );
+  }
+
   // getMaklumatPenilaian(idPenilaian: number): Observable<any> {
   //   return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetMaklumatPenilaian/${idPenilaian}`);
   // }

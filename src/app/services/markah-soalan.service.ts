@@ -18,6 +18,11 @@ export class MarkahSoalanService {
     return this.httpClient.get<markahSoalan[]>(this.baseUrl + 'MarkahSoalans/GetMarkahSoalan');
   }
 
+  // getMarkahSoalanByPenilaian(idPenilaian: number): Observable<markahSoalan[]> {
+  //   // idPenilaian tells backend which marks to return
+  //   return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}/GetByPenilaian/${idPenilaian}`);
+  // }
+
   ///// POST ///////
   simpanMarkahSoalan(object: any) {
     const httpOptions = {
@@ -47,7 +52,11 @@ export class MarkahSoalanService {
   }
 
   getMarkahSoalanByPenilaian(idPenilaian: number): Observable<markahSoalan[]> {
-    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}ByPenilaian/${idPenilaian}`);
+    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}MarkahSoalans/GetMarkahSoalanByPenilaian/ByPenilaian/${idPenilaian}`);
+  }
+
+  getPppMarkahSoalanByPenilaian(idPenilaian: number): Observable<markahSoalan[]> {
+    return this.httpClient.get<markahSoalan[]>(`${this.baseUrl}penilaian/${idPenilaian}/ppp`);
   }
 
 }
