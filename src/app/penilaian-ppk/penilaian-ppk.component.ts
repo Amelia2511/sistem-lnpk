@@ -178,7 +178,6 @@ export class PenilaianPpkComponent implements OnInit {
     this.calculateMarkahKeseluruhan(); // uses updated function below
   }
 
-
   // Load existing marks from database
   // loadExistingMarks(idPenilaian: number): void {
   //   this.isLoadingMarks = true;
@@ -323,43 +322,29 @@ export class PenilaianPpkComponent implements OnInit {
 
     const records: any[] = [];
 
-    // Define criteria with their corresponding idSoalan
+    // Define criteria with their corresponding idSoalan (1–11)
     const criteria = [
-      // Pengetahuan, Kemahiran dan Penghasilan Kerja (IDs 1-5)
-      { id: 1, name: 'ilmuPengetahuan', col1: this.formValues.ilmuPengetahuan, col2: this.formValues.ilmuPengetahuan2 },
-      { id: 2, name: 'kuantitiHasil', col1: this.formValues.kuantitiHasil, col2: this.formValues.kuantitiHasil2 },
-      { id: 3, name: 'kualitiHasil', col1: this.formValues.kualitiHasil, col2: this.formValues.kualitiHasil2 },
-      { id: 4, name: 'penganalisisan', col1: this.formValues.penganalisisan, col2: this.formValues.penganalisisan2 },
-      { id: 5, name: 'nilaiTambah', col1: this.formValues.nilaiTambah, col2: this.formValues.nilaiTambah2 },
-
-      // Kualiti Peribadi (IDs 6-11)
-      { id: 6, name: 'integriti', col1: this.formValues.integriti, col2: this.formValues.integriti2 },
-      { id: 7, name: 'disiplin', col1: this.formValues.disiplin, col2: this.formValues.disiplin2 },
-      { id: 8, name: 'kepimpinan', col1: this.formValues.kepimpinan, col2: this.formValues.kepimpinan2 },
-      { id: 9, name: 'kreatifProaktif', col1: this.formValues.kreatifProaktif, col2: this.formValues.kreatifProaktif2 },
-      { id: 10, name: 'kawalanDiri', col1: this.formValues.kawalanDiri, col2: this.formValues.kawalanDiri2 },
-      { id: 11, name: 'jalinanHubungan', col1: this.formValues.jalinanHubungan, col2: this.formValues.jalinanHubungan2 }
+      { id: 1, name: 'ilmuPengetahuan', col2: this.formValues.ilmuPengetahuan2 },
+      { id: 2, name: 'kuantitiHasil', col2: this.formValues.kuantitiHasil2 },
+      { id: 3, name: 'kualitiHasil', col2: this.formValues.kualitiHasil2 },
+      { id: 4, name: 'penganalisisan', col2: this.formValues.penganalisisan2 },
+      { id: 5, name: 'nilaiTambah', col2: this.formValues.nilaiTambah2 },
+      { id: 6, name: 'integriti', col2: this.formValues.integriti2 },
+      { id: 7, name: 'disiplin', col2: this.formValues.disiplin2 },
+      { id: 8, name: 'kepimpinan', col2: this.formValues.kepimpinan2 },
+      { id: 9, name: 'kreatifProaktif', col2: this.formValues.kreatifProaktif2 },
+      { id: 10, name: 'kawalanDiri', col2: this.formValues.kawalanDiri2 },
+      { id: 11, name: 'jalinanHubungan', col2: this.formValues.jalinanHubungan2 }
     ];
 
     const currentTimestamp = new Date().toISOString();
 
-    criteria.forEach((criterion) => {
-      if (criterion.col1 !== null && criterion.col1 !== undefined) {
-        records.push({
-          idPenilaian: this.idPenilaian,
-          idSoalan: criterion.id,
-          markah: criterion.col1,
-          createdAt: currentTimestamp,
-          updatedAt: currentTimestamp
-        });
-      }
-    });
-
+    // Push only PPK marks (col2)
     criteria.forEach((criterion) => {
       if (criterion.col2 !== null && criterion.col2 !== undefined) {
         records.push({
           idPenilaian: this.idPenilaian,
-          idSoalan: criterion.id + 11,
+          idSoalan: criterion.id, // PPK uses same idSoalan (1–11)
           markah: criterion.col2,
           createdAt: currentTimestamp,
           updatedAt: currentTimestamp
@@ -367,7 +352,7 @@ export class PenilaianPpkComponent implements OnInit {
       }
     });
 
-    console.log('Records to save:', records);
+    console.log('PPK records to save:', records);
 
     if (records.length === 0) {
       Swal.fire({
@@ -379,28 +364,16 @@ export class PenilaianPpkComponent implements OnInit {
       return;
     }
 
-    this.markahSoalan.getMarkahSoalanByPenilaian(this.idPenilaian).subscribe({
-      next: (data) => {
-        console.log('Received data from API:', data);
-        this.markahSoalanList = data.map(item => ({
-          ...item,
-          markah: typeof item.markah === 'number' ? item.markah : undefined
-        }));
-      },
-      error: (err) => console.error('Error fetching markah soalan:', err)
-    });
-
-    // Call the service to save multiple records
+    // Save to backend
     this.markahSoalan.simpanMultipleMarkahSoalan(records).subscribe({
       next: (info) => {
         console.log("API response:", info);
         Swal.fire({
           icon: 'success',
           title: 'Berjaya!',
-          text: `${records.length} rekod markah berjaya disimpan.`,
+          text: `${records.length} rekod markah PPK berjaya disimpan.`,
           confirmButtonText: 'OK'
         }).then(() => {
-          // Reload the marks after successful save
           if (this.idPenilaian) {
             this.loadMarkahFromDb(this.idPenilaian);
           }
@@ -411,7 +384,7 @@ export class PenilaianPpkComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Ralat!',
-          text: 'Gagal menyimpan markah. Sila cuba lagi.',
+          text: 'Gagal menyimpan markah PPK. Sila cuba lagi.',
           confirmButtonText: 'OK'
         });
       }

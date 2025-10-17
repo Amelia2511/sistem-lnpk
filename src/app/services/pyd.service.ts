@@ -114,4 +114,11 @@ export class PydService {
     );
   }
 
+  bolehDinilaiPpk(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
+    return this.httpClient.post<BolehDinilaiResponse>(
+      `${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpk`,
+      payload
+    );
+  }
+
 }

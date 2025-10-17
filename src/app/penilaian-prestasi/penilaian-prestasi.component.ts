@@ -38,6 +38,7 @@ export class PenilaianPrestasiComponent implements OnInit {
   idPyd: number | null = null;
   idSkt: number | null = null;
   details: penilaian = {} as penilaian;
+  penilaianList: any[] = [];  // will hold PPP & PPK records
 
   constructor(private router: Router, private route: ActivatedRoute, private penilaian: PenilaianService, private authService: AuthService) { }
 
@@ -120,6 +121,7 @@ export class PenilaianPrestasiComponent implements OnInit {
       return;
     }
 
+    // Check that at least one of PPP or PPK ulasan is filled
     if (!this.ulasanPPP.trim() && !this.ulasanPPK.trim()) {
       Swal.fire({
         icon: 'warning',
@@ -130,10 +132,21 @@ export class PenilaianPrestasiComponent implements OnInit {
       return;
     }
 
+    // 🟢 Combine or choose which ulasan to send
+    let combinedUlasan = '';
+    if (this.ulasanPPP.trim()) {
+      combinedUlasan += `${this.ulasanPPP.trim()}`;
+    }
+    if (this.ulasanPPK.trim()) {
+      if (combinedUlasan) combinedUlasan += ' | ';
+      combinedUlasan += `${this.ulasanPPK.trim()}`;
+    }
+
+    // Prepare data for API
     const payload = {
-      idUlasanPenilaian: 0, // let backend auto-generate
+      idUlasanPenilaian: 0, // Let backend auto-generate
       idPenilaian: this.idPenilaian,
-      ulasan: (this.ulasanPPP + " " + this.ulasanPPK).trim(),
+      ulasan: combinedUlasan,
       tempohPengawasan: null,
       tarikhSahUlasan: null,
       createdAt: null,
@@ -141,8 +154,8 @@ export class PenilaianPrestasiComponent implements OnInit {
     };
 
     this.penilaian.simpanUlasanPenilaian(payload).subscribe({
-      next: (info) => {
-        console.log("API response:", info);
+      next: (response) => {
+        console.log("API response:", response);
         Swal.fire({
           icon: 'success',
           title: 'Berjaya!',
@@ -160,8 +173,63 @@ export class PenilaianPrestasiComponent implements OnInit {
           text: err.error?.message || 'Ralat berlaku semasa menyimpan. Sila cuba lagi.',
           confirmButtonText: 'OK'
         });
-        return;
       }
     });
   }
+
+  // simpan(): void {
+  //   if (!this.idPenilaian) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Ralat!',
+  //       text: 'ID Penilaian tidak ditemukan. Sila cuba lagi.',
+  //       confirmButtonText: 'OK'
+  //     });
+  //     return;
+  //   }
+
+  //   if (!this.ulasanPPP.trim() && !this.ulasanPPK.trim()) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Perhatian!',
+  //       text: 'Sila isi sekurang-kurangnya satu ulasan (PPP atau PPK).',
+  //       confirmButtonText: 'OK'
+  //     });
+  //     return;
+  //   }
+
+  //   const payload = {
+  //     idUlasanPenilaian: 0, // let backend auto-generate
+  //     idPenilaian: this.idPenilaian,
+  //     ulasan: (this.ulasanPPP + " " + this.ulasanPPK).trim(),
+  //     tempohPengawasan: null,
+  //     tarikhSahUlasan: null,
+  //     createdAt: null,
+  //     updateAt: null
+  //   };
+
+  //   this.penilaian.simpanUlasanPenilaian(payload).subscribe({
+  //     next: (info) => {
+  //       console.log("API response:", info);
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Berjaya!',
+  //         text: 'Ulasan berjaya disimpan.',
+  //         confirmButtonText: 'OK'
+  //       }).then(() => {
+  //         this.resetForm();
+  //       });
+  //     },
+  //     error: (err) => {
+  //       console.error("Save failed:", err);
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Ralat!',
+  //         text: err.error?.message || 'Ralat berlaku semasa menyimpan. Sila cuba lagi.',
+  //         confirmButtonText: 'OK'
+  //       });
+  //       return;
+  //     }
+  //   });
+  // }
 }

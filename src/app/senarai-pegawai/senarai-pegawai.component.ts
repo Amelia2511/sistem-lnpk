@@ -333,6 +333,23 @@ export class SenaraiPegawaiComponent implements OnInit {
         alert('Gagal membenarkan pegawai dinilai');
       }
     });
+    this.pydService.bolehDinilaiPpk(pegawai.idSktTerkini, payload).subscribe({
+      next: (response) => {
+        (pegawai as any)._busy = false;
+        console.log(response.message);
+
+        pegawai.buttonOption = 'Sedang Dinilai';
+        // pegawai.status = 'Penilaian PPK';
+        
+        // Refresh list
+        // this.getPegawaiList();
+      },
+      error: (error) => {
+        (pegawai as any)._busy = false;
+        console.error('Error:', error);
+        alert('Gagal membenarkan pegawai dinilai');
+      }
+    });
   }
 
   getStatusSeverity(status: string | undefined): 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | null | undefined {

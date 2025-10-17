@@ -115,6 +115,14 @@ export class PenilaianService {
     );
   }
 
+  getAllBySkt(idSkt: number) {
+    return this.httpClient.get<penilaian[]>(`${this.baseUrl}/Penilaian/GetAllBySkt/${idSkt}`);
+  }
+
+  simpanAtauKemaskiniUlasan(ulasan: any): Observable<any> {
+    return this.httpClient.post(`${this.baseUrl}SimpanAtauKemaskini`, ulasan);
+  }
+
   // getMaklumatPenilaian(idPenilaian: number): Observable<any> {
   //   return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetMaklumatPenilaian/${idPenilaian}`);
   // }
