@@ -67,6 +67,10 @@ export class PenilaianService {
     );
   }
 
+  getLatestPydPenilaianByPpkNoKp(noKp: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetLatestPydPenilaianByPpkNoKp/${noKp}`);
+  }
+
   getSasaranPyd(id: number): Observable<pegawaiDinilai> {
     console.log("id", id)
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}Penilaians/pyd/${id}`);
