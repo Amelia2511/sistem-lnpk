@@ -1,5 +1,5 @@
 <p-card header="Sasaran Kerja Tahunan">
-  <p-table [value]="skts" [tableStyle]="{ 'min-width': '25rem' }">
+  <p-table [value]="filteredSkts" [tableStyle]="{ 'min-width': '25rem' }">
     <ng-template pTemplate="header">
       <tr>
         <th>Nama Pegawai</th>
@@ -11,26 +11,37 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-skt>
-      <tr>
-        <td>{{ skt.namaPegawaiDinilai }}</td>
-        <td>{{ skt.tahunPenilaian }}</td>
-        <td>{{ skt.namaKategoriPenilaian }}</td>
-        <td>{{ skt.tarikhHantar }}</td>
-        <td><p-tag value="{{ skt.namaStatus }}" [severity]="skt.namaStatus === 'Draf' ? 'warn' : null" />
-        </td>
-        <td>
-          <p-button
-            (onClick)="onButtonClick(skt)"
-            [label]="skt.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
-            [rounded]="true"
+        <tr>
+          <td>{{ skt.namaPegawaiDinilai }}</td>
+          <td>{{ skt.tahunPenilaian }}</td>
+          <td>{{ skt.namaKategoriPenilaian }}</td>
+          <td>{{ skt.tarikhHantar }}</td>
+          <td>
+            <p-tag
+            value="{{ skt.namaStatus }}"
             [severity]="skt.namaStatus === 'Draf' ? 'warn' : null"
-            size="small" />
-        </td>
-        </tr>
-      </ng-template>
-      <div *ngFor="let item of skts">
-          {{ item.namaPegawaiDinilai }} - {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
-      </div>
+            />
+          </td>
+          <td>
+            <p-button
+              (onClick)="onButtonClick(skt)"
+              [label]="skt.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
+              [rounded]="true"
+              [severity]="skt.namaStatus === 'Draf' ? 'warn' : null"
+              size="small" />
+          </td>
+          </tr>
+    </ng-template>
+    <div *ngFor="let item of skts">
+      {{ item.namaPegawaiDinilai }} - {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
+    </div>
 
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" style="text-align: center; padding: 2rem; color: #999;">
+          Tiada Sasaran Kerja Tahunan yang perlu disahkan.
+        </td>
+      </tr>
+    </ng-template>
   </p-table>
 </p-card>

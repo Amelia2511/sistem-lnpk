@@ -1,4 +1,4 @@
-<p-breadcrumb [home]="home" [model]="items" />
+  <p-breadcrumb [home]="home" [model]="items" />
 <h4>Senarai Pegawai</h4>
 
 <br>
@@ -54,7 +54,7 @@
     (onClick)="handleButtonClick(product)">
   </p-button>
       </td>
-    </tr>
+</tr>
   </ng-template>
 </p-table>
 
@@ -97,7 +97,7 @@
       label="Batal"
       icon="pi pi-times"
       class="p-button-secondary"
-      (onClick)="cancelActivation()">
+      (click)="cancelActivation()">
     </button>
 
     <button
@@ -106,7 +106,7 @@
       label="Aktifkan"
       icon="pi pi-check"
       [loading]="selectedPegawai?._busy ?? false"
-      (onClick)="confirmActivation()">
+      (click)="confirmActivation()">
     </button>
   </ng-template>
 </p-dialog>

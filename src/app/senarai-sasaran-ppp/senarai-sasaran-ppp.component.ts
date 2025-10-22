@@ -49,6 +49,10 @@ export class SenaraiSasaranPppComponent {
     });
   }
 
+  get filteredSkts() {
+    return this.skts?.filter(skt => skt.idStatus === 3) || [];
+  }
+
   onButtonClick(skt: sasaranKerja) {
     this.router.navigate(
       ['/sasaran'],

@@ -10,7 +10,7 @@
 
 <!-- PPP/PPK view -->
 <div *ngIf="hasAnyRole([3,4])">
-  <app-senarai-sasaran-ppp></app-senarai-sasaran-ppp>
+  <app-senarai-sasaran-ppp *ngIf="hasRole(3)"></app-senarai-sasaran-ppp>
   <app-senarai-pegawai-ppp></app-senarai-pegawai-ppp>
 </div>
 

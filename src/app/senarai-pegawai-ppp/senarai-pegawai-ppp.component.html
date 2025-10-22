@@ -1,2 +1,52 @@
-<p-card header="Pegawai Dinilai">
+<p-card header="Pegawai untuk Dinilai">
+  <p-table
+  [value]="pegawais"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]">
+    <ng-template #header>
+        <tr>
+            <th>Nama</th>
+            <th>Jawatan</th>
+            <th>Gred</th>
+            <th>Penilaian Terkini</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-pegawai>
+        <tr>
+            <td>{{ pegawai.nama }}</td>
+            <td>{{ pegawai.namaJawatan }}</td>
+            <td>{{ pegawai.gredDisandang }}</td>
+            <td>
+              <div *ngIf="pegawai.tahunPenilaianTerkini" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <p-tag
+                  [value]="pegawai.tahunPenilaianTerkini"
+                  severity="secondary">
+                </p-tag>
+                <p-tag
+                  [value]="pegawai.kategoriPenilaianTerkini"
+                  severity="info">
+                </p-tag>
+              </div>
+              <span *ngIf="!pegawai.tahunPenilaianTerkini" style="color: #999;"></span>
+            </td>
+            <td>
+              <p-tag [value]="pegawai.status"
+                [severity]="pegawai.status === 'Penilaian Selesai PPSM' ? 'success' : (pegawai.status === 'Tiada Penilaian' ? 'secondary' : 'primary')">
+              </p-tag>
+            </td>
+            <td>
+              <!-- Show Nilai only for Penilaian oleh PPP/PPK for PPP/PPK -->
+               @if (pegawai.status === 'Penilaian oleh PPP' && hasRole(3)) {
+                 <p-button  label="Nilai" size="small" [rounded]="true"></p-button>
+               }
+               @if (pegawai.status === 'Penilaian oleh PPK' && hasRole(4)) {
+                 <p-button  label="Nilai" size="small" [rounded]="true"></p-button>
+               }
+            </td>
+        </tr>
+    </ng-template>
+  </p-table>
 </p-card>
