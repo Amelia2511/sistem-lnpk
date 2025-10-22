@@ -15,9 +15,13 @@ import { PenilaianComponent } from './penilaian/penilaian.component';
 import { PenilaianPrestasiComponent } from './penilaian-prestasi/penilaian-prestasi.component';
 import { SenaraiPenilaianComponent } from './senarai-penilaian/senarai-penilaian.component';
 import { SenaraiSoalanComponent } from './senarai-soalan/senarai-soalan.component';
+import { PenilaianPpkComponent } from './penilaian-ppk/penilaian-ppk.component';
 import { sktMetaResolver } from './resolvers/skt-meta.resolver';
+import { SenaraiPydPpComponent } from './senarai-pyd-pp/senarai-pyd-pp.component';
+import { MaklumatPydComponent } from './maklumat-pyd/maklumat-pyd.component';
+import { SasaranPpComponent } from './sasaran-pp/sasaran-pp.component';
 import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
-
+import { SenaraiSasaranPppComponent } from './senarai-sasaran-ppp/senarai-sasaran-ppp.component';
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
     { path: 'laman-utama', component: LamanUtamaComponent },
@@ -41,6 +45,11 @@ export const routes: Routes = [
     { path: 'penilaian-prestasi', component: PenilaianPrestasiComponent},
     { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
     { path: 'senarai-soalan', component: SenaraiSoalanComponent},
-    { path: 'penilaian', component: PenilaianComponent}
+    { path: 'penilaian', component: PenilaianComponent},
+    { path: 'penilaian-ppk', component: PenilaianPpkComponent},
+    { path: 'maklumat-pyd', component: MaklumatPydComponent},
+    { path: 'senarai-pyd-pp', component: SenaraiPydPpComponent},
+    { path: 'sasaran-pp', component: SasaranPpComponent},
+    { path: 'senarai-sasaran-ppp', component: SenaraiSasaranPppComponent}
     // { path: '', redirectTo: '/laman-utama', pathMatch: 'full' }
 ];

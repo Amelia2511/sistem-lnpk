@@ -1,0 +1,27 @@
+<p-card *ngIf="details">
+  <ng-template #title>Pegawai Yang Dinilai</ng-template>
+
+  <p style="line-height: 1.7;">
+    <b>{{ details.nama || 'Tiada maklumat' }}</b><br>
+    <b>Jawatan:
+      <span [ngStyle]="{ 'color': !details.namaJawatan ? 'gray' : 'inherit', 'fontStyle': !details.namaJawatan ? 'italic' : 'normal' }">
+        {{ details.namaJawatan || 'Tiada maklumat' }}
+      </span>
+    </b><br>
+    <b>Gred:
+      <span [ngStyle]="{ 'color': !details.gredHakiki ? 'gray' : 'inherit', 'fontStyle': !details.gredHakiki ? 'italic' : 'normal' }">
+        {{ details.gredHakiki || 'Tiada maklumat' }}
+      </span>
+    </b><br>
+    <b>Unit:
+      <span [ngStyle]="{ 'color': !details.namaUnit ? 'gray' : 'inherit', 'fontStyle': !details.namaUnit ? 'italic' : 'normal' }">
+        {{ details.namaUnit || 'Tiada maklumat' }}
+      </span>
+    </b><br>
+    <b>Tarikh Mula Berkhidmat:
+      <span [ngStyle]="{ 'color': !details.tarikhMulaKontrak ? 'gray' : 'inherit', 'fontStyle': !details.tarikhMulaKontrak ? 'italic' : 'normal' }">
+        {{ details.tarikhMulaKontrak || 'Tiada maklumat' }}
+      </span>
+    </b><br>
+  </p>
+</p-card>

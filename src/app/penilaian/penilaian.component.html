@@ -10,19 +10,19 @@
 
 <p-stepper [value]="1" class="basis-[50rem]">
     <p-step-list>
-        <p-step [value]="1">Maklumat Pegawai</p-step>
+        <p-step [value]="1">Maklumat Pyd</p-step>
         <p-step [value]="2">Penilaian</p-step>
         <p-step [value]="3">Ulasan</p-step>
     </p-step-list>
+
     <p-step-panels>
         <p-step-panel [value]="1">
             <ng-template #content let-activateCallback="activateCallback">
                 <div class="flex flex-col h-48">
                     <div
-                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                    >
-                        <app-maklumat-pp></app-maklumat-pp>
-                    </div>
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        <app-maklumat-pyd></app-maklumat-pyd>
+                    </div><br>
                     <div class="flex pt-6 justify-end">
                         <p-button label="Seterusnya" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(2)" />
                     </div>
@@ -34,8 +34,212 @@
             <ng-template #content let-activateCallback="activateCallback">
                 <div class="flex flex-col h-48">
                     <div
-                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-                    >
+                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <p-divider />
+                            <h4>Pengetahuan, Kemahiran dan Penghasilan Kerja</h4>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Ilmu Pengetahuan dan Kemahiran dalam Bidang Kerja</h6>
+                                    <p>Mempunyai ilmu pengetahuan dan kemahiran/kepakaran dalam melaksanakan hasil kerja
+                                        meliputi kebolehan mengenalpasti, menganalisis serta menyelesaikan masalah.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[0]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[1]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kuantiti Hasil Kerja</h6>
+                                    <p>Kuantiti hasil kerja seperti jumlah, bilangan, kadar, kekerapan dan sebagainya
+                                        berbanding dengan sasaran kuantiti kerja, mengikut tempoh masa yang ditetapkan.
+                                    </p>
+                                </div>
+
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[2]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[3]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kualiti Hasil Kerja</h6>
+                                    <p>Dinilai dari segi kesempurnaan, teratur, kemas dan mengikut peraturan yang
+                                        ditetapkan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[4]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[5]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Penganalisisan</h6>
+                                    <p>Kebolehan mengenalpasti isu dan masalah serta berkeupayaan menganalisis serta
+                                        mengemukakan cadangan penyelesaian yang membina.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[6]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[7]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Nilai Tambah</h6>
+                                    <p>Menghasilkan nilai tambah kepada proses dan penghasilan kerja yang lebih baik.
+                                    </p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[8]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[9]" />
+                                </div>
+                            </div>
+
+                            <p-divider />
+
+                            <h4>Kualiti Peribadi</h4>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Integriti</h6>
+                                    <p>Memiliki dan mempraktikkan nilai-nilai integriti seperti akauntabiliti, jujur,
+                                        benar, amanah, telus, cekap dan bijaksana dalam setiap tindakan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[10]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[11]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Disiplin</h6>
+                                    <p>Mempunyai daya kawal diri dari segi mental dan fizikal termasuk mematuhi
+                                        peraturan, menepati masa, menunaikan janji dan bersifat sabar.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[12]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[13]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kepimpinan/Penyeliaan</h6>
+                                    <p>Mempunyai ciri-ciri kepimpinan dan penyeliaan seperti berwawasan, berkeupayaan
+                                        merancang dan menggembleng sumber dalam kawalannya seperti kewangan, tenaga
+                                        manusia, peralatan dan maklumat serta menggerak dan memberi dorongan kepada
+                                        kakitangan ke arah pencapaian objektif organisasi.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[14]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[15]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kreatif dan Proaktif</h6>
+                                    <p>Berkebolehan dan mempunyai inisiatif untuk memikirkan dan mencadangkan idea baru
+                                        serta membuat pembaharuan kepada proses kerja bagi mempertingkatkan kualiti dan
+                                        produktiviti.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[16]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[17]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Kawalan Diri</h6>
+                                    <p>Mempunyai kebolehan mengawal diri dari segi emosi, minda dan fizikal termasuk
+                                        keupayaan mengawal perasaan, memotivasikan diri, menghadapi tekanan kerja dan
+                                        mempunyai daya tahan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[18]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[19]" />
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <h6>Jalinan Hubungan dan Kerjasama</h6>
+                                    <p>Mewujudkan suasana hubungan dan kerjasama yang harmoni dalam organisasi serta
+                                        boleh menyesuaikan diri dalam semua keadaan.</p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[20]" />
+                                    <p-inputnumber [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
+                                        [style]="{ marginRight: '12px' }" inputId="integeronly" [disabled]="true"
+                                        [(ngModel)]="marks[21]" />
+                                </div>
+                            </div>
+
+                            <p-divider />
+
+                            <div style="display: flex; justify-content: space-between;">
+                                <h4>Markah Keseluruhan (%)</h4>
+                                <div style="display: flex;">
+                                    <p-inputnumber [ngModel]="markahKeseluruhan1" [readonly]="true" [disabled]="true"
+                                        [minFractionDigits]="2" [maxFractionDigits]="2"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"></p-inputnumber>
+
+                                    <p-inputnumber [ngModel]="markahKeseluruhan2" [readonly]="true" [disabled]="true"
+                                        [minFractionDigits]="2" [maxFractionDigits]="2"
+                                        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"></p-inputnumber>
+                                </div>
+                            </div>
+
+                        </div>
                         <app-senarai-soalan></app-senarai-soalan>
                     </div>
                 </div>

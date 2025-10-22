@@ -10,7 +10,6 @@ export interface sasaranKerja {
   tahunPenilaian: number;
   namaKategoriPenilaian: string;
   namaStatus: string;
-
   namaPegawaiDinilai: string;
   idPYD: number | undefined;
   idStatus: number | undefined;
@@ -77,6 +76,9 @@ export class SasaranKerjaService {
       } as sasaranKerja))));
   }
 
+  // bolehDinilai(idSkt: number, payload: { idstatus: number }): Observable<sasaranKerja[]> {
+  //   return this.httpClient.put<sasaranKerja[]>(`${this.baseUrl}SasaranKerjas/BolehDinilai/${idSkt}`, payload);
+  // }
   getSasaranKerjaPpp(noKP: string): Observable<sasaranKerja[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerjaPPP/${noKP}`)
     .pipe(map(rows => rows.map(r => ({
@@ -98,10 +100,14 @@ export class SasaranKerjaService {
   }
 
   getSasaranKerjaById(idSkt: number) {
-    return this.httpClient.get<Pick<sasaranKerja, 'idSkt'|'tahunPenilaian'|'namaKategoriPenilaian'>>(
+    return this.httpClient.get<Pick<sasaranKerja, 'idSkt' | 'tahunPenilaian' | 'namaKategoriPenilaian'>>(
       `${this.baseUrl}SasaranKerjas/${idSkt}`
     );
   }
+
+  // getSasaranKerjaById(idSkt: number): Observable<sasaranKerja> {
+  //   return this.httpClient.get<any>(`${this.baseUrl}SasaranKerjas/GetSasaranKerjaById/${idSkt}`);
+  // }
 
   getAktivitiRows(idSkt: number): Observable<SasaranAktivitiRow[]> {
     return this.httpClient.get<SasaranAktivitiRow[]>(

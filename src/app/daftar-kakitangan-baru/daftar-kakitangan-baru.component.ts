@@ -45,12 +45,14 @@ export class DaftarKakitanganBaruComponent {
 simpan() {
   
   if (
+    !this.details.noKP ||
     !this.details.nama ||
+    !this.details.emel ||
     !this.details.skimPerkhidmatan ||
     !this.details.gredHakiki||
     !this.details.namaJawatan ||
     !this.details.gredDisandang||
-    !this.details.id || 
+    !this.details.idUnit || 
     !this.details.tarikhMulaKontrak ||
     !this.details.tarikhAkhirKontrak
   ) {
@@ -102,7 +104,6 @@ onUnitChange(event: any) {
   console.log("Selected Unit ID:", event.value);
   console.log("details.idUnit:", this.details.idUnit);
 }
-
 
   // Utility to format Date to YYYY-MM-DD
   formatDateOnly(date: Date): string {

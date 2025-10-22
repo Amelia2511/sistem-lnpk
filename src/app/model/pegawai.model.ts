@@ -1,4 +1,7 @@
 export class pegawaiDinilai {
+//     constructor(init?: Partial<pegawaiDinilai>) {
+//     Object.assign(this, init);
+//   }
     nama: string | undefined;
     noKP: string | undefined;
     emel: string | undefined;
@@ -27,7 +30,6 @@ export class pegawaiDinilai {
     namaPPP: string | undefined;
     namaPPK: string | undefined;
     idPPP?: number;
-    namaBahagian: string | undefined;
     namaUnit: string | undefined;
     jawatanPPP: string | undefined;
     gredPPP: string | undefined;
@@ -42,4 +44,5 @@ export class pegawaiDinilai {
     bahagianPPK: string | undefined;
     unitPPK: string | undefined;
     _busy?: boolean;
+    idPyd?: number;
 }

@@ -48,9 +48,17 @@ export class SasaranComponent {
 
   ngOnInit() {
     const meta = this.route.snapshot.data['skt'] as { idSkt: number; tahunPenilaian: number | null; namaKategoriPenilaian: string | null } | null;
+
+    if (!meta) {
+      console.log("No meta found");
+      // resolver already navigated if invalid; safe guard
+      return;
+    }
+
     if (!meta) return;
 
     this.idSkt = meta.idSkt;
+    console.log("id skt:" , this.idSkt)
     this.tahunPenilaian = meta.tahunPenilaian;
     this.namaKategoriPenilaian = meta.namaKategoriPenilaian;
 

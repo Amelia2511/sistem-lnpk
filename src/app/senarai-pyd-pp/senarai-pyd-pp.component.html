@@ -1,0 +1,102 @@
+<p-breadcrumb [home]="home" [model]="items"></p-breadcrumb>
+
+<h4>Senarai Pegawai</h4>
+
+<!-- Dropdown filter by Unit -->
+<p-select [options]="units" ngModel [(ngModel)]="details.id" optionLabel="namaUnit" optionValue="id" [filter]="true"
+  filterBy="namaUnit" [showClear]="true" placeholder="Pilih Unit" class="act_setting"
+  (onChange)="onUnitChange($event)"></p-select>
+
+<!-- Data table -->
+<p-table [value]="products" [paginator]="true" [rows]="rows2" [first]="first2" [totalRecords]="products.length"
+  (onPage)="onPageChange2($event)" [tableStyle]="{ 'min-width': '70rem' }">
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nama</th>
+      <th>Tarikh Mula</th>
+      <th>Tarikh Akhir</th>
+      <!-- <th>Tempoh Berkhidmat</th> -->
+      <th>Unit</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-product>
+    <tr>
+      <td>
+        <!-- <a [routerLink]="['/maklumat-pegawai', product.id]" class="pegawai-link"> -->
+        {{ product.nama }}
+        <!-- </a> -->
+      </td>
+      <td>{{ product.tarikhMulaKontrak }}</td>
+      <td>{{ product.tarikhAkhirKontrak }}</td>
+      <!-- <td>{{ product.tempohBerkhidmat }}</td> -->
+      <td>{{ product.namaUnit }}</td>
+      <!-- <td>
+        <p-tag [value]="product.status"
+               [severity]="product.status === 'Aktif' ? 'success' : 'danger'">
+        </p-tag>
+      </td> -->
+      <td>
+        <p-tag [value]="product.statusPyd === 'Aktif' ? 'Pengesahan oleh PPP' : (product.statusPyd || 'Aktif')"
+          [severity]="product.statusPyd ? 'secondary' : 'success'">
+        </p-tag>
+      </td>
+      <td>
+        <p-button rounded="true" variant="outlined"
+          [severity]="product.buttonOption === 'Aktifkan' ? 'success' : 'info'" [label]="product.buttonOption"
+          [disabled]="product.isActive || product.nilaiClicked" (onClick)="handleAction(product)">
+        </p-button>
+      </td>
+      <td>
+        <p-button label="Lihat Sasaran" icon="pi pi-eye" [severity]="'secondary'" (onClick)="viewMaklumatPyd(product)">
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Items per page + paginator -->
+<div class="flex items-center justify-end mt-3">
+  <span class="mx-1 text-color">Items per page: </span>
+  <p-select [options]="options" optionLabel="label" optionValue="value" ngModel [(ngModel)]="rows2"
+    (ngModelChange)="first2 = 0">
+  </p-select>
+
+  <p-paginator [first]="first2" [rows]="rows2" [totalRecords]="products.length" (onPageChange)="onPageChange2($event)"
+    [showCurrentPageReport]="true" currentPageReportTemplate="{first} - {last} of {totalRecords}" [showPageLinks]="true"
+    [showFirstLastIcon]="true">
+  </p-paginator>
+</div>
+
+<!-- Activation Dialog -->
+<p-dialog header="Aktifkan Pegawai" [(visible)]="display" [modal]="true" [closable]="false"
+  [style]="{ width: '450px' }">
+
+  <div class="field">
+    <label for="tahunPenilaian">Tahun Penilaian *</label>
+    <p-select id="tahunPenilaian" ngModel [(ngModel)]="tahunPenilaian" [options]="tahunOptions"
+      placeholder="Pilih Tahun Penilaian" [style]="{ width: '100%' }" optionLabel="label" optionValue="value">
+    </p-select>
+  </div>
+
+  <div class="field">
+    <label for="kategoriPenilaian">Kategori Penilaian *</label>
+    <p-select id="kategoriPenilaian" ngModel [(ngModel)]="kategoriPenilaian" [options]="kategoriOptions"
+      placeholder="Pilih Kategori Penilaian" [style]="{ width: '100%' }" optionLabel="label" optionValue="value">
+    </p-select>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button type="button" pButton label="Batal" icon="pi pi-times" class="p-button-secondary"
+      (click)="cancelActivation()">
+    </button>
+
+    <button type="button" pButton label="Aktifkan" icon="pi pi-check" [loading]="selectedPegawai?._busy ?? false"
+      (click)="confirmActivation()">
+    </button>
+  </ng-template>
+</p-dialog>

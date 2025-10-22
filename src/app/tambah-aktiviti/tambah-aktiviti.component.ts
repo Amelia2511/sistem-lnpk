@@ -15,7 +15,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import Swal from 'sweetalert2';
 import { firstValueFrom } from 'rxjs';
 import { attachment } from '../model/attachment.model';
+import { environment } from '../environments/environment';
 import { AttachmentService } from '../services/attachment.service';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 interface Lampiran {
   file: File;
@@ -50,7 +52,8 @@ interface PetunjukPrestasiRow {
 export class TambahAktivitiComponent {
   private http = inject(HttpClient);
   private router = inject(Router);
-  backendUrl = 'http://localhost:5015';
+  // backendUrl = 'http://localhost:5015'; // your backend
+  baseUrl = environment.baseUrl;
 
   idSkt!: number | null;
   tahunPenilaian?: number | null;
@@ -238,7 +241,7 @@ cancelPetunjukPrestasi() {
         lampiran: this.uploadedLampiran
       };
 
-      await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
+      await this.http.post(`${this.baseUrl}Aktivitis/tambah`, payload).toPromise();
 
       // success modal
       await Swal.fire({ icon: 'success', title: 'Aktiviti berjaya disimpan', confirmButtonText: 'OK' });
@@ -256,4 +259,71 @@ cancelPetunjukPrestasi() {
       await Swal.fire({ icon: 'error', title: 'Simpan gagal', text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.' });
     }
   }
+
+  // async onSubmit() {
+  //   if (!this.namaAktiviti) {
+  //     await Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Nama Aktiviti diperlukan',
+  //       text: 'Sila isi Nama Aktiviti sebelum simpan.'
+  //     });
+  //     return;
+  //   }
+  //   if (!this.idSkt) {
+  //     await Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Rujukan SKT hilang',
+  //       text: 'Tidak dapat mengenal pasti SKT untuk Aktiviti ini.'
+  //     });
+  //     return;
+  //   }
+
+  //   try {
+  //     // (optional) upload lampiran
+  //     if (this.file) {
+  //       const lampiranId = await firstValueFrom(this.attService.postAttachment(this.atts));
+  //       await firstValueFrom(this.attService.postFile(lampiranId, this.file));
+  //       this.uploadedLampiran.push({ namaFail: this.file.name, lampiranId });
+  //     }
+
+  //     const payload = {
+  //       idSkt: this.idSkt,
+  //       namaAktiviti: this.namaAktiviti,
+  //       petunjukPrestasi: this.petunjukPrestasiRows,
+  //       lampiran: this.uploadedLampiran
+  //     };
+
+  //     await this.http.post(`${this.backendUrl}/api/aktiviti/tambah`, payload).toPromise();
+
+  //     // clear local state (optional)
+  //     this.namaAktiviti = '';
+  //     this.petunjukPrestasiRows = [];
+  //     this.uploadedFiles = [];
+  //     this.uploadedLampiran = [];
+
+  //     // success → show Swal, then navigate back to that SKT’s page
+  //     await Swal.fire({
+  //       icon: 'success',
+  //       title: 'Aktiviti berjaya disimpan',
+  //       confirmButtonText: 'Kembali ke Laporan Pencapaian Sasaran'
+  //     });
+
+  //     this.router.navigate(['/sasaran'], {
+  //       queryParams: { idSkt: this.idSkt },
+  //       state: {
+  //         idSkt: this.idSkt,
+  //         tahunPenilaian: this.tahunPenilaian,
+  //         namaKategoriPenilaian: this.namaKategoriPenilaian
+  //       }
+  //     });
+
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     await Swal.fire({
+  //       icon: 'error',
+  //       title: 'Simpan gagal',
+  //       text: err?.error?.error ?? 'Ralat berlaku semasa menyimpan Aktiviti.'
+  //     });
+  //   }
+  // }
 }
