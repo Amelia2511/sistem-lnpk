@@ -130,35 +130,6 @@ export class SenaraiSoalanComponent implements OnInit {
     this.calculateMarkahKeseluruhan();
   }
 
-  resetForm(): void {
-    this.formValues = {
-      ilmuPengetahuan: null,
-      kuantitiHasil: null,
-      kualitiHasil: null,
-      penganalisisan: null,
-      nilaiTambah: null,
-      ilmuPengetahuan2: null,
-      kuantitiHasil2: null,
-      kualitiHasil2: null,
-      penganalisisan2: null,
-      nilaiTambah2: null,
-      integriti: null,
-      disiplin: null,
-      kepimpinan: null,
-      kreatifProaktif: null,
-      kawalanDiri: null,
-      jalinanHubungan: null,
-      integriti2: null,
-      disiplin2: null,
-      kepimpinan2: null,
-      kreatifProaktif2: null,
-      kawalanDiri2: null,
-      jalinanHubungan2: null
-    };
-    this.markahKeseluruhan = 0;
-    this.markahKeseluruhan2 = 0;
-  }
-
   ngOnInit(): void {
     this.authService.currentUser.subscribe(user => {
       if (user && user.noKP) {
@@ -201,6 +172,34 @@ export class SenaraiSoalanComponent implements OnInit {
     else {
       console.log("Waiting for markah or idPenilaian:", { markah: this.markah, idPenilaian: this.idPenilaian });
     }
+  }
+
+  resetForm(): void {
+    this.formValues = {
+      ilmuPengetahuan: null,
+      kuantitiHasil: null,
+      kualitiHasil: null,
+      penganalisisan: null,
+      nilaiTambah: null,
+      ilmuPengetahuan2: null,
+      kuantitiHasil2: null,
+      kualitiHasil2: null,
+      penganalisisan2: null,
+      nilaiTambah2: null,
+      integriti: null,
+      disiplin: null,
+      kepimpinan: null,
+      kreatifProaktif: null,
+      kawalanDiri: null,
+      jalinanHubungan: null,
+      integriti2: null,
+      disiplin2: null,
+      kepimpinan2: null,
+      kreatifProaktif2: null,
+      kawalanDiri2: null,
+      jalinanHubungan2: null
+    };
+    this.markahKeseluruhan = 0;
   }
 
   simpan(): void {
@@ -317,7 +316,6 @@ export class SenaraiSoalanComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(() => {
           this.resetForm();
-          this.router.navigate(['/penilaian-prestasi']);
         });
         return;
       },

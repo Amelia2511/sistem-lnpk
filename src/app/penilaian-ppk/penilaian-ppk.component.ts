@@ -12,6 +12,7 @@ import { RoleStateService } from '../services/role-state.service';
 import { CommonModule } from '@angular/common';
 import { PenilaianService } from '../services/penilaian.service';
 import { markahKeseluruhan } from '../model/markah-keseluruhan.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-penilaian-ppk',
@@ -66,6 +67,10 @@ export class PenilaianPpkComponent implements OnInit {
 
   // Add these properties for the evaluation context
   idPenilaian: number | null = null;
+  idPenilaianPpp: number | null = null;
+  idPenilaianPpk: number | null = null;
+  idPyd: number | null = null;
+  idSkt: number | null = null;
   evaluatorType: string = 'self';
   isLoadingMarks: boolean = false;
 
@@ -112,17 +117,47 @@ export class PenilaianPpkComponent implements OnInit {
     private router: Router,
     private markahSoalan: MarkahSoalanService,
     private roleState: RoleStateService,
-    private penilaianService: PenilaianService
+    private penilaianService: PenilaianService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    // Get saved idPenilaian from localStorage (set by previous screen)
-    this.idPenilaian = this.penilaianService.getSavedIdPenilaian();
-    if (this.idPenilaian) {
-      this.loadMarkahFromDb(this.idPenilaian);
-    } else {
-      Swal.fire('No Penilaian ID found', 'Please select a Penilaian first.', 'warning');
-    }
+    this.authService.currentUser.subscribe(user => {
+      if (user && user.noKP) {
+        console.log("PPK noKp:", user.noKP);
+
+        this.penilaianService.getLatestPydPenilaianByPpkNoKp(user.noKP).subscribe({
+          next: (res) => {
+            console.log("PYD Penilaian Info:", res);
+
+            this.idPyd = res.idPyd ?? null;
+            this.idSkt = res.idSkt ?? null;
+            this.idPenilaianPpp = res.idPenilaianPpp ?? null;
+            this.idPenilaianPpk = res.idPenilaianPpk ?? null;
+
+            // ✅ Load PPP marks for viewing
+            if (this.idPenilaianPpp !== null) {
+              this.loadMarkahFromDb(this.idPenilaianPpp);
+            } else {
+              Swal.fire('No PPP marks found', '', 'warning');
+            }
+
+            // ✅ Save PPK Penilaian for later use (e.g., when PPK enters their marks)
+            if (this.idPenilaianPpk !== null) {
+              this.penilaianService.setIdPenilaian(this.idPenilaianPpk);
+            } else {
+              console.warn("No PPK Penilaian found for this SKT.");
+            }
+          },
+          error: (err) => {
+            console.error("Error fetching PYD Penilaian:", err);
+            Swal.fire('Error', 'Failed to fetch Penilaian data.', 'error');
+          }
+        });
+      } else {
+        console.warn("No user or noKP found in authService.");
+      }
+    });
   }
 
   loadMarkahFromDb(idPenilaian: number) {
@@ -309,19 +344,21 @@ export class PenilaianPpkComponent implements OnInit {
     this.calculateMarkahKeseluruhan();
   }
 
+  resetFormValues(): void {
+    this.formValues.ilmuPengetahuan2 = null;
+    this.formValues.kuantitiHasil2 = null;
+    this.formValues.kualitiHasil2 = null;
+    this.formValues.penganalisisan2 = null;
+    this.formValues.nilaiTambah2 = null;
+    this.formValues.integriti2 = null;
+    this.formValues.disiplin2 = null;
+    this.formValues.kepimpinan2 = null;
+    this.formValues.kreatifProaktif2 = null;
+    this.formValues.kawalanDiri2 = null;
+    this.formValues.jalinanHubungan2 = null;
+  }
+
   simpan(): void {
-    if (!this.idPenilaian) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ralat!',
-        text: 'ID Penilaian tidak ditemukan. Sila cuba lagi.',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-
-    const records: any[] = [];
-
     // Define criteria with their corresponding idSoalan (1–11)
     const criteria = [
       { id: 1, name: 'ilmuPengetahuan', col2: this.formValues.ilmuPengetahuan2 },
@@ -337,13 +374,37 @@ export class PenilaianPpkComponent implements OnInit {
       { id: 11, name: 'jalinanHubungan', col2: this.formValues.jalinanHubungan2 }
     ];
 
+    const allFilled = criteria.every(c => c.col2 !== null && c.col2 !== undefined);
+
+    if (!allFilled) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Markah tidak lengkap!',
+        text: 'Sila isi semua markah sebelum menyimpan.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    if (!this.idPenilaianPpk) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ralat!',
+        text: 'ID Penilaian tidak ditemukan. Sila cuba lagi.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    const records: any[] = [];
+
     const currentTimestamp = new Date().toISOString();
 
     // Push only PPK marks (col2)
     criteria.forEach((criterion) => {
       if (criterion.col2 !== null && criterion.col2 !== undefined) {
         records.push({
-          idPenilaian: this.idPenilaian,
+          idPenilaian: this.idPenilaianPpk,
           idSoalan: criterion.id, // PPK uses same idSoalan (1–11)
           markah: criterion.col2,
           createdAt: currentTimestamp,
@@ -374,9 +435,10 @@ export class PenilaianPpkComponent implements OnInit {
           text: `${records.length} rekod markah PPK berjaya disimpan.`,
           confirmButtonText: 'OK'
         }).then(() => {
-          if (this.idPenilaian) {
-            this.loadMarkahFromDb(this.idPenilaian);
+          if (this.idPenilaianPpk) {
+            this.loadMarkahFromDb(this.idPenilaianPpk);
           }
+          this.resetFormValues();
         });
       },
       error: (err) => {
@@ -387,6 +449,7 @@ export class PenilaianPpkComponent implements OnInit {
           text: 'Gagal menyimpan markah PPK. Sila cuba lagi.',
           confirmButtonText: 'OK'
         });
+        return;
       }
     });
   }
