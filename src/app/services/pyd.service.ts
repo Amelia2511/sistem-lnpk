@@ -51,6 +51,11 @@ export class PydService {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/${id}`);
   }
 
+  getPegawaiByPp(noKpPp: string): Observable<pegawaiDinilai[]> {
+  return this.httpClient.get<pegawaiDinilai[]>(
+    `${this.baseUrl}PegawaiDinilais/GetPydByPp/${noKpPp}`
+  );
+}
   getMaklumatPenilai(noKP: string): Observable<pegawaiDinilai> {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/GetMaklumatPenilai/${noKP}`);
   }
