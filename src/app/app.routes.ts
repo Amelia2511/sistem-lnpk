@@ -24,7 +24,7 @@ import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
 import { SenaraiSasaranPppComponent } from './senarai-sasaran-ppp/senarai-sasaran-ppp.component';
 export const routes: Routes = [
     { path: 'log-masuk', component: LoginPageComponent },
-    { path: 'laman-utama', component: LamanUtamaComponent },
+    { path: '', component: LamanUtamaComponent },
     { path: 'daftar-anggota', component: DaftarKakitanganBaruComponent},
     { path: 'senarai-sasaran', component: SenaraiSasaranComponent},
     { path: 'sasaran', component: SasaranComponent, resolve: { skt: sktMetaResolver },
@@ -37,7 +37,6 @@ export const routes: Routes = [
     { path: 'maklumat-pegawai', component: MaklumatPegawaiComponent},
     { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
     { path: 'penilaian', component: PenilaianComponent},
-    { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},
     { path: 'maklumat-pegawai/:id', component: MaklumatPegawaiComponent},
     { path: 'daftar-akaun', component: DaftarAkaunComponent},
     { path: 'pegawai-dinilai', component: PegawaiDinilaiComponent},

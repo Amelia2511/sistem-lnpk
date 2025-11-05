@@ -22,30 +22,21 @@ export class SideMenuComponent {
   userRoles: number[] = [];
 
   menuItems: MenuItem[] = [
-    // { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama' },
-    // { name: 'Settings', icon: 'bi-gear', route: '/settings' },
-    // { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota'},
-    // { name: 'Maklumat Pegawai', icon: 'bi bi-person-circle', route: '/maklumat-pegawai'},
-    // { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai'},
-    // { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran'},
-    // { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan'}
-    { name: 'Laman Utama', icon: 'bi-house', route: '/laman-utama', order: 1 },
-    { name: 'Settings', icon: 'bi-gear', route: '/settings', order: 99 },
-    //PYD
+    { name: 'Utama', icon: 'bi-house', route: '/', order: 1 },
+
+    // PYD
     { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran', roles: [2], order: 2 },
-    { name: 'Markah Penilaian', icon: 'bi bi-person-vcard', route: '/', roles: [2], order: 3 }, // cari icon
-    //PPP/PPK
-    { name: 'Penilaian Prestasi', icon: 'bi bi-clipboard2', route: '/penilaian-prestasi', roles: [3], order: 4 }, // cari icon
-    { name: 'Senarai Pegawai Dinilai', icon: 'bi bi-people', route: '/senarai-pyd-pp', roles: [3], order: 12},
-    { name: 'Senarai Sasaran PPP', icon: 'bi bi-bullseye', route: '/senarai-sasaran-ppp', roles: [3], order: 14},
-    { name: 'Penilaian Prestasi', icon: 'bi bi-clipboard2', route:'/penilaian-ppk', roles: [4], order: 13},
-    //PPSM
+    { name: 'Markah Penilaian', icon: 'bi bi-person-vcard', route: '/', roles: [2], order: 3 },
+
+    // PPP/PPK
+
+    // PPSM
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota', roles: [5], order: 5 },
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai', roles: [5], order: 6 },
     { name: 'Laporan', icon: 'bi bi-file-text', route: '/', roles: [5], order: 7 }, // cari icon
-    { name: 'Senarai Penilaian', icon: 'bi bi-file-earmark-text', route: '/senarai-penilaian', roles: [5], order: 10 },
-    { name: 'Penilaian Prestasi', icon: 'bi bi-people', route: '/penilaian', roles: [5], order: 11 },
-    //ADMIN / PA
+    { name: 'Penilaian', icon: 'bi bi-person-vcard', route: '/senarai-penilaian', roles: [3, 4, 5], order: 10 },
+
+    // PA
     { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan', roles: [6, 7], order: 8 },
   ];
 
