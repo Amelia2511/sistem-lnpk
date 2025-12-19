@@ -1,0 +1,127 @@
+<p-card header="Penetapan Penilai">
+  <p-table
+  [value]="pegawais"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20]">
+    <ng-template #header>
+        <tr>
+            <th>Pegawai Yang Dinilai</th>
+            <th>Pegawai Penilai Pertama</th>
+            <th>Pegawai Penilai Kedua</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-pegawai>
+        <tr>
+            <td>{{ pegawai.nama }}</td>
+            <td>{{ pegawai.namaPpp }}</td>
+            <td>{{ pegawai.namaPpk }}</td>
+            <td>
+              <p-button
+                label="Tetapkan Penilai"
+                size="small"
+                [rounded]="true"
+                (onClick)="tetapkanPenilai(pegawai)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-dialog
+  [(visible)]="showDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{width: '600px'}"
+  header="Tetapkan Penilai">
+
+  @if (selectedPyd) {
+    <div style="padding: 1rem;">
+      <!-- PYD Information -->
+      <div style="background: #f9fafb; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <h3 style="margin-top: 0; margin-bottom: 1rem; color: #1f2937;">Pegawai Yang Dinilai</h3>
+        <table style="width: 100%;">
+          <tr>
+            <td style="padding: 0.5rem 0; font-weight: 600; width: 40%;">Nama</td>
+            <td style="padding: 0.5rem 0;">{{ selectedPyd.nama }}</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem 0; font-weight: 600;">No. Kad Pengenalan</td>
+            <td style="padding: 0.5rem 0;">{{ selectedPyd.noKP }}</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem 0; font-weight: 600;">Jawatan</td>
+            <td style="padding: 0.5rem 0;">{{ selectedPyd.namaJawatan }}</td>
+          </tr>
+          <tr>
+            <td style="padding: 0.5rem 0; font-weight: 600;">Gred</td>
+            <td style="padding: 0.5rem 0;">{{ selectedPyd.gredDisandang }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- PPP Selection -->
+      <div style="margin-bottom: 1rem;">
+        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">
+          Pegawai Penilai Pertama (PPP)
+        </label>
+        <p-dropdown
+          [(ngModel)]="selectedPpp"
+          [options]="allPegawaiList"
+          optionLabel="nama"
+          placeholder="Pilih Pegawai Penilai Pertama"
+          [filter]="true"
+          filterBy="nama,noKP"
+          [showClear]="true"
+          [style]="{width: '100%'}">
+          <ng-template let-pegawai #item>
+            <div>
+              <div style="font-weight: 600;">{{ pegawai.nama }}</div>
+              <div style="font-size: 0.875rem; color: #6b7280;">
+                {{ pegawai.namaJawatan }} - {{ pegawai.gredDisandang }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+
+      <!-- PPK Selection -->
+      <div style="margin-bottom: 1rem;">
+        <label style="font-weight: 600; display: block; margin-bottom: 0.5rem;">
+          Pegawai Penilai Kedua (PPK)
+        </label>
+        <p-dropdown
+          [(ngModel)]="selectedPpk"
+          [options]="allPegawaiList"
+          optionLabel="nama"
+          placeholder="Pilih Pegawai Penilai Kedua"
+          [filter]="true"
+          filterBy="nama,noKP"
+          [showClear]="true"
+          [style]="{width: '100%'}">
+          <ng-template let-pegawai #item>
+            <div>
+              <div style="font-weight: 600;">{{ pegawai.nama }}</div>
+              <div style="font-size: 0.875rem; color: #6b7280;">
+                {{ pegawai.namaJawatan }} - {{ pegawai.gredDisandang }}
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  }
+
+  <ng-template #footer>
+    <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+      <p-button
+        label="Batal"
+        severity="secondary"
+        (onClick)="batalDialog()" />
+      <p-button
+        label="Simpan"
+        (onClick)="simpanPenilai()" />
+    </div>
+  </ng-template>
+</p-dialog>

@@ -19,6 +19,10 @@ export class EmployeeService {
     return this.httpClient.get<pegawai[]>(this.baseUrl + 'Pegawais/GetPegawai');
   }
 
+  getPegawaiByUnit(idUnit: string): Observable<pegawai[]> {
+    return this.httpClient.get<pegawai[]>(this.baseUrl + `Pegawais/GetByUnit/${idUnit}`);
+  }
+
   getPeranan(): Observable<peranan[]> {
     return this.httpClient.get<peranan[]>(this.baseUrl + 'Peranans/GetPeranan');
   }

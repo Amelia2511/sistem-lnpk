@@ -49,17 +49,17 @@ export class SenaraiSasaranComponent {
     });
   }
 
-onButtonClick(skt: sasaranKerja) {
-  this.router.navigate(
-    ['/sasaran'],
-    {
-    queryParams: { idSkt: skt.idSkt },
-    state: {
-      idSkt: skt.idSkt,
-      tahunPenilaian: skt.tahunPenilaian,
-      namaKategoriPenilaian: skt.namaKategoriPenilaian
-    }
-    }
-  );
-}
+  onButtonClick(skt: sasaranKerja) {
+    this.router.navigate(
+      ['/sasaran'],
+      {
+      queryParams: { idSkt: skt.idSkt },
+      state: {
+        idSkt: skt.idSkt,
+        tahunPenilaian: skt.tahunPenilaian,
+        namaKategoriPenilaian: skt.namaKategoriPenilaian
+      }
+      }
+    );
+  }
 }

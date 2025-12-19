@@ -25,6 +25,7 @@ export class PerananService {
     return this.httpClient.get<number[] | null>(`${this.baseUrl}SenaraiPeranans/GetRoleInPeranan/${noKP}`);
   }
 
+
   getAsPyd(noKP: string): Observable<boolean> {
     return this.httpClient.get<boolean>(`${this.baseUrl}PegawaiDinilais/GetAsPyd/${noKP}`);
   }

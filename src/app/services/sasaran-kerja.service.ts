@@ -47,6 +47,14 @@ export interface AktivitiDetail {
   }[];
 }
 
+export interface StatusPenilaianResponse {
+  statusPenilaian: {
+    statusPenilaian: number;
+    tahunPenilaian: number;
+    kategoriPenilaian: string;
+  }
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -76,9 +84,26 @@ export class SasaranKerjaService {
       } as sasaranKerja))));
   }
 
-  // bolehDinilai(idSkt: number, payload: { idstatus: number }): Observable<sasaranKerja[]> {
-  //   return this.httpClient.put<sasaranKerja[]>(`${this.baseUrl}SasaranKerjas/BolehDinilai/${idSkt}`, payload);
+  // getStatusPenilaianTerkini(noKP: string): Observable<{ statusPenilaian: number }> {
+  //   const url = `${this.baseUrl}SasaranKerjas/GetStatusPenilaianTerkini/${noKP}`;
+  //   console.log('🔗 Full API URL:', url);
+  //   console.log('🔗 Base URL:', this.baseUrl);
+  //   console.log('🔗 NoKP:', noKP);
+
+  //   return this.httpClient.get<{ statusPenilaian: number}>(
+  //     `${this.baseUrl}PegawaiDinilais/GetStatusPenilaianTerkini/${noKP}`
+  //   );
   // }
+
+  getStatusPenilaianTerkini(noKP: string): Observable<StatusPenilaianResponse> {
+  const url = `${this.baseUrl}PegawaiDinilais/GetStatusPenilaianTerkini/${noKP}`;
+  console.log('🔗 Full API URL:', url);
+  console.log('🔗 Base URL:', this.baseUrl);
+  console.log('🔗 NoKP:', noKP);
+
+  return this.httpClient.get<StatusPenilaianResponse>(url);
+}
+
   getSasaranKerjaPpp(noKP: string): Observable<sasaranKerja[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}SasaranKerjas/GetSasaranKerjaPPP/${noKP}`)
     .pipe(map(rows => rows.map(r => ({
@@ -99,11 +124,23 @@ export class SasaranKerjaService {
       } as sasaranKerja))));
   }
 
+  // getSasaranKerjaById(idSkt: number) {
+  //   return this.httpClient.get<Pick<sasaranKerja, 'idSkt' | 'tahunPenilaian' | 'namaKategoriPenilaian'>>(
+  //     `${this.baseUrl}SasaranKerjas/${idSkt}`
+  //   );
+  // }
+
   getSasaranKerjaById(idSkt: number) {
-    return this.httpClient.get<Pick<sasaranKerja, 'idSkt' | 'tahunPenilaian' | 'namaKategoriPenilaian'>>(
-      `${this.baseUrl}SasaranKerjas/${idSkt}`
-    );
-  }
+  return this.httpClient.get<{
+    idSkt: number;
+    tahunPenilaian: number;
+    namaKategoriPenilaian: string;
+    idStatus: number | null;
+    namaStatus: string | null;
+    noKpPpp: string | null;  // ⭐ Add PPP's noKP
+    noKpPpk: string | null;  // ⭐ Add PPK's noKP (optional, for future use)
+  }>(`${this.baseUrl}SasaranKerjas/${idSkt}`);
+}
 
   // getSasaranKerjaById(idSkt: number): Observable<sasaranKerja> {
   //   return this.httpClient.get<any>(`${this.baseUrl}SasaranKerjas/GetSasaranKerjaById/${idSkt}`);
@@ -150,6 +187,10 @@ export class SasaranKerjaService {
       namaKategoriPenilaian: string;
       idStatus: number | null;
       namaStatus: string | null;
-    }>(`${this.baseUrl}SasaranKerjas/${idSkt}`);
+      idPpp: number | null;
+      idPpk: number | null;
+      noKpPpp: string | null;
+      noKpPpk: string | null;
+    }>(`${this.baseUrl}SasaranKerjas/byId/${idSkt}`);
   }
 }

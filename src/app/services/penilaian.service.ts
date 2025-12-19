@@ -1,38 +1,10 @@
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { environment } from '../environments/environment';
-// import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-// import { ActivatedRoute } from '@angular/router';
-// import { Observable } from 'rxjs';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class PenilaianService {
-
-//   baseUrl = environment.baseUrl;
-
-//   constructor(private httpClient: HttpClient, private route: ActivatedRoute, private penilaianService: PenilaianService) { }
-
-//   // simpanUlasanPenilaian(object: any) {
-//   //   const httpOptions = {
-//   //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-//   //   };
-//   //   return this.httpClient.post<any>(
-//   //     this.baseUrl + 'MarkahSoalans/SimpanUlasanPenilaian',
-//   //     object,
-//   //     httpOptions
-//   //   );
-//   // }
-
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { markahSoalan } from '../model/markah-soalan.model';
-import { penilaian } from '../model/penilaian.model';
+import { Penilaian } from '../model/penilaian.model';
 import { pegawaiDinilai } from '../model/pegawai.model';
 
 @Injectable({
@@ -47,7 +19,15 @@ export class PenilaianService {
 
   constructor(private httpClient: HttpClient) { }
 
-  // Get //
+  getPenilaians(): Observable<Penilaian[]> {
+    return this.httpClient.get<Penilaian[]>(`${this.baseUrl}Penilaians/GetPenilaian/`);
+  }
+
+  getPenilaiansByPpNoKp(noKp: string): Observable<any[]> {
+  return this.httpClient.get<any[]>(
+    `${this.baseUrl}Penilaians/GetByPegawaiPenilai/${noKp}`
+  );
+}
 
   getLatestPenilaianByNoKp(noKp: string): Observable<any> {
     return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetLatestPenilaianByNoKp/${noKp}`).pipe(
@@ -59,6 +39,10 @@ export class PenilaianService {
         }
       })
     );
+  }
+
+  getAllSktViews(): Observable<Penilaian[]> {
+    return this.httpClient.get<Penilaian[]>(`${this.baseUrl}Penilaians/GetAllSktViews`);
   }
 
   getLatestPydPenilaianByPppNoKp(noKp: string): Observable<any> {
@@ -80,21 +64,8 @@ export class PenilaianService {
     return this.httpClient.get(`${this.baseUrl}GetMarkahByPenilaian/${idPenilaian}`);
   }
 
-  // getPenilaianById(id: number): Observable<any> {
-  //   return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetPenilaian/${id}`).pipe(
-  //     tap(res => {
-  //       if (res && res.idPenilaian) {
-  //         this.setIdPenilaian(res.idPenilaian); // save globally
-  //         console.log("Got idPenilaian:", res.idPenilaian);
-  //       } else {
-  //         console.warn("No idPenilaian returned from GetPenilaian API");
-  //       }
-  //     })
-  //   );
-  // }
-
-  getPenilaianById(idPyd: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetPenilaianByIdPyd/${idPyd}`);
+  getPenilaianById(idPenilaian: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}Penilaians/GetPenilaianById/${idPenilaian}`);
   }
 
   getMarkah(noKP: string): Observable<number[]> {
@@ -120,7 +91,7 @@ export class PenilaianService {
   }
 
   getAllBySkt(idSkt: number) {
-    return this.httpClient.get<penilaian[]>(`${this.baseUrl}/Penilaian/GetAllBySkt/${idSkt}`);
+    return this.httpClient.get<Penilaian[]>(`${this.baseUrl}/Penilaian/GetAllBySkt/${idSkt}`);
   }
 
   simpanAtauKemaskiniUlasan(ulasan: any): Observable<any> {

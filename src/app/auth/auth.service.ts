@@ -66,6 +66,10 @@ export class AuthService {
     }
   }
 
+  getUserDTO(): userDTO | null {
+    return this.userSource.value;
+  }
+
   logout() {
     this.userSource.next(null);
     this.loggedInSource.next(false);

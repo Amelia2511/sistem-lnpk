@@ -1,0 +1,30 @@
+/* Copy all your existing CSS for the table styling */
+.outer-aktiviti-table ::ng-deep .p-datatable-tbody > tr > td {
+  border: 1px solid var(--surface-border);
+}
+
+/* .aktiviti-cell {
+  background-color: #f9fafb;
+} */
+
+.petunjuk-cell {
+  padding: 0 !important;
+}
+
+.petunjuk-table ::ng-deep .p-datatable-wrapper {
+  border: none;
+}
+
+.petunjuk-table ::ng-deep .p-datatable-tbody > tr > td {
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+}
+
+.petunjuk-table ::ng-deep .p-datatable-tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+.tindakan-cell {
+   background-color: #f9fafb;
+}

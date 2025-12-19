@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, TitleStrategy } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { definePreset } from '@primeng/themes';
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
+import { CustomTitleStrategy } from './custom-title-strategy';
 
 const AuraAmberPreset = definePreset(Aura, {
     semantic: {
@@ -40,6 +41,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    { provide: TitleStrategy, useClass: CustomTitleStrategy }
   ]
 };

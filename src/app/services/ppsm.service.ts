@@ -24,7 +24,7 @@ export class PpsmService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.httpClient.post<any>(
-      this.baseUrl + 'PegawaiDinilais/SimpanPegawaiBaru/SimpanPegawaiBaru',
+      this.baseUrl + 'PegawaiDinilais/SimpanPegawaiBaru',
       object,
       httpOptions
     );

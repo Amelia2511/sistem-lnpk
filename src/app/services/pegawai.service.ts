@@ -14,6 +14,7 @@ export interface Pegawai {
   kementerian: string;
   idBahagian: string;
   idUnit: string;
+  namaUnit: string;
   isActive: boolean;
   createdAt: string;
   noFail: string;
@@ -49,8 +50,16 @@ export class PegawaiService {
   }
 
   // Get employee by ID - Note: This endpoint may not exist in your API
+  // getPegawaiById(id: number): Observable<Pegawai> {
+  //   return this.http.get<Pegawai>(`${this.apiUrl}/Pegawais/${id}`);
+  // }
+
   getPegawaiById(id: number): Observable<Pegawai> {
-    return this.http.get<Pegawai>(`${this.apiUrl}/Pegawais/${id}`);
+    return this.http.get<Pegawai>(`${this.apiUrl}/PegawaiDinilais/GetPegawaiById/${id}`);
+  }
+
+  getPegawaiPenilaiById(id: number): Observable<Pegawai> {
+    return this.http.get<Pegawai>(`${this.apiUrl}/Pegawais/GetById/${id}`);
   }
 
   // Create new employee - Note: This endpoint may not exist in your API

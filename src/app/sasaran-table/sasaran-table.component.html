@@ -1,0 +1,92 @@
+<!-- Outer table: one row per Aktiviti -->
+<p-table
+  [value]="pagedGroups"
+  [tableStyle]="{ 'min-width': '64rem' }"
+  [loading]="loading"
+  styleClass="outer-aktiviti-table">
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 26%">Aktiviti</th>
+      <th>Petunjuk</th>
+      <th>Keterangan</th>
+      <th class="text-right">Sasaran</th>
+      <th class="text-right">Pencapaian Sebenar</th>
+      <th>Ulasan</th>
+      <th class="text-center" *ngIf="editable">Tindakan</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-g>
+    <tr>
+      <!-- Aktiviti -->
+      <td style="vertical-align: top;">
+        <div class="font-medium">{{ g.aktiviti }}</div>
+      </td>
+
+      <!-- Inner Petunjuk table spans columns 2..6 -->
+      <td colspan="5" class="p-0 petunjuk-cell" style="vertical-align: top;">
+        <p-table
+          [value]="g.petunjuk"
+          [showGridlines]="false"
+          [tableStyle]="{ 'min-width': '100%' }"
+          styleClass="petunjuk-table">
+
+          <ng-template pTemplate="body" let-p>
+            <tr>
+              <td style="width: 14%">{{ p.jenisPetunjuk || '-' }}</td>
+              <td style="width: 30%">{{ p.keterangan || '-' }}</td>
+              <td style="width: 12%" class="text-right">{{ p.sasaranKerja ?? '-' }}</td>
+              <td style="width: 14%" class="text-right">{{ p.pencapaianSebenar ?? '-' }}</td>
+              <td>{{ p.ulasan || '-' }}</td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5" class="py-2 px-3">Tiada Petunjuk.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </td>
+
+      <!-- Tindakan -->
+      <td *ngIf="editable" class="tindakan-cell text-center" style="vertical-align: top;">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          [rounded]="true"
+          [text]="true"
+          (click)="onEditAktiviti(g)"
+          class="mr-1">
+        </button>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-trash"
+          [rounded]="true"
+          [text]="true"
+          severity="danger"
+          (click)="onDeleteAktiviti(g)">
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="editable ? 7 : 6" class="text-center">Tiada rekod.</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- External paginator (optional) -->
+<p-paginator
+  *ngIf="showPaginator"
+  [first]="first"
+  [rows]="pageSize"
+  [totalRecords]="groups.length"
+  [rowsPerPageOptions]="[5,10,20]"
+  (onPageChange)="onPageChange({ first: $event.first ?? 0, rows: $event.rows ?? pageSize })">
+</p-paginator>

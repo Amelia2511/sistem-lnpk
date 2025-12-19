@@ -1,7 +1,11 @@
 .layout {
+  /* flex:1; */
+  /* flex-direction:column; */
     display: flex;
-    height: calc(100vh - 70px);
-    background: linear-gradient(135deg, #f9fafc, #f3f6fb);
+    gap:.75rem;
+    min-height: 100vh;
+    /* height: calc(100vh - 70px); */
+    /* background: linear-gradient(135deg, #f9fafc, #f3f6fb); */
 }
 
 app-side-menu {
@@ -17,14 +21,13 @@ app-side-menu.open {
 
 .content {
     flex: 1;
-    padding: 24px;
-    background: transparent;
-
+    /* padding: 24px; */
+    /* background: transparent; */
 
     margin: 20px;
-    background: #fff;
+    /* background: #fff; */
     border-radius: 16px;
-    box-shadow: 0 12px 28px rgba(7, 62, 119, 0.15),
-        0 6px 12px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0 12px 28px rgba(7, 62, 119, 0.15), */
+        /* 0 6px 12px rgba(0, 0, 0, 0.08); */
     overflow-y: auto;
 }

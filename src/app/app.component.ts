@@ -5,13 +5,13 @@ import { HeaderComponent } from './header/header.component';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { StepperModule } from 'primeng/stepper';
+import { MenuModule } from 'primeng/menu';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, CommonModule, SideMenuComponent, MatCardModule, StepperModule],
+  imports: [RouterOutlet, HeaderComponent, CommonModule, SideMenuComponent, MatCardModule, MenuModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

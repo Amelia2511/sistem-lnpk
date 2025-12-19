@@ -5,6 +5,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
@@ -43,7 +44,7 @@ interface PetunjukPrestasiRow {
   selector: 'app-tambah-aktiviti',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, ButtonModule, DialogModule, FileUploadModule,
+    CommonModule, FormsModule, ButtonModule, CardModule, DialogModule, FileUploadModule,
     InputTextModule, SelectModule, TableModule, TextareaModule, TooltipModule, HttpClientModule
   ],
   templateUrl: './tambah-aktiviti.component.html',
@@ -241,7 +242,7 @@ cancelPetunjukPrestasi() {
         lampiran: this.uploadedLampiran
       };
 
-      await this.http.post(`${this.baseUrl}Aktivitis/tambah`, payload).toPromise();
+      await this.http.post(`${this.baseUrl}Aktiviti/tambah`, payload).toPromise();
 
       // success modal
       await Swal.fire({ icon: 'success', title: 'Aktiviti berjaya disimpan', confirmButtonText: 'OK' });

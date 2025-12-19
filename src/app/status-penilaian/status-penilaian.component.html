@@ -1,9 +1,18 @@
 <div>
   <p-card [style]="{ width: '100%', overflow: 'hidden' }">
-      <ng-template #title> Status Penilaian </ng-template>
-      <!-- <ng-template #subtitle> Card subtitle </ng-template> -->
-      <p>
-        <p-stepper [value]="1" class="basis-[50rem]">
+    <ng-template #title>
+        <div style="display: flex; justify-content: space-between;">
+          Status Penilaian Terkini
+            <span>
+              <div style="display: flex; gap: 5px;">
+                <p-tag [value]="tahunPenilaian?.toString()" />
+                <p-tag [value]="kategoriPenilaian?.toString()" />
+              </div>
+            </span>
+        </div>
+      </ng-template>
+      <!-- <p> -->
+        <p-stepper [(value)]="activeStep" [linear]="true" class="basis-[50rem]">
           <p-step-list>
               <p-step [value]="1">Aktif</p-step>
               <p-step [value]="2">Draf</p-step>
@@ -16,7 +25,7 @@
           </p-step-list>
           <p-step-panels>
               <p-step-panel [value]="1">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content" let-activateCallback="activateCallback">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -24,14 +33,14 @@
                               Akaun anda telah diaktifkan untuk penilaian. Sila sediakan Laporan Pencapaian Sasaran Kerja bagi melakukan penilaian.
                           </div>
                           <div class="flex pt-6 justify-end">
-                              <p-button label="Sediakan laporan" (onClick)="activateCallback()" />
+                              <p-button label="Sediakan laporan" (click)="activateCallback()" />
                           </div>
                       </div>
                   </ng-template>
               </p-step-panel>
 
               <p-step-panel [value]="2">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content" let-activateCallback="activateCallback">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -40,13 +49,13 @@
                           </div>
                       </div>
                       <div class="flex pt-6 justify-between">
-                          <p-button label="Lengkapkan laporan" (onClick)="activateCallback()" />
+                          <p-button label="Lengkapkan laporan" (click)="activateCallback()" />
                       </div>
                   </ng-template>
               </p-step-panel>
 
               <p-step-panel [value]="3">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -58,7 +67,7 @@
               </p-step-panel>
 
               <p-step-panel [value]="4">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -70,7 +79,7 @@
               </p-step-panel>
 
               <p-step-panel [value]="5">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -82,7 +91,7 @@
               </p-step-panel>
 
               <p-step-panel [value]="6">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -94,7 +103,7 @@
               </p-step-panel>
 
               <p-step-panel [value]="7">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -106,7 +115,7 @@
               </p-step-panel>
 
               <p-step-panel [value]="8">
-                  <ng-template #content let-activateCallback="activateCallback">
+                  <ng-template pTemplate="content" let-activateCallback="activateCallback">
                       <div class="flex flex-col h-48">
                           <div
                               class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
@@ -115,12 +124,12 @@
                           </div>
                       </div>
                       <div class="flex pt-6 justify-start">
-                          <p-button label="Lihat penilaian" (onClick)="activateCallback()" />
+                          <p-button label="Lihat penilaian" (click)="activateCallback()" />
                       </div>
                   </ng-template>
               </p-step-panel>
           </p-step-panels>
       </p-stepper>
-      </p>
+      <!-- </p> -->
   </p-card>
 </div>

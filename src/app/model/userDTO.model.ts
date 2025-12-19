@@ -3,4 +3,7 @@ export class userDTO {
     idPyd: number | undefined;
     noKP: string = "";
     nama: string | undefined;
+    namaPpp: string | undefined;
+    namaPpk: string | undefined;
+    idUnit: string | undefined;
 }

@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
-import { markahSoalan } from '../model/markah-soalan.model';
 import Swal from 'sweetalert2';
-import { MarkahSoalanService } from '../services/markah-soalan.service';
-import { RoleStateService } from '../services/role-state.service';
+import { Kriterium, SaveMarkahRequest } from '../model/kriterium.model';
 import { AuthService } from '../auth/auth.service';
-import { PenilaianService } from '../services/penilaian.service';
-import { penilaian } from '../model/penilaian.model';
+import { KriteriumService } from '../services/kriterium.service';
 
 @Component({
   selector: 'app-senarai-soalan',
@@ -21,318 +18,339 @@ import { penilaian } from '../model/penilaian.model';
   styleUrl: './senarai-soalan.component.css'
 })
 export class SenaraiSoalanComponent implements OnInit {
-  a1 = 1;
+  @Input() idPenilaian!: number;
+  @Input() idSkt!: number; // ⭐ Need SKT to load all marks
+  @Input() isPpp: boolean = false;
+  @Input() isPpk: boolean = false;
+  @Input() isPpsm: boolean = false;
 
-  // Data for the Skala table
-  skalaData = [
-    { level: 'Scale Values', values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
-  ];
+  @Output() onSaveSuccess = new EventEmitter<void>();
 
-  details: markahSoalan = {} as markahSoalan;
-  markah: string | null = null;
-  products: any[] = [];
+  kriteria: Kriterium[] = [];
+  loading = true;
+  skalaData = [{}];
 
-  idPenilaian: number | null = null;
-  idPyd: number | null = null;
-  idSkt: number | null = null;
-  evaluatorType: string = 'self';
+  private _markahKeseluruhanPpsm: number | null = null;
 
-  formValues = {
-    // Pengetahuan, Kemahiran dan Penghasilan Kerja - Column 1
-    ilmuPengetahuan: null as number | null,
-    kuantitiHasil: null as number | null,
-    kualitiHasil: null as number | null,
-    penganalisisan: null as number | null,
-    nilaiTambah: null as number | null,
-
-    // Pengetahuan, Kemahiran dan Penghasilan Kerja - Column 2 (set to null)
-    ilmuPengetahuan2: null as number | null,
-    kuantitiHasil2: null as number | null,
-    kualitiHasil2: null as number | null,
-    penganalisisan2: null as number | null,
-    nilaiTambah2: null as number | null,
-
-    // Kualiti Peribadi - Column 1
-    integriti: null as number | null,
-    disiplin: null as number | null,
-    kepimpinan: null as number | null,
-    kreatifProaktif: null as number | null,
-    kawalanDiri: null as number | null,
-    jalinanHubungan: null as number | null,
-
-    // Kualiti Peribadi - Column 2 (set to null)
-    integriti2: null as number | null,
-    disiplin2: null as number | null,
-    kepimpinan2: null as number | null,
-    kreatifProaktif2: null as number | null,
-    kawalanDiri2: null as number | null,
-    jalinanHubungan2: null as number | null
-  };
-
-  markahKeseluruhan: number = 0;
-  markahKeseluruhan2: number = 0;
-
-  constructor(private router: Router, private markahSoalan: MarkahSoalanService, private roleState: RoleStateService, private route: ActivatedRoute, private authService: AuthService, private penilaian: PenilaianService) { }
-
-  // Calculate overall percentage whenever any input changes
-  calculateMarkahKeseluruhan(): void {
-    // Column 1 calculation
-    const column1Values = [
-      this.formValues.ilmuPengetahuan,
-      this.formValues.kuantitiHasil,
-      this.formValues.kualitiHasil,
-      this.formValues.penganalisisan,
-      this.formValues.nilaiTambah,
-      this.formValues.integriti,
-      this.formValues.disiplin,
-      this.formValues.kepimpinan,
-      this.formValues.kreatifProaktif,
-      this.formValues.kawalanDiri,
-      this.formValues.jalinanHubungan
-    ].filter(val => val !== null) as number[];
-
-    // Column 2 calculation
-    const column2Values = [
-      this.formValues.ilmuPengetahuan2,
-      this.formValues.kuantitiHasil2,
-      this.formValues.kualitiHasil2,
-      this.formValues.penganalisisan2,
-      this.formValues.nilaiTambah2,
-      this.formValues.integriti2,
-      this.formValues.disiplin2,
-      this.formValues.kepimpinan2,
-      this.formValues.kreatifProaktif2,
-      this.formValues.kawalanDiri2,
-      this.formValues.jalinanHubungan2
-    ].filter(val => val !== null) as number[];
-
-    // Calculate Column 1 percentage
-    if (column1Values.length === 0) {
-      this.markahKeseluruhan = 0;
-    } else {
-      const total1 = column1Values.reduce((sum, val) => sum + val, 0);
-      const average1 = total1 / column1Values.length;
-      this.markahKeseluruhan = (average1 / 10) * 100; // Convert scale 1-10 to percentage
-    }
-
-    // Calculate Column 2 percentage
-    if (column2Values.length === 0) {
-      this.markahKeseluruhan2 = 0;
-    } else {
-      const total2 = column2Values.reduce((sum, val) => sum + val, 0);
-      const average2 = total2 / column2Values.length;
-      this.markahKeseluruhan2 = (average2 / 10) * 100; // Convert scale 1-10 to percentage
-    }
-  }
-
-  // Method to handle input changes
-  onInputChange(): void {
-    this.calculateMarkahKeseluruhan();
-  }
+  constructor(
+    private kriteriumService: KriteriumService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      if (user && user.noKP) {
-        console.log("PPP noKp:", user.noKP);
-
-        this.penilaian.getLatestPydPenilaianByPppNoKp(user.noKP).subscribe({
-          next: (res) => {
-            console.log("PYD Penilaian Info:", res);
-
-            this.idPyd = res.idPyd;
-            this.idSkt = res.idSkt;
-            this.idPenilaian = res.idPenilaian ?? null;
-
-            if (this.idPenilaian) {
-              this.penilaian.setIdPenilaian(this.idPenilaian);
-            } else {
-              console.warn("No Penilaian ID found for this PYD.");
-            }
-          },
-          error: (err) => {
-            console.error("Error fetching PYD info:", err);
-          }
-        });
-      } else {
-        console.warn("No PPP or noKp found in authService.");
-      }
-    });
-
-    if (this.markah && this.idPenilaian) {
-      this.markahSoalan.getMarkahSoalan(this.markah).subscribe({
-        next: (info) => {
-          console.log("API response:", info);
-          this.products = info;
-        },
-        error: (error) => {
-          console.error("API Error:", error.status, error.message);
+    if (!this.idPenilaian) {
+      this.route.paramMap.subscribe(params => {
+        const id = params.get('id');
+        if (id) {
+          this.idPenilaian = +id;
+          this.loadData();
         }
       });
+    } else {
+      this.loadData();
     }
-    else {
-      console.log("Waiting for markah or idPenilaian:", { markah: this.markah, idPenilaian: this.idPenilaian });
-    }
+
+    console.log('🎯 SenaraiSoalanComponent - isPpp:', this.isPpp);
+    console.log('🎯 SenaraiSoalanComponent - isPpk:', this.isPpk);
+    console.log('🎯 SenaraiSoalanComponent - isPpsm:', this.isPpsm);
+    console.log('🎯 SenaraiSoalanComponent - idSkt:', this.idSkt);
   }
 
-  resetForm(): void {
-    this.formValues = {
-      ilmuPengetahuan: null,
-      kuantitiHasil: null,
-      kualitiHasil: null,
-      penganalisisan: null,
-      nilaiTambah: null,
-      ilmuPengetahuan2: null,
-      kuantitiHasil2: null,
-      kualitiHasil2: null,
-      penganalisisan2: null,
-      nilaiTambah2: null,
-      integriti: null,
-      disiplin: null,
-      kepimpinan: null,
-      kreatifProaktif: null,
-      kawalanDiri: null,
-      jalinanHubungan: null,
-      integriti2: null,
-      disiplin2: null,
-      kepimpinan2: null,
-      kreatifProaktif2: null,
-      kawalanDiri2: null,
-      jalinanHubungan2: null
-    };
-    this.markahKeseluruhan = 0;
-  }
+  loadData(): void {
+    this.loading = true;
 
-  simpan(): void {
-    if (!this.idPenilaian) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ralat!',
-        text: 'ID Penilaian tidak ditemukan. Sila cuba lagi.',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-    if (
-      !this.formValues.ilmuPengetahuan ||
-      !this.formValues.kuantitiHasil ||
-      !this.formValues.kualitiHasil ||
-      !this.formValues.penganalisisan ||
-      !this.formValues.nilaiTambah ||
-      !this.formValues.integriti ||
-      !this.formValues.disiplin ||
-      !this.formValues.kepimpinan ||
-      !this.formValues.kreatifProaktif ||
-      !this.formValues.kawalanDiri ||
-      !this.formValues.jalinanHubungan
-    ) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Markah tidak diisi dengan lengkap!',
-        text: 'Sila lengkapkan semua markah.',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-
-    const records: any[] = [];
-
-    // Define criteria with their corresponding idSoalan
-    const criteria = [
-      // Pengetahuan, Kemahiran dan Penghasilan Kerja (IDs 1-5)
-      { id: 1, name: 'ilmuPengetahuan', col1: this.formValues.ilmuPengetahuan, col2: this.formValues.ilmuPengetahuan2 },
-      { id: 2, name: 'kuantitiHasil', col1: this.formValues.kuantitiHasil, col2: this.formValues.kuantitiHasil2 },
-      { id: 3, name: 'kualitiHasil', col1: this.formValues.kualitiHasil, col2: this.formValues.kualitiHasil2 },
-      { id: 4, name: 'penganalisisan', col1: this.formValues.penganalisisan, col2: this.formValues.penganalisisan2 },
-      { id: 5, name: 'nilaiTambah', col1: this.formValues.nilaiTambah, col2: this.formValues.nilaiTambah2 },
-
-      // Kualiti Peribadi (IDs 6-11)
-      { id: 6, name: 'integriti', col1: this.formValues.integriti, col2: this.formValues.integriti2 },
-      { id: 7, name: 'disiplin', col1: this.formValues.disiplin, col2: this.formValues.disiplin2 },
-      { id: 8, name: 'kepimpinan', col1: this.formValues.kepimpinan, col2: this.formValues.kepimpinan2 },
-      { id: 9, name: 'kreatifProaktif', col1: this.formValues.kreatifProaktif, col2: this.formValues.kreatifProaktif2 },
-      { id: 10, name: 'kawalanDiri', col1: this.formValues.kawalanDiri, col2: this.formValues.kawalanDiri2 },
-      { id: 11, name: 'jalinanHubungan', col1: this.formValues.jalinanHubungan, col2: this.formValues.jalinanHubungan2 }
-    ];
-
-    const currentTimestamp = new Date().toISOString();
-
-    // Create records for each criterion (Column 1 - Self/Employee evaluation)
-    criteria.forEach((criterion) => {
-      if (criterion.col1 !== null && criterion.col1 !== undefined) {
-        records.push({
-          idPenilaian: this.idPenilaian,
-          idSoalan: criterion.id,
-          markah: criterion.col1,
-          createdAt: currentTimestamp,
-          updatedAt: currentTimestamp
-        });
-      }
-    });
-
-    // Create records for each criterion (Column 2 - Supervisor evaluation)
-    // Using IDs 101-111 to differentiate from column 1
-    criteria.forEach((criterion) => {
-      if (criterion.col2 !== null && criterion.col2 !== undefined) {
-        records.push({
-          idPenilaian: this.idPenilaian,
-          idSoalan: criterion.id + 100, // 101-111 for supervisor evaluations
-          markah: criterion.col2,
-          createdAt: currentTimestamp,
-          updatedAt: currentTimestamp
-        });
-      }
-    });
-
-    // Add overall scores
-    // if (this.markahKeseluruhan > 0) {
-    //   records.push({
-    //     idPenilaian: this.idPenilaian,
-    //     idSoalan: null,
-    //     markah: this.markahKeseluruhan,
-    //     createdAt: currentTimestamp,
-    //     updatedAt: currentTimestamp
-    //   });
-    // }
-
-    // if (this.markahKeseluruhan2 > 0) {
-    //   records.push({
-    //     idPenilaian: this.idPenilaian,
-    //     idSoalan: null,
-    //     markah: this.markahKeseluruhan2,
-    //     createdAt: currentTimestamp,
-    //     updatedAt: currentTimestamp
-    //   });
-    // }
-
-    console.log('Records to save:', records);
-
-    this.markahSoalan.simpanMultipleMarkahSoalan(records).subscribe({
-      next: (info) => {
-        console.log('Save successful:', info);
-        Swal.fire({
-          icon: 'success',
-          title: 'Berjaya!',
-          text: `${records.length} rekod markah berjaya disimpan.`,
-          confirmButtonText: 'OK'
-        }).then(() => {
-          this.resetForm();
-        });
-        return;
+    this.kriteriumService.getAllKriteria().subscribe({
+      next: (data) => {
+        this.kriteria = data;
+        console.log('✅ Kriteria loaded:', this.kriteria);
+        this.loadExistingMarks();
       },
       error: (err) => {
-        console.error('Save error:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Ralat!',
-          text: 'Gagal menyimpan markah. Sila cuba lagi.',
-          confirmButtonText: 'OK'
-        });
-        return;
+        console.error('❌ Error loading kriteria:', err);
+        this.loading = false;
       }
     });
   }
 
-  hasRole(role: number): boolean {
-    return this.roleState.hasRole(role);
+  // ⭐ Load marks for BOTH PPP and PPK using idSkt
+loadExistingMarks(): void {
+  if (!this.idSkt) {
+    console.error('❌ No idSkt provided');
+    this.loading = false;
+    return;
+  }
+
+  this.kriteriumService.getMarkahBySkt(this.idSkt).subscribe({
+    next: (response) => {
+      console.log('✅ Existing marks loaded for SKT:', response);
+
+      // Load PPP marks
+      if (response.markahPpp) {
+        response.markahPpp.forEach((markah: any) => {
+          this.kriteria.forEach(k => {
+            const soalan = k.soalans.find(s => s.idSoalan === markah.idSoalan);
+            if (soalan) {
+              soalan.markahPpp = markah.markah;
+            }
+          });
+        });
+      }
+
+      // Load PPK marks
+      if (response.markahPpk) {
+        response.markahPpk.forEach((markah: any) => {
+          this.kriteria.forEach(k => {
+            const soalan = k.soalans.find(s => s.idSoalan === markah.idSoalan);
+            if (soalan) {
+              soalan.markahPpk = markah.markah;
+            }
+          });
+        });
+      }
+
+      // ⭐ Load PPSM's custom markah if exists
+      if (response.markahKeseluruhanPpsm && response.markahKeseluruhanPpsm > 0) {
+        this._markahKeseluruhanPpsm = response.markahKeseluruhanPpsm;
+        console.log('📊 Loaded PPSM custom markah:', this._markahKeseluruhanPpsm);
+      }
+
+      // ⭐ Calculate totals after loading marks
+      this.calculateMarkahKeseluruhan();
+
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('❌ Error loading marks:', err);
+      this.loading = false;
+    }
+  });
+
+  if (this.isPpsm) {
+    this.loadPurata();
+  }
+}
+
+loadPurata(): void {
+  this.kriteriumService.getPurataBySkt(this.idSkt).subscribe({
+    next: (purata) => {
+      if (purata && purata.purataDiguna) {
+        this._markahKeseluruhanPpsm = purata.markahPurata;
+        console.log('📊 Loaded PPSM purata:', this._markahKeseluruhanPpsm);
+      }
+    },
+    error: (err) => {
+      console.log('ℹ️ No existing Purata found');
+    }
+  });
+}
+
+// ⭐ Add this method to recalculate totals
+calculateMarkahKeseluruhan(): void {
+  console.log('📊 PPP mark:', this.markahKeseluruhanPpp.toFixed(2));
+  console.log('📊 PPK mark:', this.markahKeseluruhanPpk.toFixed(2));
+  console.log('📊 Purata mark:', this.markahKeseluruhanPurata.toFixed(2));
+  console.log('📊 PPSM mark:', this.markahKeseluruhanPpsm.toFixed(2));
+}
+
+onInputChange(): void {
+  this.calculateMarkahKeseluruhan();
+}
+  // ⭐ Calculate PPP overall mark
+  get markahKeseluruhanPpp(): number {
+    const allMarks = this.kriteria.flatMap(k =>
+      k.soalans.map(s => s.markahPpp || 0)
+    );
+
+    if (allMarks.length === 0) return 0;
+
+    const total = allMarks.reduce((sum, mark) => sum + mark, 0);
+    const average = (total / allMarks.length) * 10;
+
+    return Math.round(average * 100) / 100;
+  }
+
+  // ⭐ Calculate PPK overall mark
+  get markahKeseluruhanPpk(): number {
+    const allMarks = this.kriteria.flatMap(k =>
+      k.soalans.map(s => s.markahPpk || 0)
+    );
+
+    if (allMarks.length === 0) return 0;
+
+    const total = allMarks.reduce((sum, mark) => sum + mark, 0);
+    const average = (total / allMarks.length) * 10;
+
+    return Math.round(average * 100) / 100;
+  }
+
+    // ⭐ Calculate Purata (average of PPP and PPK)
+  get markahKeseluruhanPurata(): number {
+    const ppp = this.markahKeseluruhanPpp;
+    const ppk = this.markahKeseluruhanPpk;
+
+    // If both marks exist, calculate average
+    if (ppp > 0 && ppk > 0) {
+      const average = (ppp + ppk) / 2;
+      return Math.round(average * 100) / 100;
+    }
+
+    // If only one exists, return that one
+    if (ppp > 0) return ppp;
+    if (ppk > 0) return ppk;
+
+    return 0;
+  }
+
+  // ⭐ PPSM markah - can be edited by PPSM, defaults to Purata
+  get markahKeseluruhanPpsm(): number {
+    // If PPSM has set a custom value, use it
+    if (this._markahKeseluruhanPpsm !== null && this._markahKeseluruhanPpsm > 0) {
+      return this._markahKeseluruhanPpsm;
+    }
+
+    // Otherwise, default to Purata
+    return this.markahKeseluruhanPurata;
+  }
+
+  set markahKeseluruhanPpsm(value: number) {
+    this._markahKeseluruhanPpsm = value;
+    console.log('📊 PPSM markah set to:', value);
+  }
+
+  // onInputChange(): void {
+  //   console.log('📊 PPP mark:', this.markahKeseluruhanPpp);
+  //   console.log('📊 PPK mark:', this.markahKeseluruhanPpk);
+  //   console.log('📊 Purata mark:', this.markahKeseluruhanPurata);
+  //   console.log('📊 PPSM mark:', this.markahKeseluruhanPpsm);
+  // }
+
+  async simpan(): Promise<void> {
+    // ⭐ Validate based on user role
+    if (this.isPpp) {
+      const missingMarks = this.kriteria.some(k =>
+        k.soalans.some(s => !s.markahPpp || s.markahPpp < 1 || s.markahPpp > 10)
+      );
+
+      if (missingMarks) {
+        await Swal.fire({
+          icon: 'warning',
+          title: 'Markah Tidak Lengkap',
+          text: 'Sila isi semua markah dengan nilai antara 1 hingga 10.'
+        });
+        return;
+      }
+    }
+
+    if (this.isPpk) {
+      const missingMarks = this.kriteria.some(k =>
+        k.soalans.some(s => !s.markahPpk || s.markahPpk < 1 || s.markahPpk > 10)
+      );
+
+      if (missingMarks) {
+        await Swal.fire({
+          icon: 'warning',
+          title: 'Markah Tidak Lengkap',
+          text: 'Sila isi semua markah dengan nilai antara 1 hingga 10.'
+        });
+        return;
+      }
+    }
+
+    // ⭐ PPSM validation
+  if (this.isPpsm) {
+    // PPSM only validates their custom mark
+    if (!this._markahKeseluruhanPpsm || this._markahKeseluruhanPpsm < 1 || this._markahKeseluruhanPpsm > 100) {
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Markah Tidak Sah',
+        text: 'Sila isi markah PPSM (1-100)'
+      });
+      return;
+    }
+  } else {
+    // ⭐ Validation for PPP/PPK - check individual question marks
+    let hasInvalidMark = false;
+
+    for (const k of this.kriteria) {
+      for (const s of k.soalans) {
+        const markah = this.isPpp ? s.markahPpp : s.markahPpk;
+
+        if (markah === null || markah === undefined || markah < 1 || markah > s.markahMaksimum) {
+          hasInvalidMark = true;
+          break;
+        }
+      }
+      if (hasInvalidMark) break;
+    }
+
+    if (hasInvalidMark) {
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Markah Tidak Sah',
+        text: 'Sila isi semua markah dengan nilai antara 1 hingga markah maksimum.'
+      });
+      return;
+    }
+  }
+
+    // ⭐ Build request based on role
+let request: SaveMarkahRequest;
+
+  if (this.isPpsm) {
+    const currentUser = this.authService.getUserDTO();
+
+    if (!currentUser) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Ralat',
+        text: 'Pengguna tidak dijumpai. Sila log masuk semula.'
+      });
+      return;
+    }
+
+    // PPSM saves their custom total markah
+    request = {
+      idSkt: this.idSkt,
+      markahKeseluruhanPpsm: this._markahKeseluruhanPpsm as number,
+      idPegawai: currentUser.id
+    } as SaveMarkahRequest;
+  } else {
+    // PPP/PPK save individual question marks
+    request = {
+      idPenilaian: this.idPenilaian,
+      markahSoalans: this.kriteria.flatMap(k =>
+        k.soalans.map(s => ({
+          idSoalan: s.idSoalan,
+          markah: this.isPpp ? (s.markahPpp || 0) : (s.markahPpk || 0)
+        }))
+      ),
+      jumlahMarkah: this.isPpp ? this.markahKeseluruhanPpp : this.markahKeseluruhanPpk
+    } as SaveMarkahRequest;
+  }
+
+  console.log('💾 Saving marks:', request);
+
+  this.kriteriumService.saveMarkah(request).subscribe({
+    next: async () => {
+      await Swal.fire({
+        icon: 'success',
+        title: 'Berjaya',
+        text: 'Markah berjaya disimpan'
+      });
+
+      this.onSaveSuccess.emit();
+    },
+    error: async (err) => {
+      console.error('❌ Error saving marks:', err);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: err?.error?.error || 'Ralat semasa menyimpan markah'
+      });
+    }
+  });
+
   }
 }

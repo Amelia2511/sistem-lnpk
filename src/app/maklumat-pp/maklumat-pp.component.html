@@ -14,7 +14,7 @@
         </span>  <br>
       Bahagian: <span
           [ngStyle]="{ 'color': !details?.bahagianPPP ? 'gray' : 'inherit', 'fontStyle': !details?.bahagianPPP ? 'italic' : 'normal' }">
-          {{ capitalizeWords(details?.bahagianPPP || 'Tiada maklumat') }}
+          {{ details?.bahagianPPP || 'Tiada maklumat' }}
         </span>  <br>
       Unit: <span
           [ngStyle]="{ 'color': !details?.unitPPP ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPP ? 'italic' : 'normal' }">
@@ -37,7 +37,7 @@
         </span> <br>
       Bahagian:  <span
           [ngStyle]="{ 'color': !details?.bahagianPPK ? 'gray' : 'inherit', 'fontStyle': !details?.bahagianPPK ? 'italic' : 'normal' }">
-          {{ capitalizeWords(details?.bahagianPPK || 'Tiada maklumat') }}
+          {{ details?.bahagianPPK || 'Tiada maklumat' }}
         </span> <br>
       Unit:  <span
           [ngStyle]="{ 'color': !details?.unitPPK ? 'gray' : 'inherit', 'fontStyle': !details?.unitPPK ? 'italic' : 'normal' }">

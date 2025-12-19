@@ -1,0 +1,32 @@
+<p-card header="Penilaian Prestasi">
+  <p-table [value]="penilaians" [tableStyle]="{ 'min-width': '25rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Tahun Prestasi</th>
+        <th>Kategori Penilaian</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-penilaian>
+      <tr>
+        <td>{{ penilaian.tahunPenilaian }}</td>
+        <td>{{ penilaian.namaKategoriPenilaian }}</td>
+        <td><p-tag value="{{ penilaian.namaStatus }}" [severity]="penilaian.namaStatus === 'Draf' ? 'warn' : null" />
+        </td>
+        <td>
+          <!-- (onClick)="onButtonClick(penilaian)" -->
+          <p-button
+          [rounded]="true"
+            [label]="penilaian.namaStatus === 'Draf' ? 'Kemas kini' : 'Lihat'"
+            [severity]="penilaian.namaStatus === 'Draf' ? 'warn' : null"
+            size="small" />
+        </td>
+        </tr>
+      </ng-template>
+      <div *ngFor="let item of penilaians">
+          {{ item.tahunPenilaian }} - {{ item.namaKategoriPenilaian }} - {{ item.namaStatus }}
+      </div>
+
+  </p-table>
+</p-card>

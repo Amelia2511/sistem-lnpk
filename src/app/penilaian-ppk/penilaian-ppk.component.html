@@ -34,7 +34,7 @@
     <!-- END TESTING PANEL -->
 
     <h4>Skala</h4>
-    <p-table [value]="skalaData" [tableStyle]="{ width: '100%', tableLayout: 'fixed' }">
+    <p-table [value]="skalaData" [tableStyle]="{ width: '100%', tableLayout: 'fixed' }" showGridlines="true">
         <ng-template pTemplate="header">
             <tr>
                 <th colspan="2" style="width: 20%; text-align: center;">Sangat Rendah</th>
@@ -74,10 +74,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.ilmuPengetahuan" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -89,9 +89,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.ilmuPengetahuan2" (onInput)="onInputChange()"
-                    inputId="ilmuPengetahuan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="ilmuPengetahuan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -112,10 +112,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kuantitiHasil" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -127,9 +127,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.kuantitiHasil2" (onInput)="onInputChange()"
-                    inputId="kuantitiHasil2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="kuantitiHasil2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -149,10 +149,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kualitiHasil" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -164,9 +164,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.kualitiHasil2" (onInput)="onInputChange()"
-                    inputId="kualitiHasil2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="kualitiHasil2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -187,10 +187,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.penganalisisan" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -202,9 +202,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.penganalisisan2" (onInput)="onInputChange()"
-                    inputId="penganalisisan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="penganalisisan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -224,10 +224,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.nilaiTambah" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -239,9 +239,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.nilaiTambah2" (onInput)="onInputChange()" inputId="nilaiTambah2"
-                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -266,10 +266,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.integriti" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -281,9 +281,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.integriti2" (onInput)="onInputChange()" inputId="integriti2"
-                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -304,10 +304,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.disiplin" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -319,9 +319,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.disiplin2" (onInput)="onInputChange()" inputId="disiplin2"
-                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -343,10 +343,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kepimpinan" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -358,9 +358,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.kepimpinan2" (onInput)="onInputChange()" inputId="kepimpinan2"
-                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -381,10 +381,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kreatifProaktif" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -396,9 +396,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.kreatifProaktif2" (onInput)="onInputChange()"
-                    inputId="kreatifProaktif2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="kreatifProaktif2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -419,10 +419,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.kawalanDiri" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -434,9 +434,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.kawalanDiri2" (onInput)="onInputChange()" inputId="kawalanDiri2"
-                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',
@@ -457,10 +457,10 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; color: #666;">PPP</label>
                 <p-inputnumber [disabled]="true" [ngModel]="formValues.jalinanHubungan" placeholder="-" size="large"
-                    [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
-                    textAlign: 'center', 
+                    [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
+                    textAlign: 'center',
                     backgroundColor: '#e9ecef',
                     border: '2px solid #dee2e6',
                     fontWeight: 'bold',
@@ -472,9 +472,9 @@
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <label style="font-size: 0.8rem; margin-bottom: 4px; font-weight: bold;">PPK</label>
                 <p-inputnumber [(ngModel)]="formValues.jalinanHubungan2" (onInput)="onInputChange()"
-                    inputId="jalinanHubungan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{ 
-                    width: '3rem', 
-                    height: '3rem', 
+                    inputId="jalinanHubungan2" placeholder="0" min="1" max="10" size="large" [inputStyle]="{
+                    width: '3rem',
+                    height: '3rem',
                     textAlign: 'center',
                     border: '2px solid',
                     fontWeight: 'bold',

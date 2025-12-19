@@ -1,141 +1,145 @@
-<h1>Tambah Aktiviti</h1>
-
-<br>
-
-<label>Nama Aktiviti</label>
-<input type="text" pInputText [(ngModel)]="namaAktiviti" />
-
-<br>
-<br>
-
-<div style="display: flex; justify-content: space-between;">
-<label>Petunjuk Prestasi</label>
-  <span>
-<p-button display="flex" align-self="flex-end" label="Tambah Petunjuk" icon="pi pi-plus" (click)="showDialog()" ></p-button>
-  </span>
-</div>
-
-<p-dialog header="Tambah Petunjuk Prestasi" [(visible)]="visible" [modal]="true" [style]="{width: '50rem'}">
-
-  <!-- Jenis -->
-  <div class="mb-4">
-    <label>Jenis <span class="text-red-500">*</span></label>
-    <p-select
-      [options]="petunjukPrestasiOptions"
-      optionLabel="label"
-      optionValue="value"
-      [(ngModel)]="selectedPetunjukJenis"
-      name="jenis"
-      #jenis="ngModel"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(jenis) }">
-    </p-select>
-    <small class="p-error" *ngIf="isInvalid(jenis)">Sila pilih jenis</small>
-  </div>
-
-  <!-- Keterangan -->
-  <div class="mb-4">
-    <label>Keterangan <span class="text-red-500">*</span></label>
-    <textarea
-      pTextarea
-      [(ngModel)]="keterangan"
-      name="keterangan"
-      #keteranganRef="ngModel"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(keteranganRef) }"
-      rows="3">
-    </textarea>
-    <small class="p-error" *ngIf="isInvalid(keteranganRef)">Sila masukkan keterangan</small>
-  </div>
-
-  <!-- Sasaran Kerja -->
-  <div class="mb-4">
-    <label>Sasaran Kerja <span class="text-red-500">*</span></label>
-    <input
-      pInputText
-      [(ngModel)]="sasaranKerjaDialog"
-      name="sasaranKerja"
-      #sasaranCtrl="ngModel"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(sasaranCtrl) }" />
-    <small class="p-error" *ngIf="isInvalid(sasaranCtrl)">Sila masukkan sasaran kerja</small>
-  </div>
-
-  <!-- Pencapaian Sebenar -->
-  <div class="mb-4">
-    <label>Pencapaian Sebenar <span class="text-red-500">*</span></label>
-    <input
-      pInputText
-      [(ngModel)]="pencapaianSebenarDialog"
-      name="pencapaianSebenar"
-      #pencapaianCtrl="ngModel"
-      required
-      [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(pencapaianCtrl) }" />
-    <small class="p-error" *ngIf="isInvalid(pencapaianCtrl)">Sila masukkan pencapaian sebenar</small>
-  </div>
-
-  <!-- Ulasan (optional) -->
-  <div class="mb-4">
-    <label>Ulasan <span class="text-gray-400">(pilihan)</span></label>
-    <textarea pTextarea [(ngModel)]="ulasanDialog" rows="3" name="ulasan"></textarea>
-  </div>
-
-  <div class="flex justify-end gap-2">
-    <p-button label="Batal" severity="secondary" (click)="cancelPetunjukPrestasi()"></p-button>
-    <p-button
-      label="Simpan"
-      (click)="savePetunjukPrestasi(jenis, keteranganRef, sasaranCtrl, pencapaianCtrl)">
-    </p-button>
-  </div>
-</p-dialog>
-
-<p-table [value]="petunjukPrestasiRows">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>Jenis</th>
-      <th>Keterangan</th>
-      <th>Sasaran Kerja</th>
-      <th>Pencapaian</th>
-      <th>Ulasan</th>
-      <th></th>
-    </tr>
+<p-card>
+  <ng-template #title>
+    <div style="display: flex; justify-content: space-between;">
+      Tambah Aktiviti
+    </div>
   </ng-template>
-  <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
-    <tr>
-      <td>{{row.jenis}}</td>
-      <td>{{row.keterangan}}</td>
-      <td>{{row.sasaranKerja}}</td>
-      <td>{{row.pencapaianSebenar}}</td>
-      <td>{{row.ulasan}}</td>
-      <td class="text-center">
-        <button pTooltip="Edit" tooltipPosition="top" pButton type="button" icon="pi pi-pencil" [rounded]="true" [text]="true"
-                (click)="onEditPetunjuk(row, rowIndex)" class="mr-1"></button>
-        <button pTooltip="Padam" tooltipPosition="top" pButton type="button" icon="pi pi-trash" [rounded]="true" [text]="true"
-                severity="danger" (click)="onDeletePetunjuk(rowIndex)"></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+  <br>
+  <label>Nama Aktiviti</label>
+  <input type="text" pInputText [(ngModel)]="namaAktiviti" />
+
+  <br>
+  <br>
+
+  <div style="display: flex; justify-content: space-between;">
+  <label>Petunjuk Prestasi</label>
+    <span>
+  <p-button display="flex" align-self="flex-end" label="Tambah Petunjuk" icon="pi pi-plus" (click)="showDialog()" ></p-button>
+    </span>
+  </div>
+
+  <p-dialog header="Tambah Petunjuk Prestasi" [(visible)]="visible" [modal]="true" [style]="{width: '50rem'}">
+
+    <!-- Jenis -->
+    <div class="mb-4">
+      <label>Jenis <span class="text-red-500">*</span></label>
+      <p-select
+        [options]="petunjukPrestasiOptions"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="selectedPetunjukJenis"
+        name="jenis"
+        #jenis="ngModel"
+        required
+        [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(jenis) }">
+      </p-select>
+      <small class="p-error" *ngIf="isInvalid(jenis)">Sila pilih jenis</small>
+    </div>
+
+    <!-- Keterangan -->
+    <div class="mb-4">
+      <label>Keterangan <span class="text-red-500">*</span></label>
+      <textarea
+        pTextarea
+        [(ngModel)]="keterangan"
+        name="keterangan"
+        #keteranganRef="ngModel"
+        required
+        [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(keteranganRef) }"
+        rows="3">
+      </textarea>
+      <small class="p-error" *ngIf="isInvalid(keteranganRef)">Sila masukkan keterangan</small>
+    </div>
+
+    <!-- Sasaran Kerja -->
+    <div class="mb-4">
+      <label>Sasaran Kerja <span class="text-red-500">*</span></label>
+      <input
+        pInputText
+        [(ngModel)]="sasaranKerjaDialog"
+        name="sasaranKerja"
+        #sasaranCtrl="ngModel"
+        required
+        [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(sasaranCtrl) }" />
+      <small class="p-error" *ngIf="isInvalid(sasaranCtrl)">Sila masukkan sasaran kerja</small>
+    </div>
+
+    <!-- Pencapaian Sebenar -->
+    <div class="mb-4">
+      <label>Pencapaian Sebenar <span class="text-red-500">*</span></label>
+      <input
+        pInputText
+        [(ngModel)]="pencapaianSebenarDialog"
+        name="pencapaianSebenar"
+        #pencapaianCtrl="ngModel"
+        required
+        [ngClass]="{ 'ng-invalid ng-dirty': isInvalid(pencapaianCtrl) }" />
+      <small class="p-error" *ngIf="isInvalid(pencapaianCtrl)">Sila masukkan pencapaian sebenar</small>
+    </div>
+
+    <!-- Ulasan (optional) -->
+    <div class="mb-4">
+      <label>Ulasan <span class="text-gray-400">(pilihan)</span></label>
+      <textarea pTextarea [(ngModel)]="ulasanDialog" rows="3" name="ulasan"></textarea>
+    </div>
+
+    <div class="flex justify-end gap-2">
+      <p-button label="Batal" severity="secondary" (click)="cancelPetunjukPrestasi()"></p-button>
+      <p-button
+        label="Simpan"
+        (click)="savePetunjukPrestasi(jenis, keteranganRef, sasaranCtrl, pencapaianCtrl)">
+      </p-button>
+    </div>
+  </p-dialog>
+
+  <p-table [value]="petunjukPrestasiRows">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Jenis</th>
+        <th>Keterangan</th>
+        <th>Sasaran Kerja</th>
+        <th>Pencapaian</th>
+        <th>Ulasan</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+      <tr>
+        <td>{{row.jenis}}</td>
+        <td>{{row.keterangan}}</td>
+        <td>{{row.sasaranKerja}}</td>
+        <td>{{row.pencapaianSebenar}}</td>
+        <td>{{row.ulasan}}</td>
+        <td class="text-center">
+          <button pTooltip="Edit" tooltipPosition="top" pButton type="button" icon="pi pi-pencil" [rounded]="true" [text]="true"
+                  (click)="onEditPetunjuk(row, rowIndex)" class="mr-1"></button>
+          <button pTooltip="Padam" tooltipPosition="top" pButton type="button" icon="pi pi-trash" [rounded]="true" [text]="true"
+                  severity="danger" (click)="onDeletePetunjuk(rowIndex)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
 
-<br>
-<br>
+  <br>
+  <br>
 
-<!-- <label>Lampiran</label>
-<p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload> -->
-<label>Lampiran</label>
-<p-fileUpload
-  name="files[]"
-  [auto]="false"
-  [customUpload]="true"
-  [multiple]="true"
-  (onAdd)="handleFileSelect($event)"
-  (uploadHandler)="onCustomUpload($event)">
-</p-fileUpload>
+  <!-- <label>Lampiran</label>
+  <p-fileUpload name="files[]" (onUpload)="onUpload($event)" [multiple]="true"></p-fileUpload> -->
+  <label>Lampiran</label>
+  <p-fileUpload
+    name="files[]"
+    [auto]="false"
+    [customUpload]="true"
+    [multiple]="true"
+    (onAdd)="handleFileSelect($event)"
+    (uploadHandler)="onCustomUpload($event)">
+  </p-fileUpload>
 
-<br>
+  <br>
 
-<div class="flex justify-end gap-2 mt-4">
-  <p-button label="Batal" severity="secondary" (click)="onCancel()"></p-button>
-  <p-button label="Simpan" (click)="onSubmit()"></p-button>
-</div>
+  <div class="flex justify-end gap-2 mt-4">
+    <p-button label="Batal" severity="secondary" (click)="onCancel()"></p-button>
+    <p-button label="Simpan" (click)="onSubmit()"></p-button>
+  </div>
+</p-card>

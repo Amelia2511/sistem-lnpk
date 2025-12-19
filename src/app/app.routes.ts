@@ -22,33 +22,95 @@ import { MaklumatPydComponent } from './maklumat-pyd/maklumat-pyd.component';
 import { SasaranPpComponent } from './sasaran-pp/sasaran-pp.component';
 import { EditAktivitiComponent } from './edit-aktiviti/edit-aktiviti.component';
 import { SenaraiSasaranPppComponent } from './senarai-sasaran-ppp/senarai-sasaran-ppp.component';
+import { SenaraiPenilaianPydComponent } from './senarai-penilaian-pyd/senarai-penilaian-pyd.component';
+import { SenaraiPegawaiPaComponent } from './senarai-pegawai-pa/senarai-pegawai-pa.component';
+
 export const routes: Routes = [
-    { path: 'log-masuk', component: LoginPageComponent },
-    { path: '', component: LamanUtamaComponent },
-    { path: 'daftar-anggota', component: DaftarKakitanganBaruComponent},
-    { path: 'senarai-sasaran', component: SenaraiSasaranComponent},
-    { path: 'sasaran', component: SasaranComponent, resolve: { skt: sktMetaResolver },
+    {
+      path: 'log-masuk',
+      component: LoginPageComponent,
+      title: "Log Masuk"
+    },
+    {
+      path: '',
+      component: LamanUtamaComponent },
+    {
+      path: 'daftar-anggota',
+      component: DaftarKakitanganBaruComponent,
+      title: 'Daftar Anggota'
+    },
+    {
+      path: 'senarai-sasaran',
+      component: SenaraiSasaranComponent,
+      title: 'Senarai Sasaran'
+    },
+    {
+      path: 'sasaran',
+      component: SasaranComponent,
+      resolve: { skt: sktMetaResolver },
     // ensure resolver re-runs when query params change (idSkt changes)
-    runGuardsAndResolvers: 'paramsOrQueryParamsChange'},
-    { path: 'aktiviti/edit/:id', component: EditAktivitiComponent },
-    { path: 'tambah-aktiviti', component: TambahAktivitiComponent},
-    { path: 'maklumat-sasaran', component: LaporanSasaranComponent},
-    { path: 'senarai-pegawai', component: SenaraiPegawaiComponent},
-    { path: 'maklumat-pegawai', component: MaklumatPegawaiComponent},
-    { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
-    { path: 'penilaian', component: PenilaianComponent},
-    { path: 'maklumat-pegawai/:id', component: MaklumatPegawaiComponent},
-    { path: 'daftar-akaun', component: DaftarAkaunComponent},
-    { path: 'pegawai-dinilai', component: PegawaiDinilaiComponent},
-    { path: 'senarai-peranan', component: SenaraiPerananComponent},
-    { path: 'penilaian-prestasi', component: PenilaianPrestasiComponent},
-    { path: 'senarai-penilaian', component: SenaraiPenilaianComponent},
-    { path: 'senarai-soalan', component: SenaraiSoalanComponent},
-    { path: 'penilaian', component: PenilaianComponent},
-    { path: 'penilaian-ppk', component: PenilaianPpkComponent},
-    { path: 'maklumat-pyd', component: MaklumatPydComponent},
-    { path: 'senarai-pyd-pp', component: SenaraiPydPpComponent},
-    { path: 'sasaran-pp', component: SasaranPpComponent},
-    { path: 'senarai-sasaran-ppp', component: SenaraiSasaranPppComponent}
+      runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+    },
+    { path: 'aktiviti/edit/:id',
+      component: EditAktivitiComponent
+    },
+    { path: 'tambah-aktiviti',
+      component: TambahAktivitiComponent
+    },
+    { path: 'maklumat-sasaran',
+      component: LaporanSasaranComponent
+    },
+    { path: 'senarai-pegawai',
+      component: SenaraiPegawaiComponent
+    },
+    { path: 'maklumat-pegawai',
+      component: MaklumatPegawaiComponent
+    },
+    {
+      path: 'senarai-penilaian',
+      component: SenaraiPenilaianComponent,
+      title: 'Senarai Penilaian'
+    },
+    { path: 'maklumat-pegawai/:id',
+      component: MaklumatPegawaiComponent
+    },
+    { path: 'daftar-akaun',
+      component: DaftarAkaunComponent
+    },
+    { path: 'pegawai-dinilai',
+      component: PegawaiDinilaiComponent
+    },
+    { path: 'penetapan-penilai',
+      component: SenaraiPegawaiPaComponent,
+      title: 'Penetapan Penilai'
+    },
+    { path: 'penilaian-prestasi',
+      component: PenilaianPrestasiComponent
+    },
+
+    { path: 'senarai-soalan',
+      component: SenaraiSoalanComponent
+    },
+    { path: 'penilaian/:id',
+      component: PenilaianComponent
+    },
+    { path: 'penilaian-pyd',
+      component: SenaraiPenilaianPydComponent
+    },
+    { path: 'penilaian-ppk',
+      component: PenilaianPpkComponent
+    },
+    { path: 'maklumat-pyd',
+      component: MaklumatPydComponent
+    },
+    { path: 'senarai-pyd-pp',
+      component: SenaraiPydPpComponent
+    },
+    { path: 'sasaran-pp',
+      component: SasaranPpComponent
+    },
+    { path: 'senarai-sasaran-ppp',
+      component: SenaraiSasaranPppComponent
+    }
     // { path: '', redirectTo: '/laman-utama', pathMatch: 'full' }
 ];

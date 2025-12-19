@@ -1,7 +1,7 @@
-<div style="display: flex; flex-direction: column; gap: 1rem;">
+<div style="display: flex; flex-direction: column; gap: 1rem;" *ngIf="!loading">
   <h4>Skala</h4>
-  <p-table [value]="skalaData" [tableStyle]="{ width: '100%', tableLayout: 'fixed' }">
-    <ng-template #header>
+  <p-table [value]="skalaData" [tableStyle]="{ width: '100%', tableLayout: 'fixed' }" showGridlines="true">
+    <ng-template pTemplate="header">
       <tr>
         <th colspan="2" style="width: 20%; text-align: center;">Sangat Rendah</th>
         <th colspan="2" style="width: 20%; text-align: center;">Rendah</th>
@@ -10,7 +10,7 @@
         <th colspan="2" style="width: 20%; text-align: center;">Sangat Tinggi</th>
       </tr>
     </ng-template>
-    <ng-template #body let-row>
+    <ng-template pTemplate="body">
       <tr>
         <td style="width: 10%; text-align: center;">1</td>
         <td style="width: 10%; text-align: center;">2</td>
@@ -25,201 +25,124 @@
       </tr>
     </ng-template>
   </p-table>
-  <p-divider />
 
-  <h4>Pengetahuan, Kemahiran dan Penghasilan Kerja</h4>
+  <br>
+  <!-- <p-divider /> -->
 
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Ilmu Pengetahuan dan Kemahiran dalam Bidang Kerja</h6>
-      <p>Mempunyai ilmu pengetahuan dan kemahiran/kepakaran dalam melaksanakan hasil kerja meliputi kebolehan
-        mengenalpasti, menganalisis serta menyelesaikan masalah.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.ilmuPengetahuan" (onInput)="onInputChange()" inputId="ilmuPengetahuan"
-        min="1" max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
+  <!-- ⭐ Loop through Kriteria -->
+  <div *ngFor="let kriterium of kriteria; let isLast = last">
+    <h4>{{ kriterium.tajuk }}</h4>
 
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Kuantiti Hasil Kerja</h6>
-      <p>Kuantiti hasil kerja seperti jumlah, bilangan, kadar, kekerapan dan sebagainya berbanding dengan sasaran
-        kuantiti kerja, mengikut tempoh masa yang ditetapkan.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.kuantitiHasil" (onInput)="onInputChange()" inputId="kuantitiHasil1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
+    <!-- ⭐ Loop through Soalans -->
+    <div *ngFor="let soalan of kriterium.soalans" style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+      <div style="flex: 1; padding-right: 2rem;">
+        <h6>{{ soalan.tajuk }}</h6>
 
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Kualiti Hasil Kerja</h6>
-      <p>Dinilai dari segi kesempurnaan, teratur, kemas dan mengikut peraturan yang ditetapkan.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.kualitiHasil" (onInput)="onInputChange()" inputId="kualitiHasil1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Penganalisisan</h6>
-      <p>Kebolehan mengenalpasti isu dan masalah serta berkeupayaan menganalisis serta mengemukakan cadangan
-        penyelesaian yang membina.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.penganalisisan" (onInput)="onInputChange()" inputId="penganalisisan1"
-        min="1" max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Nilai Tambah</h6>
-      <p>Menghasilkan nilai tambah kepada proses dan penghasilan kerja yang lebih baik.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.nilaiTambah" (onInput)="onInputChange()" inputId="nilaiTambah1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <p-divider />
-
-  <h4>Kualiti Peribadi</h4>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Integriti</h6>
-      <p>Memiliki dan mempraktikkan nilai-nilai integriti seperti akauntabiliti, jujur, benar, amanah, telus, cekap dan
-        bijaksana dalam setiap tindakan.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.integriti" (onInput)="onInputChange()" inputId="integriti1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Disiplin</h6>
-      <p>Mempunyai daya kawal diri dari segi mental dan fizikal termasuk mematuhi peraturan, menepati masa, menunaikan
-        janji dan bersifat sabar.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.disiplin" (onInput)="onInputChange()" inputId="disiplin1" min="1" max="10"
-        size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Kepimpinan/Penyeliaan</h6>
-      <p>Mempunyai ciri-ciri kepimpinan dan penyeliaan seperti berwawasan, berkeupayaan merancang dan menggembleng
-        sumber dalam kawalannya seperti kewangan, tenaga manusia, peralatan dan maklumat serta menggerak dan memberi
-        dorongan kepada kakitangan ke arah pencapaian objektif organisasi.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.kepimpinan" (onInput)="onInputChange()" inputId="kepimpinan1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Kreatif dan Proaktif</h6>
-      <p>Berkebolehan dan mempunyai inisiatif untuk memikirkan dan mencadangkan idea baru serta membuat pembaharuan
-        kepada proses kerja bagi mempertingkatkan kualiti dan produktiviti.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.kreatifProaktif" (onInput)="onInputChange()" inputId="kreatifProaktif1"
-        min="1" max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Kawalan Diri</h6>
-      <p>Mempunyai kebolehan mengawal diri dari segi emosi, minda dan fizikal termasuk keupayaan mengawal perasaan,
-        memotivasikan diri, menghadapi tekanan kerja dan mempunyai daya tahan.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.kawalanDiri" (onInput)="onInputChange()" inputId="kawalanDiri1" min="1"
-        max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <div style="display: flex; justify-content: space-between;">
-    <div>
-      <h6>Jalinan Hubungan dan Kerjasama</h6>
-      <p>Mewujudkan suasana hubungan dan kerjasama yang harmoni dalam organisasi serta boleh menyesuaikan diri dalam
-        semua keadaan.</p>
-    </div>
-    <div style="display: flex;">
-      <p-inputnumber [(ngModel)]="formValues.jalinanHubungan" (onInput)="onInputChange()" inputId="jalianHubungan1"
-        min="1" max="10" size="large" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber min="1" max="10" size="small" [inputStyle]="{ width: '3rem', height: '3rem', textAlign: 'center' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true" />
-    </div>
-  </div>
-
-  <p-divider />
-
-  <div style="display: flex; justify-content: space-between;">
-    <h4>Markah Keseluruhan (%)</h4>
-    <div style="display: flex;">
-      <p-inputnumber [ngModel]="markahKeseluruhan" [readonly]="true" inputId="markahKeseluruhan1"
-        [minFractionDigits]="2" min="1" max="100" mode="decimal" size="small"
-        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"
-        [style]="{ marginRight: '12px' }" />
-      <p-inputnumber [ngModel]="markahKeseluruhan2" [readonly]="true" inputId="markahKeseluruhan2"
-        [minFractionDigits]="2" min="1" max="100" mode="decimal" size="small"
-        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center', backgroundColor: '#f5f5f5' }"
-        [style]="{ marginRight: '12px' }" [disabled]="true"/>
-    </div>
-  </div>
-
-  <div class="example-button-row">
-    <button mat-button class="btn-simpan" icon="pi pi-check" (click)="simpan()">Simpan</button>
-  </div>
-  <!-- <div style="display: flex; justify-content: space-between;">
-      <h4>Markah Keseluruhan (%)</h4>
-      <div style="display: flex;">
-        <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100" mode="decimal" size="small" [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center' }" [style]="{ marginRight: '12px' }"/>
-        <p-inputnumber inputId="minmaxfraction" [minFractionDigits]="2" min="1" max="100" mode="decimal" size="small" [inputStyle]="{ width: '6rem', height: '3rem', textAlign: 'center' }"/>
+        <!-- ⭐ Loop through Diskripsis -->
+        <p *ngFor="let diskripsi of soalan.diskripsis">
+          {{ diskripsi.diskripsi }}
+        </p>
       </div>
-    </div> -->
+
+      <div style="display: flex; gap: 0.75rem; width: 22.25rem;">
+        <!-- First assessor input (editable) -->
+        <p-inputNumber
+          [(ngModel)]="soalan.markahPpp"
+          (onInput)="onInputChange()"
+          [inputId]="'soalan_ppp_' + soalan.idSoalan"
+          [min]="1"
+          [max]="10"
+          [disabled]="!isPpp"
+          [inputStyle]="{
+          width: '5rem',
+          height: '3rem',
+          textAlign: 'center',
+          cursor: isPpp ? 'text' : 'not-allowed'
+          }"
+        />
+
+        <!-- Second assessor input (disabled for now) -->
+        <p-inputNumber
+          [(ngModel)]="soalan.markahPpk"
+          [min]="1"
+          [max]="10"
+          [disabled]="!isPpk"
+          [inputId]="'soalan_ppk_' + soalan.idSoalan"
+          [inputStyle]="{
+          width: '5rem',
+          height: '3rem',
+          textAlign: 'center' }"
+        />
+      </div>
+    </div>
+
+    <br>
+    <!-- Add divider between kriteria (except last one) -->
+    <!-- <p-divider *ngIf="!isLast" /> -->
+  </div>
+
+  <!-- <p-divider/> -->
+  <!-- Overall marks section -->
+  <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+    <h4>Markah Keseluruhan (%)</h4>
+    <div style="display: flex; gap: 0.75rem;">
+      <p-inputNumber
+        [ngModel]="markahKeseluruhanPpp"
+        [readonly]="true"
+        [disabled]="!isPpp"
+        [minFractionDigits]="2"
+        [min]="1"
+        [max]="100"
+        mode="decimal"
+        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center'}"
+      />
+      <p-inputNumber
+        [ngModel]="markahKeseluruhanPpk"
+        [readonly]="true"
+        [disabled]="!isPpk"
+        [minFractionDigits]="2"
+        [min]="1"
+        [max]="100"
+        mode="decimal"
+        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center'}"
+      />
+      <p-inputNumber
+        [ngModel]="markahKeseluruhanPurata"
+        [readonly]="true"
+        [disabled]="true"
+        [minFractionDigits]="2"
+        [min]="1"
+        [max]="100"
+        mode="decimal"
+        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center'}"
+      />
+      <p-inputNumber
+        [(ngModel)]="markahKeseluruhanPpsm"
+        (ngModelChange)="onInputChange()"
+        [readonly]="!isPpsm"
+        [disabled]="!isPpsm"
+        [minFractionDigits]="2"
+        [min]="1"
+        [max]="100"
+        mode="decimal"
+        [inputStyle]="{ width: '5rem', height: '3rem', textAlign: 'center'}"
+      />
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <!-- <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+    <p-button
+      label="Simpan"
+      variant="outlined"
+      (onClick)="simpan()"
+      [disabled]="loading">
+    </p-button>
+  </div>
+</div> -->
+
+<!-- Loading state -->
+<div *ngIf="loading" style="text-align: center; padding: 3rem;">
+  <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+  <p>Memuatkan soalan...</p>
+</div>

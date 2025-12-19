@@ -8,6 +8,7 @@ import { TagModule } from 'primeng/tag';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CommonModule } from '@angular/common';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
   selector: 'app-senarai-pegawai',
   standalone: true,
   imports: [
+    CardModule,
     ButtonModule,
     DatePickerModule,
     TagModule,
@@ -316,30 +318,13 @@ export class SenaraiPegawaiComponent implements OnInit {
       return;
     }
 
-    this.pydService.bolehDinilai(pegawai.idSktTerkini, payload).subscribe({
+    this.pydService.bolehDinilaiPpp(pegawai.idSktTerkini, payload).subscribe({
       next: (response) => {
         (pegawai as any)._busy = false;
         console.log(response.message);
 
         pegawai.buttonOption = 'Sedang Dinilai';
         // pegawai.status = 'Penilaian PPP';
-
-        // Refresh list
-        // this.getPegawaiList();
-      },
-      error: (error) => {
-        (pegawai as any)._busy = false;
-        console.error('Error:', error);
-        alert('Gagal membenarkan pegawai dinilai');
-      }
-    });
-    this.pydService.bolehDinilaiPpk(pegawai.idSktTerkini, payload).subscribe({
-      next: (response) => {
-        (pegawai as any)._busy = false;
-        console.log(response.message);
-
-        pegawai.buttonOption = 'Sedang Dinilai';
-        // pegawai.status = 'Penilaian PPK';
 
         // Refresh list
         // this.getPegawaiList();

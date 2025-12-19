@@ -11,10 +11,12 @@ import { RoleStateService } from '../services/role-state.service';
 import { CommonModule } from '@angular/common';
 import { SenaraiSasaranPppComponent } from "../senarai-sasaran-ppp/senarai-sasaran-ppp.component";
 import { SenaraiPegawaiPppComponent } from '../senarai-pegawai-ppp/senarai-pegawai-ppp.component';
+import { TestMenuComponent } from '../test-menu/test-menu.component';
+import { SenaraiPegawaiPaComponent } from '../senarai-pegawai-pa/senarai-pegawai-pa.component';
 
 @Component({
   selector: 'app-laman-utama',
-  imports: [StatusPenilaianComponent, MaklumatPpComponent, CommonModule, DashboardPpsmComponent, SenaraiSasaranPppComponent, SenaraiPegawaiPppComponent],
+  imports: [TestMenuComponent, StatusPenilaianComponent, MaklumatPpComponent, CommonModule, DashboardPpsmComponent, SenaraiSasaranPppComponent, SenaraiPegawaiPaComponent, SenaraiPegawaiPppComponent],
   templateUrl: './laman-utama.component.html',
   styleUrl: './laman-utama.component.css'
 })
@@ -22,7 +24,10 @@ export class LamanUtamaComponent {
   user: userDTO = {} as userDTO;
   details: pegawaiDinilai = {} as pegawaiDinilai;
 
-  constructor(private authService: AuthService, private pydService: PydService, private roleState: RoleStateService) { }
+  constructor(
+    private authService: AuthService,
+    private pydService: PydService,
+    private roleState: RoleStateService) { }
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe(res => {

@@ -45,7 +45,7 @@ export class LoginPageComponent {
           this.authService.changeIsLoggedIn(true);
           this.authService.changeUser(res);
 
-          this.router.navigate(['/laman-utama']);
+          this.router.navigate(['/']);
 
           Swal.fire({
             icon: 'success',
@@ -75,7 +75,7 @@ export class LoginPageComponent {
 
   onLogin(form: any) {
     if (form.valid) {
-      this.router.navigate(['/laman-utama']);
+      this.router.navigate(['/']);
     }
   }
 

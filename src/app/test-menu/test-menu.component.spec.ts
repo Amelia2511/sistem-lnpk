@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { YayaComponent } from './yaya.component';
+import { TestMenuComponent } from './test-menu.component';
 
-describe('YayaComponent', () => {
-  let component: YayaComponent;
-  let fixture: ComponentFixture<YayaComponent>;
+describe('TestMenuComponent', () => {
+  let component: TestMenuComponent;
+  let fixture: ComponentFixture<TestMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [YayaComponent]
+      imports: [TestMenuComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(YayaComponent);
+    fixture = TestBed.createComponent(TestMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

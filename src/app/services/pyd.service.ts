@@ -51,6 +51,10 @@ export class PydService {
     return this.httpClient.get<pegawaiDinilai>(`${this.baseUrl}PegawaiDinilais/${id}`);
   }
 
+  getPydByUnit(idUnit: string): Observable<pegawaiDinilai[]> {
+   return this.httpClient.get<pegawaiDinilai[]>(`${this.baseUrl}PegawaiDinilais/GetByUnit/${idUnit}`);
+  }
+
   getPegawaiByPp(noKpPp: string): Observable<pegawaiDinilai[]> {
   return this.httpClient.get<pegawaiDinilai[]>(
     `${this.baseUrl}PegawaiDinilais/GetPydByPp/${noKpPp}`
@@ -112,7 +116,7 @@ export class PydService {
     this.kategoriPenilaianSource.next(namaKategori);
   }
 
-  bolehDinilai(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
+  bolehDinilaiPpp(id: number, payload: BolehDinilaiRequest): Observable<BolehDinilaiResponse> {
     return this.httpClient.post<BolehDinilaiResponse>(
       `${this.baseUrl}SasaranKerjas/${id}/bolehDinilaiPpp`,
       payload
@@ -126,4 +130,10 @@ export class PydService {
     );
   }
 
+  assignPenilai(idPyd: number | null, idPpp: number | null, idPpk: number | null): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}PegawaiDinilais/AssignPenilai/${idPyd}`, {
+      idPpp: idPpp,
+      idPpk: idPpk
+    });
+  }
 }

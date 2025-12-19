@@ -15,7 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { PenilaianService } from '../services/penilaian.service';
-import { penilaian } from '../model/penilaian.model';
+import { Penilaian } from '../model/penilaian.model';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../auth/auth.service';
 import { MaklumatPydComponent } from '../maklumat-pyd/maklumat-pyd.component';
@@ -37,7 +37,7 @@ export class PenilaianPrestasiComponent implements OnInit {
   idPenilaian: number | null = null;
   idPyd: number | null = null;
   idSkt: number | null = null;
-  details: penilaian = {} as penilaian;
+  details: Penilaian = {} as Penilaian;
   penilaianList: any[] = [];  // will hold PPP & PPK records
 
   constructor(private router: Router, private route: ActivatedRoute, private penilaian: PenilaianService, private authService: AuthService) { }

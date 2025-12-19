@@ -26,18 +26,18 @@ export class SideMenuComponent {
 
     // PYD
     { name: 'Sasaran Kerja', icon: 'bi-bullseye', route: '/senarai-sasaran', roles: [2], order: 2 },
-    { name: 'Markah Penilaian', icon: 'bi bi-person-vcard', route: '/', roles: [2], order: 3 },
+    { name: 'Penilaian', icon: 'bi bi-graph-up', route: '/senarai-penilaian', roles: [2], order: 3 },
 
     // PPP/PPK
 
     // PPSM
     { name: 'Daftar Anggota', icon: 'bi-plus-circle', route: '/daftar-anggota', roles: [5], order: 5 },
     { name: 'Senarai Pegawai', icon: 'bi bi-people', route: '/senarai-pegawai', roles: [5], order: 6 },
-    { name: 'Laporan', icon: 'bi bi-file-text', route: '/', roles: [5], order: 7 }, // cari icon
+    // { name: 'Laporan', icon: 'bi bi-file-text', route: '/', roles: [5], order: 7 }, // cari icon
     { name: 'Penilaian', icon: 'bi bi-person-vcard', route: '/senarai-penilaian', roles: [3, 4, 5], order: 10 },
 
     // PA
-    { name: 'Senarai Peranan', icon: 'bi bi-person-vcard', route: '/senarai-peranan', roles: [6, 7], order: 8 },
+    // { name: 'Penetapan Penilai', icon: 'bi bi-person-vcard', route: '/penetapan-penilai', roles: [6, 7], order: 8 },
   ];
 
   constructor(private authService: AuthService, private roleService: PerananService, private roleStateService: RoleStateService) { }
